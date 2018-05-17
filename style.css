@@ -1,0 +1,62 @@
+body {
+    background-color: #EEE;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#container {
+    max-width: 960px;
+    margin: 30px auto;
+    min-height: 100vh;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18pt;
+    background-color: white;
+    padding: 50px 30px; 
+    border-radius:10px;
+    /* box-sizing: border-box; */
+    line-height: 1.4;
+}
+
+header {
+    text-align: center;
+}
+
+button {
+    background-color: maroon;
+    border: 0px;
+    min-width: 240px;
+    font-family: Garamond, Georgia, 'Times New Roman', Times, serif;
+    font-size: 18pt;
+    font-weight: bolder;
+    color: white;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+/* #short-description {
+    text-align: center;
+} */
+
+.titlebox, .headline {
+    font-family: Garamond, Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    background-color: darkred;
+    padding: 8px 16px;
+    font-weight: bolder;
+    border-radius: 8px;
+}
+
+.titlebox {
+    padding: 4px; 
+    line-height: 1;
+}
+
+.title {
+    font-size: 36pt;
+}
+
+.subtitle {
+    font-size: 24pt;
+}
+
+
