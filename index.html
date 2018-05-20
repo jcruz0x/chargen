@@ -1,42 +1,125 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id="container">
-            <header>
-                <div class="titlebox">
-                    <h2 class="title">Dungeons &amp; Dragons</h2>
-                    <h3 class="subtitle">5th ed. Character Generator</h3>
-                </div>
-                <!-- <h1 class="headline">Dungeons &amp; Dragons 5th ed. Character Generator</h1> -->
-                <!-- <h3 id="short-description">Character Generator</h3> -->
-                <!-- <hr> -->
-                <br>
-
-                <button>Create New Character</button>
-                <button>My Characters</button>                 
-
-                <br>
-            </header>
-            <main>
-                <section>
-                <h2 class="headline">Stats</h2>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Aliquam in pretium nisl. Vestibulum dapibus erat sit amet hendrerit auctor. 
-                </section>
-
-                <section>
-                <h2 class="headline">Skills</h2>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Aliquam in pretium nisl. Vestibulum dapibus erat sit amet hendrerit auctor. 
-                </section>
-            </main>
-            <footer>
-
-            </footer>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div class="titlebox">
+          <h2 class="title">Dungeons &amp; Dragons</h2>
+          <h3 class="subtitle">5th ed. Character Generator</h3>
         </div>
-    </body>
+        <!-- <h1 class="headline">Dungeons &amp; Dragons 5th ed. Character Generator</h1> -->
+        <!-- <h3 id="short-description">Character Generator</h3> -->
+        <!-- <hr> -->
+        <br>
+        <br>
+
+
+
+        <button>Create New Character</button>
+        <button>My Characters</button>                 
+
+        <br>
+        <br>
+      </header>
+      <main>
+
+
+        <section>
+
+          <h2 class="headline">Ability Scores</h2>
+          <p>
+          Click the 'roll for stats' button to assign random values 
+          to your attribute scores, or the 'assign standard array' to
+          assign the standard array to your ability scores.
+          </p>
+
+
+          <div class="buttons-array">
+            <button>Roll For Stats</button>
+            <button>Use Standard Array</button>
+          </div>
+
+          <p>
+          Then click and drag your rolls to the desired stat:
+          </p>
+
+          <table>
+            <tr>
+              <th>Ability</td>
+              <th><b>Roll</b></td>
+              <th>+/-</td>
+              <th>Score</td>
+              <th>Ability Modifier</td>
+            </tr>
+            <tr>
+              <td>Strength</td>
+              <td><div class="rolled-score grabbable">10</div></td>
+              <td>--</td>
+              <td>10</td>
+              <td>+0</td>
+            </tr>
+            <tr>
+              <td>Dexterity</td>
+              <td><div class="rolled-score grabbable">10</div></td>
+              <td>--</td>
+              <td>10</td>
+              <td>+0</td>
+            </tr>
+            <tr>
+              <td>Constitution</td>
+              <td><div class="rolled-score grabbable">10</div></td>
+              <td>--</td>
+              <td>10</td>
+              <td>+0</td>
+            </tr>
+            <tr>
+              <td>Intelligence</td>
+              <td><div class="rolled-score grabbable">10</div></td>
+              <td>--</td>
+              <td>10</td>
+              <td>+0</td>
+            </tr>
+            <tr>
+              <td>Wisdom</td>
+              <td><div class="rolled-score grabbable">10</div></td>
+              <td>--</td>
+              <td>10</td>
+              <td>+0</td>
+            </tr>
+            <tr>
+              <td>Charisma</td>
+              <td><div class="rolled-score grabbable">10</div></td>
+              <td>--</td>
+              <td>10</td>
+              <td>+0</td>
+            </tr>
+          </table>
+
+
+        </section>
+
+        <section>
+          <h2 class="headline">Race</h2>
+          <div class="radio-boxes">
+            <input type="radio" id="elf-choice" name="race" value="elf"><label for="elf-choice">Elf</lable><br>
+            <input type="radio" id="human-choice" name="race" value="human"><label for="human-choice">Human</lable><br>
+            <input type="radio" id="dwarf-choice" name="race" value="dwarf"><label for="dwarf-choice">Dwarf</lable><br>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="headline">Skills</h2>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+          Aliquam in pretium nisl. Vestibulum dapibus erat sit amet hendrerit auctor. 
+        </section>
+      </main>
+      <footer>
+
+      </footer>
+    </div>
+  </body>
 </html>
