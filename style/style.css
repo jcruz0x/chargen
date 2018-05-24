@@ -43,6 +43,29 @@ header {
     text-align: center;
 }
 
+#titlebar-buttons-section {
+    float: left;
+    /* margin-right: auto; */
+    /* text-align: left;
+    /* margin: auto; */ */
+}
+
+/* #titlebar-spacer {
+    display: inline-block;
+    margin: auto;
+} */
+
+#titlebar-login-section {
+    float: right;
+    /* text-align: rV
+    margin: auto; */
+    /* margin-left: auto; */
+}
+
+#clear {
+    clear: both;
+}
+
 table {
     margin: auto;
     width: 100%;
