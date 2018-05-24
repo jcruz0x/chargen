@@ -9,6 +9,10 @@ console.log("server started");
 // node js modules
 let path = require('path');
 let fs = require('fs');
+let mustache = require('mustache');
+
+// other server files
+let data = require('./data.js');
 
 // express modules
 let express = require('express');
@@ -19,7 +23,22 @@ let app = express();
 // --------------------------------------------------
 
 let WEB = path.join(__dirname, 'web');
-app.use('/', express.static(WEB));
+let STYLE = path.join(__dirname, 'style')
+
+app.use('/style', express.static(STYLE));
+
+app.get('/', (req, res) => {
+    let view = data.getView(); 
+    fs.readFile('./web/index.mustache', 'utf8', (err, data) => {
+        if (err) {
+            res.status('500').send('Error. Unavailable.');
+        }
+        else {
+            let page = mustache.render(data, view);
+            res.send(page);
+        }
+    })
+});
 
 app.get('*', (req,res) => res.status(404).send('Error 404: Not found'));
 

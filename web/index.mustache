@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+      {{style}}
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div class="titlebox">
+          <h2 class="title">Dungeons &amp; Dragons</h2>
+          <h3 class="subtitle">5th ed. Character Generator</h3>
+        </div>
+        <!-- <h1 class="headline">Dungeons &amp; Dragons 5th ed. Character Generator</h1> -->
+        <!-- <h3 id="short-description">Character Generator</h3> -->
+        <!-- <hr> -->
+        <br>
+        <br>
+
+        <button>Create New Character</button>
+        <button>My Characters</button>                 
+
+        <br>
+        <br>
+      </header>
+      <main>
+        <section>
+          <h2 class="headline">Ability Scores</h2>
+          <p>
+          Click the 'roll for stats' button to assign random values 
+          to your attribute scores, or the 'assign standard array' to
+          assign the standard array to your ability scores.
+          </p>
+
+          <div class="buttons-array">
+            <button>Roll For Stats</button>
+            <button>Use Standard Array</button>
+          </div>
+
+          <p>
+          Then click and drag your rolls to the desired stat:
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Ability</th>
+                <th><b>Roll</b></th>
+                <th>+/-</th>
+                <th>Score</th>
+                <th>Ability Modifier</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#abilities}}
+              <tr>
+                <td>{{abilityname}}</td>
+                <td><div class="rolled-score grabbable" id="{{abilityid}}">10</div></td>
+                <td>--</td>
+                <td>10</td>
+                <td>+0</td>
+              </tr>
+            {{/abilities}}
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2 class="headline">Race</h2>
+          <div class="radio-boxes">
+            {{#races}}
+              <input type="radio" id="{{racechoice}}" name="race" value="{{raceval}}"><label for="{{racechoice}}">{{racename}}</lable><br>
+            {{/races}}
+          </div>
+        </section>
+
+        <section>
+          <h2 class="headline">Class</h2>
+
+          <div class="radio-boxes">
+            {{#classes}}
+              <input type="radio" id="{{classchoice}}" name="class" value="{{classval}}"><label for="{{classchoice}}">{{classname}}</lable><br>
+            {{/classes}}
+          </div>
+        </section>
+
+        <section>
+          <h2 class="headline">Background</h2>
+        </section>
+
+        <section>
+          <h2 class="headline">Skills</h2>
+          <div class="check-boxes">
+            {{#skills}}
+              <input type="checkbox" id="{{skillchoice}}" name="skills" value="{{skillval}}"><label for="{{skillchoice}}">{{skillname}}</label><br>
+            {{/skills}}
+          </div>
+        </section>
+
+        <section>
+          <h2 class="headline">Description</h2>
+        </section>
+
+        <section>
+          <h2 class="headline">Summary</h2>
+        </section>
+      </main>
+      <footer>
+
+      </footer>
+    </div>
+  </body>
+</html>
