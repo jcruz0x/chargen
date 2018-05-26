@@ -66,6 +66,12 @@ header {
     clear: both;
 }
 
+select {
+    font-size: 18px;
+    margin: 10px;
+    padding: 5px;
+}
+
 table {
     margin: auto;
     width: 100%;
