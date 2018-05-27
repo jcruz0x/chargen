@@ -124,7 +124,12 @@
         "features": ["extra-language"]
     },
     "variant-human": {
-        "ability-mods": {},
+        "ability-mods": {
+            "choice": {
+                "count": 2,
+                "by": 1
+            }
+        },
         "size": "medium",
         "speed": 30,
         "languages": ["common"],
@@ -145,9 +150,7 @@
             "draconic"
         ],
         "features": [
-            "draconic-ancestry",
-            "breath-weapon",
-            "damage-resistance"
+            "draconic-ancestry"
         ]
     },
     "gnome": {
@@ -185,7 +188,12 @@
     },
     "half-elf": {
         "ability-mods": {
-            "cha": 1
+            "cha": 1,
+            "choice": {
+                "count": 2,
+                "by": 1,
+                "except": ["cha"]
+            }
         },
         "size": "medium",
         "speed": 30,
@@ -194,7 +202,6 @@
             "elvish"
         ],
         "features": [
-            "half-elf-ability-score-increases",
             "darkvision",
             "fey-ancestry",
             "skill-versatility",

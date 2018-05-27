@@ -35,7 +35,7 @@
     },
     "dwarven-toughness": {
         "description":
-            "Your hit point maximum increases by 1, and again by 1 every time you gain a level.",
+            "Your hit point maximum increases by 1, and again by 1 every time you gain a level."
     },
     "dwarven-armor-training": {
         "description":
@@ -76,7 +76,7 @@
     },
     "extra-language": {
         "description":
-            "You can speak, read, and write one extra language of your choice.",
+            "You can speak, read, and write one extra language of your choice."
     },
     "mask-of-the-wild": {
         "description":
@@ -117,7 +117,7 @@
     },
     "naturally-stealthy": {
         "description":
-            "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you",
+            "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you"
     },
     "stout-resilience": {
         "description":
@@ -127,7 +127,58 @@
         "description":
             "You gain proficiency in one skill of your choice, and gain one feat of your choice."
     },
-    ""
-
-
+    "draconic-ancestry": {
+        "description":
+            "You have draconic ancestry. You gain a breath weapons and resistance based on your chosen dragon type."
+    },
+    "gnome-cunning": {
+        "description":
+            "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."
+    },
+    "natural-illusionist": {
+        "description":
+            "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it."
+    },
+    "speak-with-small-beasts": {
+        "description":
+            "Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animaIs and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets."
+    },
+    "artificiers-lore": {
+        "description":
+            "Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of the bonus you would normally apply."
+    },
+    "tinker": {
+        "description":
+            "You have proficiency with artisan's tools, and with them can spend 1 hour and 10 gp worth of materials to construct a tiny clockwork device.",
+        "proficiencies": [
+            "artisans-tools"
+        ]
+    },
+    "skill-versatility": {
+        "description":
+            "You gain proficiency in two skills of your choice."
+    },
+    "menacing": {
+        "description":
+            "You gain proficiency in the intimidation skill.",
+        "proficiencies": [
+            "intimidation"
+        ]
+    },
+    "relentless-endurance": {
+        "description":
+            "When you are reduced to 0 hit points but not killed outright, you can drop to 1 point instead. You can't use this feature again until you finish a long rest."
+    },
+    "savage-attacks": {
+        "description":
+            "You gain proficiency in two skills of your choice."
+    },
+    "hellish-resistance": {
+        "description":
+            "You have resistance to fire damage."
+    },
+    "infernal-legacy": {
+        "description":
+            "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spclls" 
+    } 
 }
