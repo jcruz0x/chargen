@@ -1,0 +1,150 @@
+{
+    "dwarf": {
+        "fullname": "Dwarf",
+        "ability-mods": {
+            "con": 2
+        },
+        "speed": 25,
+        "size": "medium",
+        "languages": [
+            "common",
+            "dwarvish"
+        ],
+        "features": [
+            "darkvision",
+            "dwarven-resilience",
+            "dwarven-combat-training",
+            "dwarven-tool-proficiency",
+            "stonecunning"
+        ]
+    },
+    "hill-dwarf": {
+        "fullname": "Hill Dwarf",
+        "ability-mods": {
+            "wis": 1
+        },
+        "features": [
+            "dwarven-toughness"
+        ]
+    },
+    "mountain-dwarf": {
+        "fullname": "Mountain Dwarf",
+        "ability-mods": {
+            "str": 2
+        },
+        "features": [
+            "dwarvent-armor-training"
+        ]
+    },
+    "elf": {
+        "fullname": "Elf",
+        "ability-mods": {
+            "dex": 2
+        },
+        "speed": 30,
+        "size": "medium",
+        "languages": [
+            "common", 
+            "elvish"
+         ],
+        "features": [
+            "darkvision",
+            "keen-senses",
+            "fey-ancestry",
+            "trance"
+        ]
+    },
+    "high-elf": {
+        "fullname": "High Elf",
+        "ability-mods": {
+            "int": 1
+        },
+        "features": [
+            "elf-weapon-training",
+            "elf-cantrip",
+            "extra-language"
+        ]
+    },
+    "wood-elf": {
+        "fullname": "Wood Elf",
+        "ability-mods": {
+            "wis": 1
+        },
+        "speed": 35,
+        "features": [
+            "elf-weapon-training",
+            "mask-of-the-wild"
+        ]
+    },
+    "drow-elf": {
+        "fullname": "Drow Elf",
+        "ability-mods": {
+            "cha": 1
+        },
+        "speed": 35,
+        "features": [
+            "superior-darkvision",
+            "sunlight-sensitivity",
+            "drow-magic",
+            "drow-weapon-training"
+        ]
+    },
+    "halfling": {
+        "fullname": "Halfling",
+        "ability-mods": {
+            "dex": 2
+        },
+        "size": "small",
+        "speed": 25,
+        "languages": [
+            "common",
+            "halfling"
+        ],
+        "features": [
+            "lucky",
+            "brave",
+            "halfling-nimbleness"
+        ]
+    },
+    "lightfoot-halfling": {
+        "fullname": "Lightfoot Halfing",
+        "ability-mods": {
+            "cha": 2
+        },
+        "features": [
+            "naturally-stealthy"
+        ]
+    },
+    "stout-halfling": {
+        "fullname": "Stout Halfing",
+        "ability-mods": {
+            "cha": 2
+        },
+        "features": [
+            "naturally-stealthy"
+        ]
+    },
+    "human": {
+        "fullname": "Human",
+        "ability-mods": {
+            "all": 1
+        },
+        "size": "medium",
+        "speed": 30,
+        "langauges": ["common"],
+        "features": ["extra-language"]
+    },
+    "variant-human": {
+        "fullname": "Variant Human",
+        "ability-mods": {},
+        "size": "medium",
+        "speed": 30,
+        "langauges": ["common"],
+        "features": [
+            "extra-language",
+            "variant-human-ability-score-increases",
+            "extra-skill-proficiency",
+            "feat"
+        ]
+    }
+}
