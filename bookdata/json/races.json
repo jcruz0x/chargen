@@ -30,7 +30,7 @@
             "str": 2
         },
         "features": [
-            "dwarvent-armor-training"
+            "dwarven-armor-training"
         ]
     },
     "elf": {
@@ -100,7 +100,7 @@
     },
     "lightfoot-halfling": {
         "ability-mods": {
-            "cha": 2
+            "cha": 1
         },
         "features": [
             "naturally-stealthy"
@@ -108,10 +108,10 @@
     },
     "stout-halfling": {
         "ability-mods": {
-            "cha": 2
+            "con": 1
         },
         "features": [
-            "naturally-stealthy"
+            "stout-resilience"
         ]
     },
     "human": {
@@ -130,9 +130,7 @@
         "languages": ["common"],
         "features": [
             "extra-language",
-            "variant-human-ability-score-increases",
-            "extra-skill-proficiency",
-            "feat"
+            "variant-human"
         ]
     },
     "dragonborn": {
@@ -149,7 +147,7 @@
         "features": [
             "draconic-ancestry",
             "breath-weapon",
-            "damage-resistance",
+            "damage-resistance"
         ]
     },
     "gnome": {
@@ -173,7 +171,7 @@
         },
         "features": [
             "natural-illusionist",
-            "speak-with-small-beasts",
+            "speak-with-small-beasts"
         ]
     },
     "rock-gnome": {
@@ -238,4 +236,4 @@
             "infernal-legacy"
         ]
     }
-}
+} 

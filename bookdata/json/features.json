@@ -1,0 +1,133 @@
+{
+    "darkvision": {
+        "description":
+            "You can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim."
+    },
+    "dwarven-resilience": {
+        "description":
+            "You have advantage on saving throws against poison, and resistance against poison damage."
+    },
+    "dwarven-combat-training": {
+        "description": 
+            "You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.",
+        "proficiencies": [
+            "warhammer",
+            "handaxe",
+            "light-hammer",
+            "warhammer"
+        ]
+    },
+    "dwarven-tool-proficiency": {
+        "description":
+            "You gain proficiency with one of: smiths tools, brewers supplies, or masons tools.",
+        "proficiency-choices": {
+            "count": 2,
+            "choices": [
+                "smiths-tools",
+                "brewers-supplies",
+                "masons-tools"
+            ]
+        }
+    },
+    "stonecunning": {
+        "description":
+            "When making an intelligence (History) check related to stonework, you are proficient and add double your proficiency bonus."
+    },
+    "dwarven-toughness": {
+        "description":
+            "Your hit point maximum increases by 1, and again by 1 every time you gain a level.",
+    },
+    "dwarven-armor-training": {
+        "description":
+            "You have proficiency with light and medium armor.",
+        "proficiencies": [
+            "light-armor",
+            "medium-armor"
+        ]
+    },
+    "keen-senses": {
+        "description":
+            "You have proficiency in the perception skill.",
+        "proficiencies": [
+            "perception"
+        ]
+    },
+    "fey-ancestry": {
+        "description":
+            "You have advantage on saving throws against being charmed, and magic can't put you to sleep"
+    },
+    "trance": {
+        "description":
+            "You can meditate for hour hours to gain the rest a human gains for 8 hours of sleep."
+    },
+    "elf-weapon-training": {
+        "description":
+            "You gain proficiency with the longsword, shortsword, shortbow, and longbow",
+        "proficiencies": [
+            "longsword",
+            "shortsword",
+            "longbow",
+            "shortbow"
+        ]
+    },
+    "elf-cantrip": {
+        "description":
+            "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting stat for it."
+    },
+    "extra-language": {
+        "description":
+            "You can speak, read, and write one extra language of your choice.",
+    },
+    "mask-of-the-wild": {
+        "description":
+            "You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena."
+    },
+    "superior-darkvision": {
+        "description":
+            "You can see in dim light within 120 feet as if it were bright light, and in darkness as if it were dim."
+    },
+    "sunlight-sensitivity": {
+        "description":
+            "You have disadvantage on attack rolls and ability checks that rely on sight when you, your target, or what you are trying to perceive is in direct sunlight"
+    },
+    "drow-magic": {
+        "description":
+            "You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once per day. When you reach 5th level, you can cast darkness once per day. Charisma is your spellcasting ability for these spells."
+    },
+    "drow-weapon-training": {
+        "description":
+            "You have proficiency with rapiers, shortswords, and hand crossbows",
+        "proficiencies": [
+            "rapier",
+            "shortsword",
+            "hand-crossbow"
+        ]
+    },
+    "lucky": {
+        "description":
+            "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll."
+    },
+    "brave": {
+        "description":
+            "You have advantage on saving throws against being frightened."
+    },
+    "hafling-nimbleness": {
+        "description":
+            "You can move through the space of any creature that is a size larger than yours."
+    },
+    "naturally-stealthy": {
+        "description":
+            "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you",
+    },
+    "stout-resilience": {
+        "description":
+            "You have advantage on saving throws against poison, and resistance against poison damage."
+    },
+    "variant-human": {
+        "description":
+            "You gain proficiency in one skill of your choice, and gain one feat of your choice."
+    },
+    ""
+
+
+}

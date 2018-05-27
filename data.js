@@ -1,6 +1,15 @@
 "use strict"
 
 let abilities = [
+    'str',
+    'dex',
+    'con',
+    'int',
+    'wis',
+    'cha',
+]
+
+let abilityNames = [
     'strength',
     'dexterity',
     'constitution',
@@ -24,12 +33,12 @@ let classes = [
     'wizard'
 ]
 
-let races = [
-    'elf',
-    'dwarf',
-    'human',
-    'halfling',
-]
+// let races = [
+//     'elf',
+//     'dwarf',
+//     'human',
+//     'halfling',
+// ]
 
 
 function capitalize(str) {
