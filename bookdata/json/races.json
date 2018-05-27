@@ -1,6 +1,5 @@
 {
     "dwarf": {
-        "fullname": "Dwarf",
         "ability-mods": {
             "con": 2
         },
@@ -19,7 +18,6 @@
         ]
     },
     "hill-dwarf": {
-        "fullname": "Hill Dwarf",
         "ability-mods": {
             "wis": 1
         },
@@ -28,7 +26,6 @@
         ]
     },
     "mountain-dwarf": {
-        "fullname": "Mountain Dwarf",
         "ability-mods": {
             "str": 2
         },
@@ -37,7 +34,6 @@
         ]
     },
     "elf": {
-        "fullname": "Elf",
         "ability-mods": {
             "dex": 2
         },
@@ -55,7 +51,6 @@
         ]
     },
     "high-elf": {
-        "fullname": "High Elf",
         "ability-mods": {
             "int": 1
         },
@@ -66,7 +61,6 @@
         ]
     },
     "wood-elf": {
-        "fullname": "Wood Elf",
         "ability-mods": {
             "wis": 1
         },
@@ -77,7 +71,6 @@
         ]
     },
     "drow-elf": {
-        "fullname": "Drow Elf",
         "ability-mods": {
             "cha": 1
         },
@@ -90,7 +83,6 @@
         ]
     },
     "halfling": {
-        "fullname": "Halfling",
         "ability-mods": {
             "dex": 2
         },
@@ -107,7 +99,6 @@
         ]
     },
     "lightfoot-halfling": {
-        "fullname": "Lightfoot Halfing",
         "ability-mods": {
             "cha": 2
         },
@@ -116,7 +107,6 @@
         ]
     },
     "stout-halfling": {
-        "fullname": "Stout Halfing",
         "ability-mods": {
             "cha": 2
         },
@@ -125,26 +115,127 @@
         ]
     },
     "human": {
-        "fullname": "Human",
         "ability-mods": {
             "all": 1
         },
         "size": "medium",
         "speed": 30,
-        "langauges": ["common"],
+        "languages": ["common"],
         "features": ["extra-language"]
     },
     "variant-human": {
-        "fullname": "Variant Human",
         "ability-mods": {},
         "size": "medium",
         "speed": 30,
-        "langauges": ["common"],
+        "languages": ["common"],
         "features": [
             "extra-language",
             "variant-human-ability-score-increases",
             "extra-skill-proficiency",
             "feat"
+        ]
+    },
+    "dragonborn": {
+        "ability-mods": {
+            "str": 2,
+            "cha": 1
+        },
+        "size": "medium",
+        "speed": 30,
+        "languages": [
+            "common",
+            "draconic"
+        ],
+        "features": [
+            "draconic-ancestry",
+            "breath-weapon",
+            "damage-resistance",
+        ]
+    },
+    "gnome": {
+        "ability-mods": {
+            "int": 2
+        },
+        "size": "small",
+        "speed": 25,
+        "languages": [
+            "common",
+            "gnomish"
+        ],
+        "features": [
+            "darkvision",
+            "gnome-cunning"
+        ]
+    },
+    "forest-gnome": {
+        "ability-mods": {
+            "dex": 1
+        },
+        "features": [
+            "natural-illusionist",
+            "speak-with-small-beasts",
+        ]
+    },
+    "rock-gnome": {
+        "ability-mods": {
+            "con": 1
+        },
+        "features": [
+            "artificiers-lore",
+            "tinker"
+        ]
+    },
+    "half-elf": {
+        "ability-mods": {
+            "cha": 1
+        },
+        "size": "medium",
+        "speed": 30,
+        "languages": [
+            "common",
+            "elvish"
+        ],
+        "features": [
+            "half-elf-ability-score-increases",
+            "darkvision",
+            "fey-ancestry",
+            "skill-versatility",
+            "extra-language"
+        ]
+    },
+    "half-orc": {
+        "ability-mods": {
+            "str": 2,
+            "con": 1 
+        },
+        "size": "medium",
+        "speed": 30,
+        "languages": [
+            "common",
+            "orc"
+        ],
+        "features": [
+            "darkvision",
+            "menacing",
+            "relentless-endurance",
+            "savage-attacks"
+        ]
+    },
+    "tiefling": {
+        "ability-mods": {
+            "int": 1,
+            "cha": 2 
+        },
+        "size": "medium",
+        "speed": 30,
+        "languages": [
+            "common",
+            "infernal"
+        ],
+        "features": [
+            "darkvision",
+            "hellish-resistance",
+            "infernal-legacy"
         ]
     }
 }
