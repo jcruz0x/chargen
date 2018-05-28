@@ -1,5 +1,13 @@
 "use strict"
 
+let fs = require('fs');
+let showdown = require('showdown');
+let mustache = require('mustache');
+
+let util = require('./util.js');
+
+let mdconverter = new showdown.Converter();
+
 let abilities = [
     'str',
     'dex',
@@ -40,16 +48,43 @@ let classes = [
 //     'halfling',
 // ]
 
+// -------------------------------------------------- 
+// Races
+// -------------------------------------------------- 
 
-function capitalize(str) {
-    return str[0].toUpperCase() + str.substr(1);
+let racejson = fs.readFileSync('bookdata/json/races.json', 'utf8');
+let races = JSON.parse(racejson);
+
+for (let keyname in races) {
+    if (!races.hasOwnProperty(keyname))
+        continue;
+    
+    let race = races[keyname];
+    race.fullname = util.keynameToFullname(keyname)
+
+    let descfile = race.descfile || (keyname + ".md");
+    let desc = fs.readFileSync('bookdata/json/' + descfile, 'utf8');
+    race.htmlDesc = mdconverter.makeHtml(desc);
 }
+
+function getRaceChoiceView() {
+
+}
+
+function getRaceDivView() {
+
+}
+
+
+// -------------------------------------------------- 
+// Abilities
+// -------------------------------------------------- 
 
 function getAbilityView() {
     let view = [];
     for (let ability of abilities) {
         let attribs = {};
-        attribs.abilityname = capitalize(ability);
+        attribs.abilityname = util.capitalize(ability);
         attribs.abilityid = ability;
 
         view.push(attribs);
@@ -57,6 +92,10 @@ function getAbilityView() {
 
     return view;
 }
+
+// -------------------------------------------------- 
+// Other
+// -------------------------------------------------- 
 
 function getInputView(prefix, items) {
     let view = [];
@@ -70,7 +109,7 @@ function getInputView(prefix, items) {
         let attribs = {}; 
         attribs[choice] = item + "-choice"
         attribs[val] = item;
-        attribs[name] = capitalize(item);
+        attribs[name] = util.capitalize(item);
         
         view.push(attribs);
     }
@@ -78,7 +117,7 @@ function getInputView(prefix, items) {
     return view;
 }
 
-exports.getView = function() {
+function getView() {
     let view = {};
 
     view.abilities = getAbilityView();
@@ -91,3 +130,4 @@ exports.getView = function() {
     return view;
 }
 
+exports.getView = getView;

@@ -86,17 +86,18 @@
 
         <section>
           <h2 class="headline">Race</h2>
-          <!-- <div class="radio-boxes">
-            {{!#races}}
-              <input type="radio" id="{{racechoice}}" name="race" value="{{raceval}}"><label for="{{racechoice}}">{{racename}}</lable><br>
-            {{!/races}}
-          </div> -->
 
           <select class="">
-            {{#races}}
+            {{#racechoices}}
               <option value="{{raceval}}">{{racename}}</option>
-            {{/races}}
+            {{/racechoices}}
           </select>
+
+          {{#racedivs}}
+          <div display="none">
+            {{racehtml}}
+          </div>
+          {{/racedivs}}
         </section>
 
         <section>

@@ -1,6 +1,6 @@
 {
     "dwarf": {
-        "ability-mods": {
+        "abilitymods": {
             "con": 2
         },
         "speed": 25,
@@ -18,7 +18,7 @@
         ]
     },
     "hill-dwarf": {
-        "ability-mods": {
+        "abilitymods": {
             "wis": 1
         },
         "features": [
@@ -26,7 +26,7 @@
         ]
     },
     "mountain-dwarf": {
-        "ability-mods": {
+        "abilitymods": {
             "str": 2
         },
         "features": [
@@ -34,7 +34,7 @@
         ]
     },
     "elf": {
-        "ability-mods": {
+        "abilitymods": {
             "dex": 2
         },
         "speed": 30,
@@ -51,7 +51,7 @@
         ]
     },
     "high-elf": {
-        "ability-mods": {
+        "abilitymods": {
             "int": 1
         },
         "features": [
@@ -61,7 +61,7 @@
         ]
     },
     "wood-elf": {
-        "ability-mods": {
+        "abilitymods": {
             "wis": 1
         },
         "speed": 35,
@@ -71,7 +71,7 @@
         ]
     },
     "drow-elf": {
-        "ability-mods": {
+        "abilitymods": {
             "cha": 1
         },
         "speed": 35,
@@ -83,7 +83,7 @@
         ]
     },
     "halfling": {
-        "ability-mods": {
+        "abilitymods": {
             "dex": 2
         },
         "size": "small",
@@ -99,7 +99,7 @@
         ]
     },
     "lightfoot-halfling": {
-        "ability-mods": {
+        "abilitymods": {
             "cha": 1
         },
         "features": [
@@ -107,7 +107,7 @@
         ]
     },
     "stout-halfling": {
-        "ability-mods": {
+        "abilitymods": {
             "con": 1
         },
         "features": [
@@ -115,7 +115,7 @@
         ]
     },
     "human": {
-        "ability-mods": {
+        "abilitymods": {
             "all": 1
         },
         "size": "medium",
@@ -124,8 +124,8 @@
         "features": ["extra-language"]
     },
     "variant-human": {
-        "desc-file": "humand.md",
-        "ability-mods": {
+        "descfile": "human.md",
+        "abilitymods": {
             "choice": {
                 "count": 2,
                 "by": 1
@@ -140,7 +140,7 @@
         ]
     },
     "dragonborn": {
-        "ability-mods": {
+        "abilitymods": {
             "str": 2,
             "cha": 1
         },
@@ -155,7 +155,7 @@
         ]
     },
     "gnome": {
-        "ability-mods": {
+        "abilitymods": {
             "int": 2
         },
         "size": "small",
@@ -170,7 +170,7 @@
         ]
     },
     "forest-gnome": {
-        "ability-mods": {
+        "abilitymods": {
             "dex": 1
         },
         "features": [
@@ -179,7 +179,7 @@
         ]
     },
     "rock-gnome": {
-        "ability-mods": {
+        "abilitymods": {
             "con": 1
         },
         "features": [
@@ -188,7 +188,7 @@
         ]
     },
     "half-elf": {
-        "ability-mods": {
+        "abilitymods": {
             "cha": 1,
             "choice": {
                 "count": 2,
@@ -210,7 +210,7 @@
         ]
     },
     "half-orc": {
-        "ability-mods": {
+        "abilitymods": {
             "str": 2,
             "con": 1 
         },
@@ -228,7 +228,7 @@
         ]
     },
     "tiefling": {
-        "ability-mods": {
+        "abilitymods": {
             "int": 1,
             "cha": 2 
         },

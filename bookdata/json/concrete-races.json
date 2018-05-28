@@ -1,0 +1,17 @@
+{
+    "hill-dwarf": ["dwarf","hill-dwarf"],
+    "mountain-dwarf": ["dwarf", "mountain-dwarf"],
+    "high-elf": ["elf","high-elf"],
+    "woodelf": ["elf","wood-elf"],
+    "drow-elf": ["elf","drow-elf"],
+    "lightfoot-halfling": ["halfing", "lightfoot-halfling"],
+    "stout-halfling": ["halfling", "stout-halfling"],
+    "human": "human",
+    "variant-human": "variant-human",
+    "dragonborn": "dragonborn",
+    "forest-gnome": ["gnome","forest-gnome"],
+    "rock-gnome": ["gnome","rock-gnome"],
+    "half-elf": "half-elf",
+    "half-orc": "half-orc",
+    "tiefling": "tiefling"
+}
