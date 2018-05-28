@@ -1,0 +1,1 @@
+As a high elf, you have a keen mind and a mastery of at least the basics of magic. 

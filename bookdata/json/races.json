@@ -124,6 +124,7 @@
         "features": ["extra-language"]
     },
     "variant-human": {
+        "desc-file": "humand.md",
         "ability-mods": {
             "choice": {
                 "count": 2,
