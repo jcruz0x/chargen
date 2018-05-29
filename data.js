@@ -26,13 +26,14 @@ let abilityNames = [
     'charisma',
 ]
 
-// these need to be from database
+// testdata 
 let skills = [
     'acrobatics',
     'perception',
     'stealth',
 ]
 
+// testdata
 let classes = [
     'fighter',
     'cleric',
@@ -41,38 +42,84 @@ let classes = [
     'wizard'
 ]
 
-// let races = [
-//     'elf',
-//     'dwarf',
-//     'human',
-//     'halfling',
-// ]
-
 // -------------------------------------------------- 
 // Races
 // -------------------------------------------------- 
 
-let racejson = fs.readFileSync('bookdata/json/races.json', 'utf8');
-let races = JSON.parse(racejson);
+let raceDivTemplate = fs.readFileSync('web/desclist.mustache', 'utf8');
+
+let raceJson = fs.readFileSync('bookdata/json/races.json', 'utf8');
+let races = JSON.parse(raceJson);
+
+let racechoiceJson = fs.readFileSync('bookdata/json/concrete-races.json', 'utf8');
+let racechoices = JSON.parse(racechoiceJson);
 
 for (let keyname in races) {
     if (!races.hasOwnProperty(keyname))
         continue;
-    
+
     let race = races[keyname];
     race.fullname = util.keynameToFullname(keyname)
 
     let descfile = race.descfile || (keyname + ".md");
-    let desc = fs.readFileSync('bookdata/json/' + descfile, 'utf8');
+    let desc = fs.readFileSync('bookdata/md/' + descfile, 'utf8');
     race.htmlDesc = mdconverter.makeHtml(desc);
 }
 
 function getRaceChoiceView() {
+    let raceChoiceView = [];
+    for (let keyname in racechoices) {
+        if (!racechoices.hasOwnProperty(keyname))
+            continue;
 
+        let choice = {}; 
+        choice.raceval = keyname;
+        choice.racename = util.keynameToFullname(keyname);
+
+        raceChoiceView.push(choice);
+    }
+    return raceChoiceView;
+}
+
+function getRaceDivHtml(racechoice) {
+    let choice = racechoices[racechoice];
+    let html;
+
+    if (typeof choice === "string") {
+        html = renderRaceDivHtml(choice);
+    } else {
+        let mainrace = racechoices[racechoice][0];
+        let subrace = racechoices[racechoice][1];
+
+        html = renderRaceDivHtml(mainrace);
+        if (subrace !== undefined)
+            html += renderRaceDivHtml(subrace, 'Subrace: ');
+    }
+    return html;
+}
+
+function renderRaceDivHtml(race, prefix = '') {
+    let view = {}; 
+    view.title = prefix + races[race].fullname;
+    view.desc = races[race].htmlDesc;
+    view.items = [
+        {name: "foo: ", desc: "foozball"},
+        {name: "bar: ", desc: "barzabalam"},
+        {name: "baz: ", desc: "quuxoid"},
+    ]
+    
+    return mustache.render(raceDivTemplate, view);
 }
 
 function getRaceDivView() {
-
+    let view = [];
+    for (let racechoice in racechoices) {
+        if (!racechoices.hasOwnProperty(racechoice))
+            continue;
+        
+        view.push({name: racechoice, html: getRaceDivHtml(racechoice)});
+    }
+    return view;
 }
 
 
@@ -122,10 +169,10 @@ function getView() {
 
     view.abilities = getAbilityView();
     view.classes = getInputView('class', classes);
-    view.races = getInputView('race', races);
+    view.racechoices = getRaceChoiceView();
+    view.racedivs = getRaceDivView();
     view.skills = getInputView('skill', skills);
 
-    // console.log(view);
 
     return view;
 }

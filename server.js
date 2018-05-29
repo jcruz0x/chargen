@@ -23,9 +23,11 @@ let app = express();
 // --------------------------------------------------
 
 let WEB = path.join(__dirname, 'web');
-let STYLE = path.join(__dirname, 'style')
+let IMG = path.join(__dirname, 'img');
+let STATIC = path.join(__dirname, 'static')
 
-app.use('/style', express.static(STYLE));
+app.use('/static', express.static(STATIC));
+app.use('/img', express.static(IMG));
 
 app.get('/', (req, res) => {
     let view = data.getView(); 

@@ -8,7 +8,5 @@ gnomes tend to be friendly with other good-spirited
 woodland folk, and they regard elves and good fey as
 their most important allies. 
 
-These gnomes also befriend
-small forest animais and rely on them for information
-about threats that might prowl their lands.
-
+These gnomes also befriend small forest animals and rely on 
+them for information about threats that might prowl their lands. 

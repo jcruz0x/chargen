@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="static/style.css">
   </head>
   <body>
     <div id="container">
@@ -87,17 +87,21 @@
         <section>
           <h2 class="headline">Race</h2>
 
-          <select class="">
+          <img src="img/maleraces.png" alt="Image of Races" class="side-image" />
+
+          <select id="race-dropdown" class="">
             {{#racechoices}}
               <option value="{{raceval}}">{{racename}}</option>
             {{/racechoices}}
           </select>
 
           {{#racedivs}}
-          <div display="none">
-            {{racehtml}}
+          <div style="display: none" id="racediv-{{name}}">
+            {{{html}}}
           </div>
           {{/racedivs}}
+
+          <div class="clear">
         </section>
 
         <section>
@@ -141,5 +145,14 @@
 
       </footer>
     </div>
+
+    <script type="text/javascript" src="static/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="static/index.js"></script>
+
+    {{! <script>
+      var elfdiv = document.getElementById("racediv-wood-elf");
+      elfdiv.style = "display: block";
+    </script> }}
+
   </body>
 </html>

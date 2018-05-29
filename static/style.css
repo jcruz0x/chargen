@@ -16,6 +16,12 @@ body {
     font-size: 16pt;
 }
 
+.side-image {
+    width: 50%;
+    float: left;
+    margin: 30px;
+}
+
 @media screen and (max-width: 1100px) {
     #container {
         margin: auto;
@@ -23,12 +29,20 @@ body {
     body {
         background: white;
     }
-
+    .side-image {
+        margin: 20px;
+    }
 }
 
 @media screen and (max-width: 640px) {
     #container {
         font-size: 12pt;
+    }
+
+    .side-image {
+        box-sizing: border-box; 
+        width: 100%;
+        margin: 10px;
     }
 }
 
@@ -37,7 +51,13 @@ body {
         font-size: 10pt;
         padding: 10px;
     }
+
+    .side-image {
+        margin: 5px;
+    }
 }
+
+
 
 header {
     text-align: center;
