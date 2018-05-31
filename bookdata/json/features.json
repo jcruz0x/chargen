@@ -129,12 +129,24 @@
     },
     "draconic-ancestry": {
         "description":
-            "You have draconic ancestry. Your breath weapon and damage resistance are based on your chosen dragon type."
+            "You have draconic ancestry. Your breath weapon and damage resistance are based on your chosen dragon type.",
+        "types": [
+            {"dragon": "black",  "damage": "acid",      "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "blue",   "damage": "lightning", "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "brass",  "damage": "fire",      "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "bronze", "damage": "lightning", "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "copper", "damage": "acid",      "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "gold",   "damage": "fire",      "breath": "15 ft. cone (Dex. save)" },
+            {"dragon": "green",  "damage": "poision",   "breath": "15 ft. cone (Con. save)" },
+            {"dragon": "red",    "damage": "fire",      "breath": "15 ft. cone (Dex. save)" },
+            {"dragon": "silver", "damage": "cold",      "breath": "15 ft. cone (Con. save)" },
+            {"dragon": "white",  "damage": "cold",      "breath": "15 ft. cone (Con. save)" }
+        ]
     },
     "draconic-breath-weapon": {
         "fullname": "Breath Weapon",
         "description":
-            "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation."
+            "Your ancestry determines the shape and damage type. Targets must make a saving throw (based on your ancestry) with DC 8 + your constitution modifier + your prof. bonus, and takes 2d6 damage, or half as much on a successful save. Damage increases to 3d6 at 6th level, 4d6 at 11th, and 5d6 at 16th. Recharges after a short or long rest."
     },
     "draconic-damage-resistance": {
         "fullname": "Damage Resistance",

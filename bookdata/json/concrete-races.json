@@ -6,12 +6,12 @@
     "drow-elf": ["elf","drow-elf"],
     "lightfoot-halfling": ["halfling", "lightfoot-halfling"],
     "stout-halfling": ["halfling", "stout-halfling"],
-    "human": "human",
-    "variant-human": "variant-human",
-    "dragonborn": "dragonborn",
+    "human": ["human"],
+    "variant-human": ["variant-human"],
+    "dragonborn": ["dragonborn"],
     "forest-gnome": ["gnome","forest-gnome"],
     "rock-gnome": ["gnome","rock-gnome"],
-    "half-elf": "half-elf",
-    "half-orc": "half-orc",
-    "tiefling": "tiefling"
+    "half-elf": ["half-elf"],
+    "half-orc": ["half-orc"],
+    "tiefling": ["tiefling"]
 }

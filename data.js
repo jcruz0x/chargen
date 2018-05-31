@@ -8,25 +8,28 @@ let util = require('./util.js');
 
 let mdconverter = new showdown.Converter();
 
-let abilities = [
-    'str',
-    'dex',
-    'con',
-    'int',
-    'wis',
-    'cha',
-]
+let abilities = { 
+    'str': {
+        fullname: "Strength",
+    },
+    'dex': {
+        fullname: "Dexterity",
+    },
+    'con': {
+        fullname: "Constitution"
+    },
+    'int': {
+        fullname: "Intelligence"
+    },
+    'wis': {
+        fullname: "Wisdom"
+    },
+    'cha': {
+        fullname: "Charisma"
+    }
+}
 
-let abilityNames = [
-    'strength',
-    'dexterity',
-    'constitution',
-    'intelligence',
-    'wisdom',
-    'charisma',
-]
-
-// testdata 
+// testdata
 let skills = [
     'acrobatics',
     'perception',
@@ -43,6 +46,13 @@ let classes = [
 ]
 
 // -------------------------------------------------- 
+// Race and Class Features
+// -------------------------------------------------- 
+
+let featuresJson = fs.readFileSync('bookdata/json/features.json', 'utf8');
+let features = JSON.parse(featuresJson);
+
+// -------------------------------------------------- 
 // Races
 // -------------------------------------------------- 
 
@@ -54,16 +64,14 @@ let races = JSON.parse(raceJson);
 let racechoiceJson = fs.readFileSync('bookdata/json/concrete-races.json', 'utf8');
 let racechoices = JSON.parse(racechoiceJson);
 
-// race and class features
-let featuresJson = fs.readFileSync('bookdata/json/features.json', 'utf8');
-let features = JSON.parse(featuresJson);
+
 
 for (let keyname in races) {
     if (!races.hasOwnProperty(keyname))
         continue;
 
     let race = races[keyname];
-    race.fullname = util.keynameToFullname(keyname)
+    race.fullname = util.keynameToFullname(keyname);
 
     let descfile = race.descfile || (keyname + ".md");
     let desc = fs.readFileSync('bookdata/md/' + descfile, 'utf8');
@@ -86,17 +94,8 @@ function getRaceChoiceView() {
 }
 
 function getRaceDivHtml(racechoice) {
-    let choice = racechoices[racechoice];
+    let racenames = racechoices[racechoice];
 
-    if (typeof choice === "string") {
-        return renderRaceDivHtml([choice]);
-    } else {
-        return renderRaceDivHtml(choice);
-    }
-}
-
-// takes any number of races keyname strings as args
-function renderRaceDivHtml(racenames) {
     console.log("racenames in renderRaceDivHtml: ");
     console.log(racenames);
     let view = {}; 
@@ -129,8 +128,6 @@ function getRaceFeatureItems(racename) {
 function getBaseRaceFeatures(racenames) {
     items = [];
 
-    
-
 }
 
 function getRaceDivView() {
@@ -144,6 +141,11 @@ function getRaceDivView() {
     return view;
 }
 
+// -------------------------------------------------- 
+// Classes
+// -------------------------------------------------- 
+
+
 
 // -------------------------------------------------- 
 // Abilities
@@ -151,9 +153,12 @@ function getRaceDivView() {
 
 function getAbilityView() {
     let view = [];
-    for (let ability of abilities) {
+    for (let ability in abilities) {
+        if (!abilities.hasOwnProperty(ability))
+            continue;
+
         let attribs = {};
-        attribs.abilityname = util.capitalize(ability);
+        attribs.abilityname = abilities[ability].fullname;
         attribs.abilityid = ability;
 
         view.push(attribs);
@@ -175,7 +180,7 @@ function getInputView(prefix, items) {
     let name = prefix + "name";
 
     for (let item of items) {
-        let attribs = {}; 
+        let attribs = {};
         attribs[choice] = item + "-choice"
         attribs[val] = item;
         attribs[name] = util.capitalize(item);
@@ -193,7 +198,7 @@ function getView() {
     view.classes = getInputView('class', classes);
     view.racechoices = getRaceChoiceView();
     view.racedivs = getRaceDivView();
-    view.skills = getInputView('skill', skills);
+    view.skills = getInputView('skill', skills); 
 
 
     return view;
