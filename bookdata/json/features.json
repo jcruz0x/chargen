@@ -111,7 +111,7 @@
         "description":
             "You have advantage on saving throws against being frightened."
     },
-    "hafling-nimbleness": {
+    "halfling-nimbleness": {
         "description":
             "You can move through the space of any creature that is a size larger than yours."
     },
@@ -129,7 +129,17 @@
     },
     "draconic-ancestry": {
         "description":
-            "You have draconic ancestry. You gain a breath weapons and resistance based on your chosen dragon type."
+            "You have draconic ancestry. Your breath weapon and damage resistance are based on your chosen dragon type."
+    },
+    "draconic-breath-weapon": {
+        "fullname": "Breath Weapon",
+        "description":
+            "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation."
+    },
+    "draconic-damage-resistance": {
+        "fullname": "Damage Resistance",
+        "description":
+            "You have resistance to the damage type associated with your draconic ancestry."
     },
     "gnome-cunning": {
         "description":

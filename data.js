@@ -54,6 +54,10 @@ let races = JSON.parse(raceJson);
 let racechoiceJson = fs.readFileSync('bookdata/json/concrete-races.json', 'utf8');
 let racechoices = JSON.parse(racechoiceJson);
 
+// race and class features
+let featuresJson = fs.readFileSync('bookdata/json/features.json', 'utf8');
+let features = JSON.parse(featuresJson);
+
 for (let keyname in races) {
     if (!races.hasOwnProperty(keyname))
         continue;
@@ -83,32 +87,50 @@ function getRaceChoiceView() {
 
 function getRaceDivHtml(racechoice) {
     let choice = racechoices[racechoice];
-    let html;
 
     if (typeof choice === "string") {
-        html = renderRaceDivHtml(choice);
+        return renderRaceDivHtml([choice]);
     } else {
-        let mainrace = racechoices[racechoice][0];
-        let subrace = racechoices[racechoice][1];
-
-        html = renderRaceDivHtml(mainrace);
-        if (subrace !== undefined)
-            html += renderRaceDivHtml(subrace, 'Subrace: ');
+        return renderRaceDivHtml(choice);
     }
-    return html;
 }
 
-function renderRaceDivHtml(race, prefix = '') {
+// takes any number of races keyname strings as args
+function renderRaceDivHtml(racenames) {
+    console.log("racenames in renderRaceDivHtml: ");
+    console.log(racenames);
     let view = {}; 
-    view.title = prefix + races[race].fullname;
-    view.desc = races[race].htmlDesc;
-    view.items = [
-        {name: "foo: ", desc: "foozball"},
-        {name: "bar: ", desc: "barzabalam"},
-        {name: "baz: ", desc: "quuxoid"},
-    ]
-    
+    view.desc = "";
+    view.items = [];
+
+    for (let i = 0; i < racenames.length; i++) {
+        view.title = races[racenames[i]].fullname;
+        view.desc += races[racenames[i]].htmlDesc;
+        view.items = view.items.concat(getRaceFeatureItems(racenames[i]));
+    }
+
     return mustache.render(raceDivTemplate, view);
+}
+
+function getRaceFeatureItems(racename) {
+    let list = races[racename].features;
+    console.log(list);
+    let items = [];
+
+    for (let i = 0; i < list.length; i++) {
+        let feature = features[list[i]];
+        let name = feature.fullname || util.keynameToFullname(list[i]);
+        items.push({name: name, desc: feature.description});
+    }
+
+    return items;
+}
+
+function getBaseRaceFeatures(racenames) {
+    items = [];
+
+    
+
 }
 
 function getRaceDivView() {

@@ -151,7 +151,9 @@
             "draconic"
         ],
         "features": [
-            "draconic-ancestry"
+            "draconic-ancestry",
+            "draconic-breath-weapon",
+            "draconic-damage-resistance"
         ]
     },
     "gnome": {
