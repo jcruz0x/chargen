@@ -113,10 +113,28 @@ table {
     }
 }
 
+li {
+    padding-bottom: 15px;
+}
+
 table, th, td {
     /* border: 1px solid lightgrey; */
     border-collapse: collapse;
     text-align: center; 
+}
+
+.dragonborn-radio {
+    text-align: left;
+    padding-left: 30px;
+}
+
+caption {
+    font-size: 130%;
+}
+
+th {
+    font-weight: bold;
+    background-color: rgb(241, 241, 241);
 }
 
 .rolled-score {
@@ -156,7 +174,7 @@ table, th, td {
     cursor: -moz-grabbing;
 }
 
-tr:nth-child(even) {
+    tr:nth-child(even) {
     background-color: rgb(241, 241, 241);
 }
 

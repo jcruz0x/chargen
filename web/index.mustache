@@ -52,15 +52,15 @@
           </p>
 
           <div class="buttons-array">
-            <button>Roll For Stats</button>
-            <button>Use Standard Array</button>
+            <button id="abilities-roll-button">Roll For Abilities</button>
+            <button id="abilities-array-button">Use Standard Array</button>
           </div>
 
           <p>
           Then click and drag your rolls to the desired stat:
           </p>
 
-          <table>
+          <table class="stats-table">
             <thead>
               <tr>
                 <th>Ability</th>
@@ -74,7 +74,7 @@
             {{#abilities}}
               <tr>
                 <td>{{abilityname}}</td>
-                <td><div class="rolled-score grabbable" id="{{abilityid}}">10</div></td>
+                <td><div class="rolled-score grabbable" id="{{abilityid}}" draggable="true">10</div></td>
                 <td>--</td>
                 <td>10</td>
                 <td>+0</td>
@@ -101,17 +101,28 @@
           </div>
           {{/racedivs}}
 
-          <table style="display: none" id="draconic-bloodline">
-            <caption>"Draconic Bloodline"</caption>
-            {{#draconicbloodline}}
+          <table style="display: none" id="dragonborn-table">
+            <caption>Draconic Bloodline</caption>
+            <thead>
               <tr>
-                {{! radio button }}
-                {{! dragon type  }}
-                {{! damage type }}
-                {{! breath weapon shape }}
+                <th>Dragon Type</th>
+                <th>Damage Type</th>
+                <th>Breath Weapon</th>
               </tr>
-            {{/draconicbloodline}}
-          <table>
+            </thead>
+            <tbody>
+              {{#dragonborntable}}
+                  <tr>
+                    <td class="dragonborn-radio">
+                      <input type="radio" id="{{dragon}}-dragonborn-ancestry" name="dragonborn-ancestry" value="{{dragon}}">
+                      <label for="{{dragon}}-dragonborn-ancestry">{{dragonname}}</label>
+                    </td>
+                    <td>{{damage}}</td>
+                    <td>{{breath}}</td>
+                  </tr>
+              {{/dragonborntable}}
+            </tbody>
+          </table>
 
           <div class="clear"></div>
         </section>

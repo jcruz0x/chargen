@@ -9,9 +9,12 @@ function keynameToFullname(str) {
     return arr.join(' ');
 }
 
-
 function capitalize(str) {
     return str[0].toUpperCase() + str.substr(1);
+}
+
+function rolld(n) {
+    return Math.floor(Math.random() * n) + 1;
 }
 
 

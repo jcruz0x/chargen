@@ -154,6 +154,18 @@
             "draconic-ancestry",
             "draconic-damage-resistance",
             "draconic-breath-weapon"
+        ],
+        "bloodlines": [
+            {"dragon": "black",  "damage": "acid",      "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "blue",   "damage": "lightning", "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "brass",  "damage": "fire",      "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "bronze", "damage": "lightning", "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "copper", "damage": "acid",      "breath": "5 by 30 ft. line (Dex. save)" },
+            {"dragon": "gold",   "damage": "fire",      "breath": "15 ft. cone (Dex. save)" },
+            {"dragon": "green",  "damage": "poison",   "breath": "15 ft. cone (Con. save)" },
+            {"dragon": "red",    "damage": "fire",      "breath": "15 ft. cone (Dex. save)" },
+            {"dragon": "silver", "damage": "cold",      "breath": "15 ft. cone (Con. save)" },
+            {"dragon": "white",  "damage": "cold",      "breath": "15 ft. cone (Con. save)" }
         ]
     },
     "gnome": {

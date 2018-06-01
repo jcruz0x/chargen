@@ -6,44 +6,38 @@ let mustache = require('mustache');
 
 let util = require('./util.js');
 
-let mdconverter = new showdown.Converter();
+let markdownConverter = new showdown.Converter();
+
+// -------------------------------------------------- 
+// Abilities
+// -------------------------------------------------- 
 
 let abilities = { 
-    'str': {
-        fullname: "Strength",
-    },
-    'dex': {
-        fullname: "Dexterity",
-    },
-    'con': {
-        fullname: "Constitution"
-    },
-    'int': {
-        fullname: "Intelligence"
-    },
-    'wis': {
-        fullname: "Wisdom"
-    },
-    'cha': {
-        fullname: "Charisma"
-    }
+    'str': { fullname: "Strength", },
+    'dex': { fullname: "Dexterity", },
+    'con': { fullname: "Constitution" },
+    'int': { fullname: "Intelligence" },
+    'wis': { fullname: "Wisdom" },
+    'cha': { fullname: "Charisma" }
 }
 
-// testdata
-let skills = [
-    'acrobatics',
-    'perception',
-    'stealth',
-]
+function getAbilityView() {
+    let view = [];
+    for (let ability in abilities) {
+        if (!abilities.hasOwnProperty(ability))
+            continue;
 
-// testdata
-let classes = [
-    'fighter',
-    'cleric',
-    'barbarian',
-    'rouge',
-    'wizard'
-]
+        let attribs = {};
+        attribs.abilityname = abilities[ability].fullname;
+        attribs.abilityid = ability;
+
+        view.push(attribs);
+    }
+
+    return view;
+}
+
+
 
 // -------------------------------------------------- 
 // Race and Class Features
@@ -64,8 +58,6 @@ let races = JSON.parse(raceJson);
 let racechoiceJson = fs.readFileSync('bookdata/json/concrete-races.json', 'utf8');
 let racechoices = JSON.parse(racechoiceJson);
 
-
-
 for (let keyname in races) {
     if (!races.hasOwnProperty(keyname))
         continue;
@@ -75,7 +67,7 @@ for (let keyname in races) {
 
     let descfile = race.descfile || (keyname + ".md");
     let desc = fs.readFileSync('bookdata/md/' + descfile, 'utf8');
-    race.htmlDesc = mdconverter.makeHtml(desc);
+    race.htmlDesc = markdownConverter.makeHtml(desc);
 }
 
 function getRaceChoiceView() {
@@ -125,11 +117,6 @@ function getRaceFeatureItems(racename) {
     return items;
 }
 
-function getBaseRaceFeatures(racenames) {
-    items = [];
-
-}
-
 function getRaceDivView() {
     let view = [];
     for (let racechoice in racechoices) {
@@ -141,31 +128,42 @@ function getRaceDivView() {
     return view;
 }
 
+function getDragonbornTableView() {
+    let view = [];
+    for (let item of races['dragonborn'].bloodlines) {
+        view.push({
+            dragon: item.dragon,
+            dragonname: util.capitalize(item.dragon),
+            damage: util.capitalize(item.damage),
+            breath: item.breath,
+        });
+    }
+    return view;
+}
+
 // -------------------------------------------------- 
 // Classes
 // -------------------------------------------------- 
 
-
+// testdata
+let classes = [
+    'fighter',
+    'cleric',
+    'barbarian',
+    'rouge',
+    'wizard'
+]
 
 // -------------------------------------------------- 
-// Abilities
+// Skills
 // -------------------------------------------------- 
 
-function getAbilityView() {
-    let view = [];
-    for (let ability in abilities) {
-        if (!abilities.hasOwnProperty(ability))
-            continue;
-
-        let attribs = {};
-        attribs.abilityname = abilities[ability].fullname;
-        attribs.abilityid = ability;
-
-        view.push(attribs);
-    }
-
-    return view;
-}
+// testdata
+let skills = [
+    'acrobatics',
+    'perception',
+    'stealth',
+]
 
 // -------------------------------------------------- 
 // Other
@@ -195,11 +193,13 @@ function getView() {
     let view = {};
 
     view.abilities = getAbilityView();
-    view.classes = getInputView('class', classes);
     view.racechoices = getRaceChoiceView();
     view.racedivs = getRaceDivView();
+    view.dragonborntable = getDragonbornTableView();
+    
+    // temporary:
+    view.classes = getInputView('class', classes);
     view.skills = getInputView('skill', skills); 
-
 
     return view;
 }

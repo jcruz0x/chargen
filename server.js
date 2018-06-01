@@ -53,6 +53,6 @@ let ip = process.env.IP || 'localhost';
 
 console.log(`using port ${port} and ip ${ip}`);
 
-app.listen(port, ip);
+app.listen(port);
 console.log('listening');
 
