@@ -4,5 +4,5 @@ affable and get along well with others. In the Forgotten
 Realms, lightfoot halflings have spread the farthest and
 thus are the most common variety.
 Lightfoots are more prone to wanderlust than other
-halflings. and often dwell alongside other races or take
+halflings, and often dwell alongside other races or take
 up a nomadic life.

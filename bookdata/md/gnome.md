@@ -10,7 +10,7 @@ everything around.
 
 As far as gnomes are concerned, being alive is a
 wonderful thing, and they squeeze every ounce of
-enjoyment out of their three to tive centuries of life.
+enjoyment out of their three to five centuries of life.
 Though gnomes love jokes of all kinds, particularly
 puns and pranks, they're just as dedicated to the more
 serious tasks they undertake, Many gnomes are skilled

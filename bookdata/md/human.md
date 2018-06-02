@@ -9,7 +9,7 @@ but a human nation or culture preserves traditions
 with origins far beyond the reach of any single human's
 memory.
 
-A lot of humans have a dash of nonhuman blood. revealing hints of 
+A lot of humans have a dash of nonhuman blood, revealing hints of 
 elf, orc, or other lineages. Humans reach adulthood in their
 late teens and rarely live even a single century. 
 
