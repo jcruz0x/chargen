@@ -41,7 +41,6 @@ function rollAbility() {
     rolls.sort(function(a, b) { return b - a });
     rolls.pop()
     return rolls.reduce(function(total, n) { return total + n });
-    return ability;
 }
 
 function rollAllAbilities() {

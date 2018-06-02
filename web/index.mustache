@@ -13,14 +13,11 @@
             <span>HOME | MY CHARACTERS | SETTINGS</span>
           </div>
 
-          {{! <div id="titlebar-spacer"> </div> }}
-
           <div id="titlebar-login-section">
             <span id="logged-in-text">Logged in as guest</span>
             <span> ( login | sign up )</span>
           </div>
 
-          {{! <div id="clear"></div> }}
           <br>
           <br>
         <div>
@@ -29,25 +26,18 @@
           <h2 class="title">Dungeons &amp; Dragons</h2>
           <h3 class="subtitle">5th ed. Character Generator</h3>
         </div>
-        <!-- <h1 class="headline">Dungeons &amp; Dragons 5th ed. Character Generator</h1> -->
-        <!-- <h3 id="short-description">Character Generator</h3> -->
-        <!-- <hr> -->
         <br>
 
         <h2> Create A New Character </h2>
 
-        {{! <button>Create New Character</button>
-        <button>My Characters</button>                 
-
-        <br>
-        <br> }}
       </header>
       <main>
         <section>
           <h2 class="headline">Ability Scores</h2>
+
           <p>
-          Click the 'roll for stats' button to assign random values 
-          to your attribute scores, or the 'assign standard array' to
+          Click the 'roll for abilities' button to assign random values 
+          to your ability scores, or the 'assign standard array' to
           assign the standard array to your ability scores.
           </p>
 
@@ -57,7 +47,7 @@
           </div>
 
           <p>
-          Then click and drag your rolls to the desired stat:
+          Click and drag to rearrange your rolls, assigning them to your desired abilities:
           </p>
 
           <table class="stats-table">
@@ -129,8 +119,8 @@
 
         <section>
           <h2 class="headline">Class</h2>
-
           <div class="radio-boxes">
+
             <!-- {{!#classes}}
               <input type="radio" id="{{classchoice}}" name="class" value="{{classval}}"><label for="{{classchoice}}">{{classname}}</lable><br>
             {{!/classes}} -->
@@ -171,11 +161,6 @@
 
     <script type="text/javascript" src="static/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="static/index.js"></script>
-
-    {{! <script>
-      var elfdiv = document.getElementById("racediv-wood-elf");
-      elfdiv.style = "display: block";
-    </script> }}
 
   </body>
 </html>

@@ -94,6 +94,14 @@ function getRaceDivHtml(racechoice) {
     view.desc = "";
     view.items = [];
 
+    view.items.push(getRaceAbilityBonusItem(racenames));
+
+    let speedDesc = getRaceProperty(racenames, 'speed').toString();
+    view.items.push({name: 'Speed', desc: speedDesc});
+    
+    let sizeDesc = util.capitalize(getRaceProperty(racenames, 'size').toString()); 
+    view.items.push({name: 'Size', desc: sizeDesc});
+
     for (let i = 0; i < racenames.length; i++) {
         view.title = races[racenames[i]].fullname;
         view.desc += races[racenames[i]].htmlDesc;
@@ -101,6 +109,52 @@ function getRaceDivHtml(racechoice) {
     }
 
     return mustache.render(raceDivTemplate, view);
+}
+
+function getRaceProperty(racenames, propertyname) {
+    let result;
+    for (let i = 0; i < racenames.length; i++) {
+        let property = races[racenames[i]][propertyname];
+        if (property !== undefined)
+            result = property;
+    }
+    return result;
+}
+
+function getRaceBonuses(racenames) {
+    let bonuses = {};
+    for (let i = 0; i < racenames.length; i++) {
+        let race = races[racenames[i]];
+        bonuses = Object.assign(race.bonuses, bonuses);
+    }
+    return bonuses;
+}
+
+function getRaceAbilityBonusItem(racenames) {
+    let bonuses = getRaceBonuses(racenames);
+    let desc = [];
+    
+    for (let key in bonuses) {
+        if (!bonuses.hasOwnProperty(key))
+        continue;
+        
+        if (abilities.hasOwnProperty(key)) {
+            // desc.push(`${abilities[key].fullname} + ${bonuses[key]}.`);
+            desc.push(`+${bonuses[key]} to ${abilities[key].fullname}.`);
+            continue;
+        }
+        
+        if (key == 'all') {
+            desc.push('+1 to all ability scores.')
+            continue;
+        }
+
+        if (key == 'choice') {
+            desc.push(`+${bonuses[key].by} to ${bonuses[key].count} ability scores.`)
+        }
+    }
+
+    return {name: "Ability Score Bonuses", desc: desc.join(' ')};
 }
 
 function getRaceFeatureItems(racename) {
