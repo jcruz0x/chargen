@@ -88,8 +88,6 @@ function getRaceChoiceView() {
 function getRaceDivHtml(racechoice) {
     let racenames = racechoices[racechoice];
 
-    console.log("racenames in renderRaceDivHtml: ");
-    console.log(racenames);
     let view = {}; 
     view.desc = "";
     view.items = [];
@@ -139,7 +137,6 @@ function getRaceAbilityBonusItem(racenames) {
         continue;
         
         if (abilities.hasOwnProperty(key)) {
-            // desc.push(`${abilities[key].fullname} + ${bonuses[key]}.`);
             desc.push(`+${bonuses[key]} to ${abilities[key].fullname}.`);
             continue;
         }
@@ -159,7 +156,6 @@ function getRaceAbilityBonusItem(racenames) {
 
 function getRaceFeatureItems(racename) {
     let list = races[racename].features;
-    console.log(list);
     let items = [];
 
     for (let i = 0; i < list.length; i++) {
@@ -218,6 +214,9 @@ let skills = [
     'perception',
     'stealth',
 ]
+
+
+
 
 // -------------------------------------------------- 
 // Other

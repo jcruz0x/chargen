@@ -15,25 +15,29 @@ function newmodel() {
     }
 }
 
+// --------------------------------------------------
+// Misc / Util
+// --------------------------------------------------
+
+function rolld(n) {
+    return Math.floor(Math.random() * n) + 1;
+}
+
+function useDragAndDrop() {
+    if (('draggable' in document.createElement('div')) == false)
+        return false;
+    
+    console.log(navigator.userAgent);
+    if (navigator.userAgent.toLowerCase().indexOf('mobi') != -1)
+        return false;
+    
+    return true;
+}
 
 // --------------------------------------------------
 // Abilities
 // --------------------------------------------------
 
-function isAbility(id) {
-    for (var ability in model.abilities) {
-        if (!model.abilities.hasOwnProperty(ability))
-            continue;
-
-        if (id === ability)
-            return true;
-    }
-    return false;
-}
-
-function rolld(n) {
-    return Math.floor(Math.random() * n) + 1;
-}
 
 // 4d6, drop the lowest
 function rollAbility() {
@@ -91,14 +95,27 @@ function setupDraggableScores() {
                 return false;
             }
 
+            scorediv.ondragenter = function(event) {
+                event.preventDefault();
+                return false;
+            }
+
+            scorediv.ondragexit = function(event) {
+                event.preventDefault();
+                return false;
+            }
+
             scorediv.ondrop = function(event) {
                 var draggedAbility = event.dataTransfer.getData("text/plain");
-                if (!isAbility(draggedAbility) || draggedAbility === currentAbility)
+                if ((draggedAbility in model.abilities) == false || draggedAbility === currentAbility)
                     return true;
+
+
+                swapAbilityRolls(currentAbility, draggedAbility);
                     
-                var temp = model.abilities[currentAbility];
-                model.abilities[currentAbility] = model.abilities[draggedAbility];
-                model.abilities[draggedAbility] = temp;
+                // var temp = model.abilities[currentAbility];
+                // model.abilities[currentAbility] = model.abilities[draggedAbility];
+                // model.abilities[draggedAbility] = temp;
                 
                 event.preventDefault();
                 return false;
@@ -114,6 +131,53 @@ function setupDraggableScores() {
     }
 }
 
+function swapAbilityRolls(first, second) {
+    var temp = model.abilities[first];
+    model.abilities[first] = model.abilities[second];
+    model.abilities[second] = temp;
+}
+
+var swapAbility = null;
+
+function setupTapSwappableScores() {
+    for (var ability in model.abilities) {
+        if (!model.abilities.hasOwnProperty(ability))
+            continue;
+
+        (function() {
+            
+            var $scorediv = $("#" + ability);
+            var scorediv = $scorediv[0];
+            var currentAbility = ability; 
+
+            scorediv.classList.remove("grabbable");
+            scorediv.grabbable = false;
+
+            $scorediv.click(function() {
+                if (swapAbility === null) {
+                    swapAbility = currentAbility;                          
+                    scorediv.classList.add("scoreglow");
+                } else {
+                    swapAbilityRolls(currentAbility, swapAbility);
+                    updateAbilityHtml();
+                    $("#" + swapAbility)[0].classList.remove("scoreglow");
+                    swapAbility = null;
+                }
+            });
+        })();
+    }
+}
+
+function setupAbilityControls() {
+    if (useDragAndDrop()) {
+        setupDraggableScores();
+    }
+    else {
+        $("#ability-drag-drop-instructions").hide();
+        $("#ability-tap-swap-instructions").show();
+        setupTapSwappableScores();
+    }
+}
 
 
 // --------------------------------------------------
@@ -144,12 +208,9 @@ function selectrace() {
 
 function pageinit() {
     newmodel();
-    setupDraggableScores();
+    // setupDraggableScores();
+    setupAbilityControls();
     selectrace();
-}
-
-$('document').ready(function() {
-    pageinit();
 
     $('#race-dropdown').change(function() {
         selectrace();
@@ -164,4 +225,8 @@ $('document').ready(function() {
        abilityArrayFill();
        updateAbilityHtml();
     });
+}
+
+$('document').ready(function() {
+    pageinit();
 })
