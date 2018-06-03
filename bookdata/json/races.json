@@ -206,8 +206,7 @@
             "cha": 1,
             "choice": {
                 "count": 2,
-                "by": 1,
-                "except": ["cha"]
+                "by": 1
             }
         },
         "size": "medium",

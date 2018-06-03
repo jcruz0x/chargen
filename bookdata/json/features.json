@@ -159,9 +159,9 @@
     },
     "tinker": {
         "description":
-            "You have proficiency with artisan's tools, and with them can spend 1 hour and 10 gp worth of materials to construct a tiny clockwork device.",
+            "You have proficiency with tinkers tools, and with them can spend 1 hour and 10 gp worth of materials to construct a tiny clockwork device.",
         "proficiencies": [
-            "artisans-tools"
+            "tinkers-tools"
         ]
     },
     "skill-versatility": {

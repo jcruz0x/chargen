@@ -42,6 +42,10 @@ app.get('/', (req, res) => {
     })
 });
 
+app.get('/api/jsondata', (req, res) => {
+    res.send(data.joinedJson);
+});
+
 app.get('*', (req,res) => res.status(404).send('Error 404: Not found'));
 
 // --------------------------------------------------

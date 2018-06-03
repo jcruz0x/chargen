@@ -60,7 +60,7 @@
               <tr>
                 <th>Ability</th>
                 <th><b>Roll</b></th>
-                <th>+/-</th>
+                <th>Racial Bonuses</th>
                 <th>Score</th>
                 <th>Ability Modifier</th>
               </tr>
@@ -70,13 +70,39 @@
               <tr>
                 <td>{{abilityname}}</td>
                 <td><div class="rolled-score grabbable" id="{{abilityid}}" draggable="true">10</div></td>
-                <td>--</td>
-                <td>10</td>
-                <td>+0</td>
+                <td id="{{abilityid}}-bonus"> </td>
+                <td id="{{abilityid}}-final"> </td>
+                <td id="{{abilityid}}-modifier"> </td>
               </tr>
             {{/abilities}}
             </tbody>
           </table>
+
+          <div id="bonus-choice-dropdowns" style="display: none" class="centered"> 
+            <h4> Racial Ability Bonuses </h4>
+
+            <p id="half-elf-bonus-text"> 
+              As a half elf, you gain +1 to your charisma, 
+              and +1 to two other abilities of your choice. 
+            </p>
+
+            <p id="variant-human-bonus-text">
+              As a variant human, you gain +1 to two
+              abilities of your choice.
+            </p>
+
+            <select id="bonus-choice-primary">
+              {{#abilities}}
+                <option value="{{abilityid}}">{{abilityname}}</option>
+              {{/abilities}}
+            </select>
+            <select id="bonus-choice-secondary">
+              {{#abilities}}
+                <option value="{{abilityid}}">{{abilityname}}</option>
+              {{/abilities}}
+            </select>
+          </div>
+
         </section>
 
         <section>
@@ -118,6 +144,7 @@
               {{/dragonborntable}}
             </tbody>
           </table>
+
 
           <div class="clear"></div>
         </section>

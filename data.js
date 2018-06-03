@@ -38,7 +38,6 @@ function getAbilityView() {
 }
 
 
-
 // -------------------------------------------------- 
 // Race and Class Features
 // -------------------------------------------------- 
@@ -82,6 +81,7 @@ function getRaceChoiceView() {
 
         raceChoiceView.push(choice);
     }
+
     return raceChoiceView;
 }
 
@@ -215,9 +215,6 @@ let skills = [
     'stealth',
 ]
 
-
-
-
 // -------------------------------------------------- 
 // Other
 // -------------------------------------------------- 
@@ -257,4 +254,13 @@ function getView() {
     return view;
 }
 
+
+// -------------------------------------------------- 
+// Exports, data prep for ajax
+// -------------------------------------------------- 
+
+let joinedData = { races, racechoices, features };
+let joinedJson = JSON.stringify(joinedData);
+
 exports.getView = getView;
+exports.joinedJson = joinedJson;
