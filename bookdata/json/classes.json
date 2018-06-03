@@ -1,0 +1,288 @@
+{
+    "Barbarian": {
+        "hitdie": 12,
+        "armorprof": [
+            "light-armor",
+            "medium-armor",
+            "shields"
+        ],
+        "weaponprof": [
+            "simple-weapons",
+            "martial-weapons"
+        ],
+        "tools": [],
+        "savingthrows": [
+            "str",
+            "con"
+        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "animal-handling",
+                "athletics",
+                "intimidation",
+                "nature",
+                "perception",
+                "survival"
+            ] 
+        },
+        "features": [
+            "rage",
+            "unarmored-defense"
+        ],
+        "gold": 50
+    },
+    "Bard": {
+        "hitdie": 8,
+        "armorprof": [
+            "light-armor"
+        ],
+        "weaponprof": [
+            "simple-weapons",
+            "hand-crossbow",
+            "longsword",
+            "rapier",
+            "shortsword"
+        ],
+        "tools": {
+            "choose": 3,
+            "from": [
+                "musical-instrument",
+            ]
+        },
+        "savingthrows": [
+            "dex","cha"
+        ],
+        "skills": {
+            "count": 3,
+            "from": "all"
+        },
+        "features": [
+            "bardic-spellcasting",
+            "bardic-inspiration"
+        ],
+        "spells-known": [2,4],
+        
+        "gold": 50
+    },
+    "Cleric": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Druid": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Fighter": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Monk": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Paladin": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Ranger": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Rouge": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Sorcerer": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Warlock": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    },
+    "Wizard": {
+        "hitdie": 12,
+        "armorprof": [
+
+        ],
+        "weaponprof": [
+
+        ],
+        "tools": [
+
+        ],
+        "savingthrows": [
+
+        ],
+        "skills": [
+
+        ],
+        "features": [
+
+        ],
+        "gold": 50
+    }
+}
