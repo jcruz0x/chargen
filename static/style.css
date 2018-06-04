@@ -82,7 +82,7 @@ header {
     /* margin-left: auto; */
 }
 
-#clear {
+.clear {
     clear: both;
 }
 
