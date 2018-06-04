@@ -190,5 +190,109 @@
     "infernal-legacy": {
         "description":
             "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spclls" 
-    } 
+    },
+    "rage": {
+        "description":
+            "You can enter a rage as a bonus action, allowing you advantage on strength checks and saving throws, extra damage, and resistance to damage. See the Players Handbook for complete rules."
+    },
+    "unarmored-defense": {
+        "description":
+            "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+    },
+    "bardic-spellcasting": {
+        "fullname":
+            "Spellcasting",
+        "description":
+            "You have learned to untangle and reshape the fabric of reality in harmony with your wishes and music. See the Players Handbook for full rules on Bardic Spellcasting."
+    },
+    "bardic-inspiration": {
+        "description":
+            "You can inspire others within 60 feet through stirring words or music. They gain a d6. Once, within 10 minutes, they can roll the die and add the number to an ability check, attack roll, or saving throw. A creature can only have on bardic inpiration die at a time."
+    },
+    "cleric-spellcasting": {
+        "fullname":
+            "Spellcasting",
+        "description":
+            "As a conduit for divine power,k you can cast cleric spells. See the Players Handbook for full rules on Cleric Spellcasting."
+    },
+    "divine-domain": {
+        "description":
+            "Your choice of a domain associated with your deity grants you domain spells and other features."
+    },
+    "druidic": {
+        "description":
+            "You know druidic, the secret language of druids."
+    },
+    "druidic-spellcasting": {
+        "description":
+            "Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will. See the Players Handbook for full rules on Druid Spellcasting."
+    },
+    "fighting-style": {
+        "description":
+            "You adopt a particular style of fighting as your specialty, chosen from Archery, Defense, Dueling, Great Weapon Fighting, Protection, or Two-Weapon Fighting."
+    },
+    "second-wind": {
+        "description":
+            "On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. You must finish a short or long rest to use this ability again."
+    },
+    "martial-arts": {
+        "description":
+            "You gain extra benefits when using unarmed strikes or monk weapons, such as extra attacks or the use of dexterity instead of strength for attacks. See the Players Handbook for the full rules on Martial Arts."
+    },
+    "divine-sense": {
+        "description":
+            "You can use your divine sense to detect celestials, fiends, or undead, or whether a place or object has been consecrated or desecrated. See Players Handbook for full rules."
+    },
+    "lay-on-hands": {
+        "description":
+            "You have a pool of healing points equal to your paladin level times 5, which you can use to heal creatures you touch as an action. See the Players Handbook for the full rules."
+    },
+    "favoured-enemy": {
+        "description":
+            "You can choose a type of favored enemy. You have advantage on Wisdom (Survival) checks to track your favored enemy, as well as on intelligence checks to recall information about them. You also learn one language of your choice that is spoken by your favored enemies, if they speak one."
+    },
+    "natural-explorer": {
+        "description":
+            "You can choose a type of natural environment you are adept at traveling and surviving in. You gain various advantages in these kinds of terrains. See the Players Handbook for full rules."
+    },
+    "expertise": {
+        "description":
+            "Choose two skill proficiencies (or proficiency with theives tools and a skill proficiency.) Your proficiency bonus is doubled for these ability checks."
+    },
+    "thieves-cant": {
+        "description":
+            "You know thieves cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation."
+    },
+    "sneak-attack": {
+        "description":
+            "Once per turn, you deal an extra 1d6 damage to a creature you hit with advantage on the attack roll. You must use a finesse or ranged weapon. You don't need advantage on the attack if an ally is within 5 feet of the target and you don't have disadvantage on the attack roll. The extra damage increases as you level, per the Sneak Attack column of the Rouge table."
+    },
+    "sorcerous-spellcasting": {
+        "fullname":
+            "Spellcasting",
+        "description":
+            "You are infused with arcane magic. See the Players Handbook for full rules on Sorcerer Spellcasting."
+    },
+    "sorcerous-origin": {
+        "description":
+            "You must choose a sorcerous origin, which describes the source of your innate magical power: Draconic Bloodline, or Wild Magic."
+    },
+    "otherworldy-patron": {
+        "description":
+            "You have struct a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One. Your choice grants you special features."
+    },
+    "pact-magic": {
+        "description":
+            "Your arcane research and the magic bestowed on you by your patron have given you facility with spells. See the Players Handbook for full rules on Pact Magic."
+    },
+    "wizard-spellcasting": {
+        "fullname":
+            "Spellcasting",
+        "description":
+            "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power. See the Players Handbooks for full rules on Wizard Spellcasting."
+    },
+    "arcane-recovery": {
+        "description":
+            "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose to recover expended spell slots that have a combined level less than or equal to half your wizard level, rounded up. None of the slots can be 6th level or higher."
+    }
 }

@@ -1,5 +1,5 @@
 {
-    "Barbarian": {
+    "barbarian": {
         "hitdie": 12,
         "armorprof": [
             "light-armor",
@@ -10,7 +10,6 @@
             "simple-weapons",
             "martial-weapons"
         ],
-        "tools": [],
         "savingthrows": [
             "str",
             "con"
@@ -32,7 +31,7 @@
         ],
         "gold": 50
     },
-    "Bard": {
+    "bard": {
         "hitdie": 8,
         "armorprof": [
             "light-armor"
@@ -45,9 +44,9 @@
             "shortsword"
         ],
         "tools": {
-            "choose": 3,
+            "count": 3,
             "from": [
-                "musical-instrument",
+                "musical-instrument"
             ]
         },
         "savingthrows": [
@@ -61,228 +60,354 @@
             "bardic-spellcasting",
             "bardic-inspiration"
         ],
-        "spells-known": [2,4],
-        
-        "gold": 50
+        "cantrips": 2,
+        "spellsknown": 4,
+        "spellslots": 2,
+        "gold": 125
     },
-    "Cleric": {
-        "hitdie": 12,
+    "cleric": {
+        "hitdie": 8,
         "armorprof": [
-
+            "light-armor",
+            "medium-armor",
+            "shields"
         ],
         "weaponprof": [
-
-        ],
-        "tools": [
-
+            "simple-weapons"
         ],
         "savingthrows": [
-
+            "wis","cha"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "history",
+                "insight",
+                "medicine",
+                "persuasion",
+                "religion"
+            ]
+        },
         "features": [
-
+            "cleric-spellcasting",
+            "divine-domain"
         ],
-        "gold": 50
+        "cantrips": 3,
+        "spellslots": 2,
+        "gold": 125
     },
-    "Druid": {
-        "hitdie": 12,
+    "druid": {
+        "hitdie": 8,
         "armorprof": [
-
+            "light-armor",
+            "medium-armor",
+            "shields"
         ],
         "weaponprof": [
-
+            "club",
+            "dagger",
+            "dart",
+            "javelin",
+            "mace",
+            "quarterstaff",
+            "scimitar",
+            "sickle",
+            "sling",
+            "spear"
         ],
         "tools": [
-
+            "herbalism-kit"
         ],
         "savingthrows": [
-
+            "int","wis"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "arcana",
+                "animal-handling",
+                "insight",
+                "medicine",
+                "nature",
+                "perception",
+                "religion",
+                "survival"
+            ]
+        },
         "features": [
-
+            "druidic",
+            "druidic-spellcasting"
         ],
+        "cantrips": 2,
+        "slots": 2,
         "gold": 50
     },
-    "Fighter": {
-        "hitdie": 12,
+    "fighter": {
+        "hitdie": 10,
         "armorprof": [
-
+            "light-armor",
+            "medium-armor",
+            "heavy-armor",
+            "shields"
         ],
         "weaponprof": [
-
-        ],
-        "tools": [
-
+            "simple-weapons",
+            "martial-weapons"
         ],
         "savingthrows": [
-
+            "str","con"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "acrobatics",
+                "animal-handling",
+                "athletics",
+                "history",
+                "insight",
+                "intimidation",
+                "perception",
+                "survival"
+            ]
+        },
         "features": [
-
+            "fighting-style",
+            "second-wind"
         ],
-        "gold": 50
+        "gold": 125
     },
-    "Monk": {
-        "hitdie": 12,
-        "armorprof": [
-
-        ],
+    "monk": {
+        "hitdie": 8,
+        "armorprof": [ ],
         "weaponprof": [
-
+            "simple-weapons",
+            "shortsword"
         ],
-        "tools": [
-
-        ],
+        "tools": {
+            "count": 1,
+            "from": [
+                "musical-instrument",
+                "artisans-tools"
+            ]
+        },
         "savingthrows": [
-
+            "str","dex"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "acrobatics",
+                "athletics",
+                "history",
+                "insight",
+                "religion",
+                "stealth"
+            ]
+        },
         "features": [
-
+            "unarmored-defense",
+            "martial-arts"
         ],
-        "gold": 50
+        "gold": 27
     },
-    "Paladin": {
-        "hitdie": 12,
+    "paladin": {
+        "hitdie": 10,
         "armorprof": [
-
+            "light-armor",
+            "medium-armor",
+            "heavy-armor",
+            "shields"
         ],
         "weaponprof": [
-
-        ],
-        "tools": [
-
+            "simple-weapons",
+            "martial-weapons"
         ],
         "savingthrows": [
-
+            "wis","cha"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "athletics",
+                "insight",
+                "intimidation",
+                "medicine",
+                "persuasion",
+                "religion"
+            ]
+        },
         "features": [
-
+            "divine-sense",
+            "lay-on-hands"
         ],
-        "gold": 50
+        "gold": 125
     },
-    "Ranger": {
-        "hitdie": 12,
+    "ranger": {
+        "hitdie": 10,
         "armorprof": [
-
+            "light-armor",
+            "medium-armor",
+            "shields"
         ],
         "weaponprof": [
-
-        ],
-        "tools": [
-
+            "simple-weapons",
+            "martial-weapons"
         ],
         "savingthrows": [
-
+            "str","dex"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 3,
+            "from": [
+                "animal-handling",
+                "athletics",
+                "insight",
+                "investigation",
+                "nature",
+                "perception",
+                "stealth",
+                "survival"
+            ]
+        },
         "features": [
-
+            "favored-enemy",
+            "natural-explorer"
         ],
-        "gold": 50
+        "gold": 125
     },
-    "Rouge": {
-        "hitdie": 12,
+    "rouge": {
+        "hitdie": 8,
         "armorprof": [
-
+            "light-armor"
         ],
         "weaponprof": [
-
+            "simple-weapons",
+            "hand-crossbow",
+            "longsword",
+            "rapier",
+            "shortsword"
         ],
         "tools": [
-
+            "thieves-tools"
         ],
         "savingthrows": [
-
+            "dex","int"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 4,
+            "from": [
+                "acrobatics",
+                "athletics",
+                "deception",
+                "insight",
+                "intimidation",
+                "investigation",
+                "perception",
+                "performance",
+                "persuasion",
+                "sleight-of-hand",
+                "stealth"
+            ]
+        },
         "features": [
-
+            "expertise",
+            "sneak-attack",
+            "thieves-cant"
         ],
-        "gold": 50
+        "gold": 100
     },
-    "Sorcerer": {
-        "hitdie": 12,
-        "armorprof": [
-
-        ],
+    "sorcerer": {
+        "hitdie": 6,
+        "armorprof": [ ],
         "weaponprof": [
-
-        ],
-        "tools": [
-
+            "dagger",
+            "dart",
+            "sling",
+            "quarterstaff",
+            "light-crossbow"
         ],
         "savingthrows": [
-
+            "con","cha"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "arcana",
+                "deception",
+                "insight",
+                "intimidation",
+                "persuasion",
+                "religion" 
+            ]
+        },
         "features": [
-
+            "sorcerer-spellcasting",
+            "sorcerous-origin"
         ],
-        "gold": 50
+        "gold": 75
     },
-    "Warlock": {
-        "hitdie": 12,
+    "warlock": {
+        "hitdie": 8,
         "armorprof": [
-
+            "light-armor"
         ],
         "weaponprof": [
-
-        ],
-        "tools": [
-
+            "simple-weapons"
         ],
         "savingthrows": [
-
+            "wis","cha"
         ],
-        "skills": [
-
-        ],
+        "skills": {
+            "count": 2,
+            "from": [
+                "arcana",
+                "deception",
+                "history",
+                "intimidation",
+                "investigation",
+                "nature",
+                "religion"
+            ]
+        },
         "features": [
-
+            "otherworldy-patron",
+            "pact-magic"
         ],
-        "gold": 50
+        "cantrips": 2,
+        "spellsknown": 2,
+        "spellslots": 1,
+        "gold": 100
     },
     "Wizard": {
-        "hitdie": 12,
-        "armorprof": [
-
-        ],
+        "hitdie": 6,
+        "armorprof": [ ],
         "weaponprof": [
-
-        ],
-        "tools": [
-
+            "dagger",
+            "dart",
+            "sling",
+            "quarterstaff",
+            "light-crossbow"
         ],
         "savingthrows": [
-
+            "int", "wis"
         ],
-        "skills": [
-
-        ],
+        "skills": { 
+            "count": 1,
+            "from": [
+                "arcana",
+                "history",
+                "insight",
+                "investigation",
+                "medicine",
+                "religion"
+            ] 
+        },
         "features": [
-
+            "wizard-spellcasting",
+            "arcane-recovery"
         ],
-        "gold": 50
+        "cantrips": 3,
+        "spellslots": 2,
+        "gold": 100
     }
 }
