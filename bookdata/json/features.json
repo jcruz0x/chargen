@@ -195,9 +195,17 @@
         "description":
             "You can enter a rage as a bonus action, allowing you advantage on strength checks and saving throws, extra damage, and resistance to damage. See the Players Handbook for complete rules."
     },
-    "unarmored-defense": {
+    "barbarian-unarmored-defense": {
+        "fullname":
+            "Unarmored Defense",
         "description":
             "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+    },
+    "monk-unarmored-defense": {
+        "fullname":
+            "Unarmored Defense",
+        "description":
+            "While you are wearing no armor and not using a shield, your Armor Class equals 10 + your Dexterity modifier + your Wisdom modifier."
     },
     "bardic-spellcasting": {
         "fullname":
