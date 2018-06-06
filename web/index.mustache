@@ -32,6 +32,9 @@
 
       </header>
       <main>
+
+        <!-- ABILITIES SECTION -->
+
         <section>
           <h2 class="headline">Ability Scores</h2>
 
@@ -78,32 +81,10 @@
             </tbody>
           </table>
 
-          <div id="bonus-choice-dropdowns" style="display: none" class="centered"> 
-            <h4> Racial Ability Bonuses </h4>
-
-            <p id="half-elf-bonus-text"> 
-              As a half elf, you gain +1 to your charisma, 
-              and +1 to two other abilities of your choice. 
-            </p>
-
-            <p id="variant-human-bonus-text">
-              As a variant human, you gain +1 to two
-              abilities of your choice.
-            </p>
-
-            <select id="bonus-choice-primary">
-              {{#abilities}}
-                <option value="{{abilityid}}">{{abilityname}}</option>
-              {{/abilities}}
-            </select>
-            <select id="bonus-choice-secondary">
-              {{#abilities}}
-                <option value="{{abilityid}}">{{abilityname}}</option>
-              {{/abilities}}
-            </select>
-          </div>
 
         </section>
+
+        <!-- RACE SECTION -->
 
         <section>
           <h2 class="headline">Race</h2>
@@ -134,7 +115,7 @@
             <tbody>
               {{#dragonborntable}}
                   <tr>
-                    <td class="dragonborn-radio">
+                    <td class="table-radio">
                       <input type="radio" id="{{dragon}}-dragonborn-ancestry" name="dragonborn-ancestry" value="{{dragon}}">
                       <label for="{{dragon}}-dragonborn-ancestry">{{dragonname}}</label>
                     </td>
@@ -145,30 +126,78 @@
             </tbody>
           </table>
 
+          <div id="bonus-choice-dropdowns" style="display: none" class="centered"> 
+            <h4> Racial Ability Bonuses </h4>
 
-          <div class="clear"></div>
-        </section>
+            <p id="half-elf-bonus-text"> 
+              As a half elf, you gain +1 to your charisma, 
+              and +1 to two other abilities of your choice. 
+            </p>
 
-        <section>
-          <h2 class="headline">Class</h2>
-          <div class="radio-boxes">
+            <p id="variant-human-bonus-text">
+              As a variant human, you gain +1 to two
+              abilities of your choice.
+            </p>
 
-          <img src="img/chars.png" alt="Image of Various Adventurers" class="side-image" />
-
-            <!-- {{!#classes}}
-              <input type="radio" id="{{classchoice}}" name="class" value="{{classval}}"><label for="{{classchoice}}">{{classname}}</lable><br>
-            {{!/classes}} -->
-
-            <select>
-              {{#classes}}
-                <option value="{{classval}}">{{classname}}</option>
-              {{/classes}}
+            <select id="bonus-choice-primary">
+              {{#abilities}}
+                <option value="{{abilityid}}">{{abilityname}}</option>
+              {{/abilities}}
+            </select>
+            <select id="bonus-choice-secondary">
+              {{#abilities}}
+                <option value="{{abilityid}}">{{abilityname}}</option>
+              {{/abilities}}
             </select>
           </div>
 
           <div class="clear"></div>
-
         </section>
+
+        <!-- CLASS SECTION -->
+
+        <section>
+          <h2 class="headline">Class</h2>
+
+          <img src="img/chars.png" alt="Image of Various Adventurers" class="side-image" />
+
+          <select id="class-dropdown">
+            {{#classes}}
+              <option value="{{name}}">{{fullname}}</option>
+            {{/classes}}
+          </select>
+
+          {{#classes}}
+          <div style="display: none" id="classdiv-{{name}}">
+            {{{html}}}
+          </div>
+          {{/classes}}
+
+          <table style="display: none" id="sorcerous-origin-table">
+            <caption>Sorcerous Origin</caption>
+            <thead>
+              <tr>
+                <th>Dragon Type</th>
+                <th>Damage Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#dragonborntable}}
+                  <tr>
+                    <td class="table-radio">
+                      <input type="radio" id="{{dragon}}-sorcerous-origin" name="sorcerous-origin" value="{{dragon}}">
+                      <label for="{{dragon}}-sorcerous-origin">{{dragonname}}</label>
+                    </td>
+                    <td>{{damage}}</td>
+                  </tr>
+              {{/dragonborntable}}
+            </tbody>
+          </table>
+
+          <div class="clear"></div>
+        </section>
+
+        <!-- BACKGROUND SECTION -->
 
         <section>
           <h2 class="headline">Background</h2>
@@ -183,9 +212,13 @@
           </div>
         </section>
 
+        <!-- DESCRIPTION SECTION -->
+
         <section>
           <h2 class="headline">Description</h2>
         </section>
+
+        <!-- SUMMARY SECTION -->
 
         <section>
           <h2 class="headline">Summary</h2>

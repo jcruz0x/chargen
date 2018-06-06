@@ -189,7 +189,7 @@
     },
     "infernal-legacy": {
         "description":
-            "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spclls" 
+            "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells." 
     },
     "rage": {
         "description":
@@ -255,7 +255,7 @@
         "description":
             "You have a pool of healing points equal to your paladin level times 5, which you can use to heal creatures you touch as an action. See the Players Handbook for the full rules."
     },
-    "favoured-enemy": {
+    "favored-enemy": {
         "description":
             "You can choose a type of favored enemy. You have advantage on Wisdom (Survival) checks to track your favored enemy, as well as on intelligence checks to recall information about them. You also learn one language of your choice that is spoken by your favored enemies, if they speak one."
     },
@@ -265,7 +265,7 @@
     },
     "expertise": {
         "description":
-            "Choose two skill proficiencies (or proficiency with theives tools and a skill proficiency.) Your proficiency bonus is doubled for these ability checks."
+            "Choose two skill proficiencies (or proficiency with theives tools and a skill proficiency.) Your proficiency bonus is doubled for these ability checks. At 6th level you may choose two more proficiencies (in skills or with theives tools) to gain this benefit."
     },
     "thieves-cant": {
         "description":
@@ -275,7 +275,7 @@
         "description":
             "Once per turn, you deal an extra 1d6 damage to a creature you hit with advantage on the attack roll. You must use a finesse or ranged weapon. You don't need advantage on the attack if an ally is within 5 feet of the target and you don't have disadvantage on the attack roll. The extra damage increases as you level, per the Sneak Attack column of the Rouge table."
     },
-    "sorcerous-spellcasting": {
+    "sorcerer-spellcasting": {
         "fullname":
             "Spellcasting",
         "description":
@@ -287,7 +287,7 @@
     },
     "otherworldy-patron": {
         "description":
-            "You have struct a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One. Your choice grants you special features."
+            "You have struck a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One. Your choice grants you special features."
     },
     "pact-magic": {
         "description":

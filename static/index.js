@@ -4,11 +4,13 @@
 // --------------------------------------------------
 
 currentRaceSelector = null;
+currentClassSelector = null;
 var model;
 
 function newmodel() {
     model = {};
-    model.raceval = $('#race-dropdown').val();
+    model.raceval = 'human';
+    model.classval = 'fighter';
     model.abilities = {
         str: 10, dex: 10, con: 10, 
         int: 10, wis: 10, cha: 10
@@ -279,10 +281,12 @@ function selectrace(changeto) {
     $(newRaceSelector).show();
     currentRaceSelector = newRaceSelector;
 
-    if (raceval == 'dragonborn')
-        $('#dragonborn-table').show();
-    else
-        $('#dragonborn-table').hide();
+    // if (raceval == 'dragonborn')
+    //     $('#dragonborn-table').show();
+    // else
+    //     $('#dragonborn-table').hide();
+
+    conditionallyShow('#dragonborn-table', raceval === 'dragonborn');
 
     if (raceval == 'variant-human') {
         $('#bonus-choice-dropdowns').show();
@@ -306,16 +310,50 @@ function selectrace(changeto) {
 }
 
 // --------------------------------------------------
+// Class
+// --------------------------------------------------
+
+function selectclass(changeto) {
+    if (currentClassSelector !== null)
+        $(currentClassSelector).hide();
+
+    if (changeto !== undefined)
+        $('#class-dropdown').val(changeto);
+
+    var classval = $('#class-dropdown').val();
+    model.classval = classval;
+
+    var newClassSelector = '#classdiv-' + classval;
+    $(newClassSelector).show();
+    currentClassSelector = newClassSelector;
+
+    conditionallyShow('#sorcerous-origin-table', classval === 'sorcerer');
+}
+
+
+// --------------------------------------------------
 // Page
 // --------------------------------------------------
+
+function conditionallyShow(selector, truthval) {
+    if (truthval)
+        $(selector).show();
+    else
+        $(selector).hide();
+}
 
 function pageinit() {
     newmodel();
     setupAbilityControls();
-    selectrace('human');
+    selectrace(model.raceval);
+    selectclass(model.classval);
 
     $('#race-dropdown').change(function() {
         selectrace();
+    })
+
+    $('#class-dropdown').change(function() {
+        selectclass();
     })
 
     $('#abilities-roll-button').click(function() {
@@ -335,6 +373,8 @@ function pageinit() {
     $('#bonus-choice-secondary').change(function() {
         updateAbilities();
     })
+
+    // $('#classdiv-fighter').show();
 }
 
 var bookdata;

@@ -49,7 +49,7 @@ let features = JSON.parse(featuresJson);
 // Races
 // -------------------------------------------------- 
 
-let raceDivTemplate = fs.readFileSync('web/desclist.mustache', 'utf8');
+let desclistTemplate = fs.readFileSync('web/desclist.mustache', 'utf8');
 
 let raceJson = fs.readFileSync('bookdata/json/races.json', 'utf8');
 let races = JSON.parse(raceJson);
@@ -106,7 +106,7 @@ function getRaceDivHtml(racechoice) {
         view.items = view.items.concat(getRaceFeatureItems(racenames[i]));
     }
 
-    return mustache.render(raceDivTemplate, view);
+    return mustache.render(desclistTemplate, view);
 }
 
 function getRaceProperty(racenames, propertyname) {
@@ -195,14 +195,139 @@ function getDragonbornTableView() {
 // Classes
 // -------------------------------------------------- 
 
-// testdata
-let classes = [
-    'fighter',
-    'cleric',
-    'barbarian',
-    'rouge',
-    'wizard'
-]
+let classJson = fs.readFileSync('bookdata/json/classes.json', 'utf8');
+let classes = JSON.parse(classJson);
+
+for (let keyname in classes) {
+    if (!classes.hasOwnProperty(keyname))
+        continue;
+
+    let charclass = classes[keyname];
+    charclass.fullname = util.keynameToFullname(keyname);
+
+    let desc = fs.readFileSync(`bookdata/md/${keyname}.md`, 'utf8');
+    charclass.htmlDesc = markdownConverter.makeHtml(desc);
+}
+
+function appendHitDieFeatures(charclass, items) {
+    items.push({
+        name: "Hit Dice",
+        desc: `1d${charclass.hitdie} per ${charclass.fullname} level.`
+    });
+    items.push({
+        name: "Hit Points At First Level",
+        desc: `${charclass.hitdie} + your constitution modifier,`
+    });
+
+    let halfdie = (charclass.hitdie / 2) + 1;
+    items.push({
+        name: "Hit Points At Higher Levels",
+        desc: `1d${charclass.hitdie} (or ${halfdie}) + 
+            your constitution modifier per ${charclass.fullname} 
+            level after the first.`
+    });
+}
+
+function joinFullnames(keynames) {
+    if (keynames.length == 0)
+        return "None";
+
+    let fullnames = [];
+    for (let i = 0; i < keynames.length; i++)
+        fullnames.push(util.keynameToFullname(keynames[i]));
+    return fullnames.join(", ");
+}
+
+
+function getSavingThrowsDesc(throws) {
+    let fullnames = [];
+    for (let i = 0; i < throws.length; i++) 
+        fullnames.push(abilities[throws[i]].fullname)
+    return fullnames.join(", ") + ".";
+}
+
+function getSkillsDesc(skillchoices) {
+    if (skillchoices.from == 'all')
+        return `Choose ${skillchoices.count} skills.`;
+
+    let fromlist = joinFullnames(skillchoices.from);
+    return `Choose ${skillchoices.count} from ${fromlist}.`;
+}
+
+function getToolDesc(tools) {
+    if (tools == undefined)
+        return "None.";
+    else if (Array.isArray(tools))
+        return joinFullnames(tools) + ".";
+    else
+        return getSkillsDesc(tools);
+}
+
+function getGoldDesc(charclass) {
+    return `${charclass.gold}gp.`;
+}
+
+function getClassDivHtml(charclass) {
+    let view = {};
+    view.items = [];
+
+    view.desc = charclass.htmlDesc;
+    view.title = charclass.fullname;
+
+    appendHitDieFeatures(charclass, view.items);
+
+    view.items.push({
+        name: "Armor Proficiencies",
+        desc: joinFullnames(charclass.armorprof) + "."
+    });
+
+    view.items.push({
+        name: "Weapon Proficiencies",
+        desc: joinFullnames(charclass.weaponprof)  + "."
+    });
+
+    view.items.push({
+        name: "Tool Proficiencies",
+        desc: getToolDesc(charclass.tools)
+    });
+
+    view.items.push({
+        name: "Saving Throws",
+        desc: getSavingThrowsDesc(charclass.savingthrows) 
+    });
+
+    view.items.push({ 
+        name: "Skills", 
+        desc: getSkillsDesc(charclass.skills) 
+    });
+
+    view.items.push({
+        name: "Starting Wealth", 
+        desc: getGoldDesc(charclass)
+    });
+
+    for (let i = 0; i < charclass.features.length; i++) {
+        let feature = features[charclass.features[i]];
+        let fullname = feature.fullname || util.keynameToFullname(charclass.features[i]);
+        view.items.push({ name: fullname, desc: feature.description });
+    }
+
+    return mustache.render(desclistTemplate, view);
+}
+
+
+function getClassDivView() {
+    let view = [];
+    for (let classkey in classes) {
+        if (!classes.hasOwnProperty(classkey))
+            continue;
+
+        let fullname = util.keynameToFullname(classkey);
+
+        view.push({name: classkey, html: getClassDivHtml(classes[classkey]), fullname });
+    }
+    return view;
+}
 
 // -------------------------------------------------- 
 // Skills
@@ -246,20 +371,22 @@ function getView() {
     view.racechoices = getRaceChoiceView();
     view.racedivs = getRaceDivView();
     view.dragonborntable = getDragonbornTableView();
-    
+    view.classes = getClassDivView();
+
     // temporary:
-    view.classes = getInputView('class', classes);
     view.skills = getInputView('skill', skills); 
 
     return view;
 }
 
 
+
+
 // -------------------------------------------------- 
 // Exports, data prep for ajax
 // -------------------------------------------------- 
 
-let joinedData = { races, racechoices, features };
+let joinedData = { races, classes, racechoices, features };
 let joinedJson = JSON.stringify(joinedData);
 
 exports.getView = getView;

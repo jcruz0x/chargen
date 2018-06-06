@@ -27,7 +27,7 @@
         },
         "features": [
             "rage",
-            "unarmored-defense"
+            "barbarian-unarmored-defense"
         ],
         "gold": 50
     },
@@ -205,7 +205,7 @@
             ]
         },
         "features": [
-            "unarmored-defense",
+            "monk-unarmored-defense",
             "martial-arts"
         ],
         "gold": 27

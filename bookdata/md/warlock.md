@@ -17,6 +17,6 @@ at hand-to-hand combat. They are comfortable in light
 armor and know how to use simple weapons.
 
 Warlocks are driven by an insatiable need for knowledge
-and power, which compels them into their pacts and
-shapes their lives, This thirst drives warlocks into their
+and power which shapes their lives. 
+This thirst drives warlocks into their
 pacts and shapes their later careers as well.
