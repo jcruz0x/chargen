@@ -304,8 +304,6 @@ function selectrace(changeto) {
         $('#half-elf-bonus-text').hide();
     }
 
-
-
     updateAbilities();
 }
 

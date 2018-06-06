@@ -370,7 +370,7 @@ function getView() {
     view.abilities = getAbilityView();
     view.racechoices = getRaceChoiceView();
     view.racedivs = getRaceDivView();
-    view.dragonborntable = getDragonbornTableView();
+    view.dragondata = getDragonbornTableView();
     view.classes = getClassDivView();
 
     // temporary:

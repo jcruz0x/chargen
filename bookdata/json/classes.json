@@ -94,7 +94,84 @@
         ],
         "cantrips": 3,
         "spellslots": 2,
-        "gold": 125
+        "gold": 125,
+        "domains": {
+            "knowledge-domain": {
+                "description": "The gods of knowledge value learning and understanding above all. Followers of these gods study esoteric lore, collect old tomes, delve into the secret places of the earth, and learn all they can.",
+                "spells": [
+                    "command",
+                    "identify"
+                ],
+                "features": [
+                    "blessings-of-knowledge"
+                ]
+            },
+            "life-domain": {
+                "description": "The life domain focuses on the vibrant positive energy that sustains all life. The gods of life promote vitality and health through healing the sick and wounded, caring for those in need, and driving away the forces of death and undeath.",
+                "spells": [
+                    "bless",
+                    "cure-wounds"
+                ],
+                "features": [
+                    "domain-heavy-armor",
+                    "disciple-of-life"
+                ]
+            },
+            "light-domain": {
+                "description": "Gods of light promote the ideals of rebirth and renewal, truth, vigilance, and beauty, ofting using the symbol of the sun. Clerics of a god of light are enlightened souls infused with radiance and the power of their gods discerning vision, charged with chasing away lies and burning away darkness.",
+                "spells": [
+                    "burning-hands",
+                    "faerie-fire"
+                ],
+                "features": [
+                    "light-domain-cantrip",
+                    "warding-flare"
+                ]
+            },
+            "nature-domain": {
+                "description": "Gods of nature are as varied as the natural world itself, from inscrutable gods of the deep forests, to friendly deities associated with particular springs and groves. Druids often serve these deities, but many of these gods have clerics as well, who might hunt the evil monstrosities that despoil the woodlands or bless the harvest of the faithful.",
+                "spells": [
+                    "animal-friendship",
+                    "speak-with-animals"
+                ],
+                "features": [
+                    "acolyte-of-nature",
+                    "domain-heavy-armor"
+                ]
+            },
+            "tempest-domain": {
+                "description": "Gods of the tempest domain govern storms, sea, and sky. They include gods of lightning and thunder, of earthquakes, fire, and violence. Tempest gods send their clerics to inspire fear in the common folk, to keep them on the path of righteousness or encourage them to offer sacrifices of propitiation.",
+                "spells": [
+                    "fog-cloud",
+                    "thunderwave"
+                ],
+                "features": [
+                    "domain-heavy-armor-martial-weapons",
+                    "wrath-of-the-storm"
+                ]
+            },
+            "trickery-domain": {
+                "description": "Gods of trickery are mischief makers and instigators who stand as a constant challenge to the accepted order among both gods and mortals. They are patrons of thieves and scoundrels, and their clerics are a disruptive force in the world, puncturing pride, mocking tyrants, stealing from the rich, freeing captives, and flouting hollow traditions.",
+                "spells": [
+                    "charm-person",
+                    "disguise-self"
+                ],
+                "features": [
+                    "blessing-of-the-trickster"
+                ]
+            },
+            "war-domain": {
+                "description": "Gods of war watch over warriors reward them for their great deeds. The clerics of such gods excel in battle, inspiring others to fight the good fight, or offering acts of violence as prayers. Gods of war include champions of honor and chivalry as well as gods of destruction and domination.",
+                "spells": [
+                    "divine-favor",
+                    "shield-of-faith"
+                ],
+                "features": [
+                    "domain-heavy-armor-martial-weapons",
+                    "war-priest" 
+                ]
+            }
+        }
     },
     "druid": {
         "hitdie": 8,
@@ -376,7 +453,39 @@
         "cantrips": 2,
         "spellsknown": 2,
         "spellslots": 1,
-        "gold": 100
+        "gold": 100,
+        "otherworldy-patrons": {
+            "the-archfey": {
+                "description": "You patron is a lord or lady of the fey, who holds forgotten secrets. This being's inscrutable, whimsical motivations might involve striving for greater magical power, or settling age-old grudges. Beings of this sort include the Prince Of Frost, the Queen of Air and Darkness, and Titania of the summer court.",
+                "spells": [
+                    "faerie-fire",
+                    "sleep"
+                ],
+                "features": [
+                    "fey-presence"
+                ]
+            },
+            "the-fiend": {
+                "description": "You have made a pact with a fiend from the lower planes of existence, a being whose aims are evil, even if you strive against those aims. Such beings desire the corruption or destruction of all things. Examples are Archdevils like Mephistopholes and Belial, and demon lords such as Baphomet and the Demogorgon.",
+                "spells": [
+                    "burning-hands",
+                    "command"
+                ],
+                "features": [
+                    "dark-ones-blessing"
+                ]
+            },
+            "the-great-old-one": {
+                "description": "Your patron is mysterious entity whose nature is utterly foreign to the fabric of reality. It might come from the Far Realm, the space beyond reality, or it could be one the forgotten Elder Gods. Examples include Ghaundar, called That Which Lurks; Tharizdun, the Chained God; Great Cthulhu, and other Unfathomable beings",
+                "spells": [
+                    "dissonant-whispers",
+                    "tashas-hideous-laughter"
+                ],
+                "features": [
+                    "awakened-mind"
+                ]
+            }
+        }
     },
     "Wizard": {
         "hitdie": 6,

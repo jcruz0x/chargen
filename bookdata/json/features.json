@@ -21,7 +21,7 @@
         "description":
             "You gain proficiency with one of: smiths tools, brewers supplies, or masons tools.",
         "proficiency-choices": {
-            "count": 2,
+            "count": 1,
             "choices": [
                 "smiths-tools",
                 "brewers-supplies",
@@ -237,7 +237,15 @@
     },
     "fighting-style": {
         "description":
-            "You adopt a particular style of fighting as your specialty, chosen from Archery, Defense, Dueling, Great Weapon Fighting, Protection, or Two-Weapon Fighting."
+            "You adopt a particular style of fighting as your specialty, chosen from Archery, Defense, Dueling, Great Weapon Fighting, Protection, or Two-Weapon Fighting.",
+        "styles": {
+            "archery": "You gain a +2 bonus to attack rolls you make with ranged weapons.", 
+            "defense": "While you are wearing armor, you gain a +1 bonus to AC", 
+            "dueling": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.", 
+            "great-weapon-fighting": "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or 2. The weapon must have the two handed or versatile property for you to gain this benefit.", 
+            "protection": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.", 
+            "two-weapon-fighting": "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack."
+        }
     },
     "second-wind": {
         "description":
@@ -257,15 +265,41 @@
     },
     "favored-enemy": {
         "description":
-            "You can choose a type of favored enemy. You have advantage on Wisdom (Survival) checks to track your favored enemy, as well as on intelligence checks to recall information about them. You also learn one language of your choice that is spoken by your favored enemies, if they speak one."
+            "You can choose a type of favored enemy. You have advantage on Wisdom (Survival) checks to track your favored enemy, as well as on intelligence checks to recall information about them. You also learn one language of your choice that is spoken by your favored enemies, if they speak one. You choose additional favored enemies as you level.",
+        "types": [
+            "Abberations",
+            "Beasts",
+            "Celestials",
+            "Constructs",
+            "Dragons",
+            "Elementals",
+            "Fey",
+            "Fiends",
+            "Giants",
+            "Monstrosities",
+            "Oozes",
+            "Plants",
+            "Undead",
+            "Humanoids"
+        ]
     },
     "natural-explorer": {
         "description":
-            "You can choose a type of natural environment you are adept at traveling and surviving in. You gain various advantages in these kinds of terrains. See the Players Handbook for full rules."
+            "You can choose a type of natural environment you are adept at traveling and surviving in. You gain various advantages in these kinds of terrains. See the Players Handbook for full rules.",
+        "types": [
+            "Arctic",
+            "Coast",
+            "Desert",
+            "Forest",
+            "Grassland",
+            "Mountain",
+            "Swamp",
+            "Underdark"
+        ]
     },
     "expertise": {
         "description":
-            "Choose two skill proficiencies (or proficiency with theives tools and a skill proficiency.) Your proficiency bonus is doubled for these ability checks. At 6th level you may choose two more proficiencies (in skills or with theives tools) to gain this benefit."
+            "Choose two skill proficiencies (or proficiency with thieves tools and a skill proficiency.) Your proficiency bonus is doubled for these ability checks. At 6th level you may choose two more proficiencies (in skills or with thieves tools) to gain this benefit."
     },
     "thieves-cant": {
         "description":
@@ -302,5 +336,54 @@
     "arcane-recovery": {
         "description":
             "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose to recover expended spell slots that have a combined level less than or equal to half your wizard level, rounded up. None of the slots can be 6th level or higher."
+    },
+    "blessings-of-knowledge": {
+        "description":
+            "You learn two languages of your choice. You also become proficient in your choice of two of the following skills: Arcana, History, Nature, or Religion. Your proficiency bonus is doubled for any ability check you make that uses either of those skills."
+    },
+    "domain-heavy-armor": {
+        "fullname": "Bonus Proficiency",
+        "description":
+            "You gain proficiency with heavy armor.",
+        "proficiencies": [
+            "heavy-armor"
+        ]
+    },
+    "domain-heavy-armor-martial-weapons": {
+        "fullname": "Bonus Proficiency",
+        "description":
+            "You gain proficiency with heavy armor and martial weapons.",
+        "proficiencies": [
+            "heavy-armor",
+            "martial-weapons"
+        ]
+    },
+    "disciple-of-life": {
+        "description":
+            "Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spells level."
+    },
+    "light-domain-cantrip": {
+        "description":
+            "You gain the light cantrip if you don't already know it."
+    },
+    "warding-flare": {
+        "description":
+            "When you are attacked by a creature within 30 feet of you that you can see, you can use your reaction to impose disadvantage on the attack roll, causing light to flare before the attacker. An attacker that can't be blinded is immune. You can use this feature a number of times equal to your Wisdom modifier, or a minimum of once. You regain all expended uses when you finish a long rest."
+    },
+    "acolyte-of-nature": {
+        "description":
+            "You learn one druid cantrip of your choice. You also gain proficieny in one of the following skills of your choice: Animal Handling, Nature, or Survival."
+    },
+    "wrath-of-the-storm": {
+        "description":
+            "You can thunderously rebuke attackers. When a creature within 5 feet of you that you can see hits you with an attack, you can use your reaction to cause the creature to make a dexterity saving throw. The creature takes 2d8 lightning or thunder damage on a failed saving throw, or half as much if successful. You can use this feature a number of times equal to your Wisdom modifier, or a minimum of once. You regain all expended uses when you finish a long rest."
+    },
+    "blessing-of-the-trickster": {
+        "description":
+            "You can use your action to touch a willing creature other than yourself to give it advantage on Dexterity (Stealth) checks. This blessing lasts of 1 hour or until you use this feature again."
+    },
+    "war-priest": {
+        "description":
+            "When you use the attack action, you can make one weapon attack as a bonus action. You can use this feature a number of times equal to your Wisdom modifier, or a minimum of once. You regain all expended uses when you finish a long rest."
     }
 }
