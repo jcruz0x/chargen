@@ -341,7 +341,7 @@ function getDomainDivHtml(domain, fullname) {
     for (let i = 0; i < domain.features.length; i++) {
         let featurekey = domain.features[i]
         let feature = features[featurekey];
-        let fullname = util.keynameToFullname(featurekey);
+        let fullname = feature.fullname || util.keynameToFullname(featurekey);
 
         view.items.push({
             name: fullname,

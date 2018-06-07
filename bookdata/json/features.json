@@ -350,7 +350,7 @@
         ]
     },
     "domain-heavy-armor-martial-weapons": {
-        "fullname": "Bonus Proficiency",
+        "fullname": "Bonus Proficiencies",
         "description":
             "You gain proficiency with heavy armor and martial weapons.",
         "proficiencies": [
