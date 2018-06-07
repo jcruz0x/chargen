@@ -118,7 +118,7 @@
                 ]
             },
             "light-domain": {
-                "description": "Gods of light promote the ideals of rebirth and renewal, truth, vigilance, and beauty, ofting using the symbol of the sun. Clerics of a god of light are enlightened souls infused with radiance and the power of their gods discerning vision, charged with chasing away lies and burning away darkness.",
+                "description": "Gods of light promote the ideals of rebirth and renewal, truth, vigilance, and beauty, often using the symbol of the sun. Clerics of a god of light are enlightened souls infused with radiance and the power of their gods discerning vision, charged with chasing away lies and burning away darkness.",
                 "spells": [
                     "burning-hands",
                     "faerie-fire"

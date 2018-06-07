@@ -3,13 +3,6 @@
 // Model
 // --------------------------------------------------
 
-// currentRaceSelector = null;
-// currentClassSelector = null;
-// currentDomainSelector = null;
-// currentPatronSelector = null;
-
-
-
 var model;
 
 function newmodel() {
@@ -63,23 +56,29 @@ function objectAssign(target, source) {
 
 function manageDivSelection(property, changeto) {
     var modelproperty = property + "val"
+
     var oldval = model[modelproperty];
-
-    $dropdown = $("#" + property + "-dropdown");
-
     $("#" + property + "div-" + oldval).hide();
-
+    
+    $dropdown = $("#" + property + "-dropdown");
     if (changeto != undefined)
         $dropdown.val(changeto);
     else
         changeto = $dropdown.val()
 
     model[modelproperty] = changeto;
-    
     $("#" + property + "div-" + changeto).show();
 
     return changeto;
 }
+
+function conditionallyShow(selector, truthval) {
+    if (truthval)
+        $(selector).show();
+    else
+        $(selector).hide();
+}
+
 
 // --------------------------------------------------
 // Abilities
@@ -296,31 +295,12 @@ function setupAbilityControls() {
     }
 }
 
-
 // --------------------------------------------------
 // Race
 // --------------------------------------------------
 
 function selectrace(changeto) {
-    // if (currentRaceSelector !== null)
-    //     $(currentRaceSelector).hide();
-
-    // if (changeto !== undefined)
-    //     $('#race-dropdown').val(changeto);
-
-    // var raceval = $('#race-dropdown').val();
-    // model.raceval = raceval;
-
-    // var newRaceSelector = '#racediv-' + raceval;
-    // $(newRaceSelector).show();
-    // currentRaceSelector = newRaceSelector;
-
     let raceval = manageDivSelection('race', changeto);
-
-    // if (raceval == 'dragonborn')
-    //     $('#dragonborn-table').show();
-    // else
-    //     $('#dragonborn-table').hide();
 
     conditionallyShow('#dragonborn-table', raceval === 'dragonborn');
 
@@ -348,19 +328,6 @@ function selectrace(changeto) {
 // --------------------------------------------------
 
 function selectclass(changeto) {
-    // if (currentClassSelector !== null)
-    //     $(currentClassSelector).hide();
-
-    // if (changeto !== undefined)
-    //     $('#class-dropdown').val(changeto);
-
-    // var classval = $('#class-dropdown').val();
-    // model.classval = classval;
-
-    // var newClassSelector = '#classdiv-' + classval;
-    // $(newClassSelector).show();
-    // currentClassSelector = newClassSelector;
-
     let classval = manageDivSelection('class', changeto);
 
     conditionallyShow('#sorcerous-origin-table', classval === 'sorcerer');
@@ -368,25 +335,26 @@ function selectclass(changeto) {
     conditionallyShow('#warlock-patrons', classval === 'warlock');
 }
 
+function selectdomain(changeto) {
+    let domainval = manageDivSelection('domain', changeto);
+}
+
+function selectpatron(changeto) {
+    let patronval = manageDivSelection('patron', changeto)
+}
+
 
 // --------------------------------------------------
 // Page
 // --------------------------------------------------
-
-function conditionallyShow(selector, truthval) {
-    if (truthval)
-        $(selector).show();
-    else
-        $(selector).hide();
-}
 
 function pageinit() {
     newmodel();
     setupAbilityControls();
     selectrace(model.raceval);
     selectclass(model.classval);
-    // selectdomain(model.domain);
-    // selectpatron(model.patron);
+    selectdomain(model.domain);
+    selectpatron(model.patron);
 
     $('#race-dropdown').change(function() {
         selectrace();
@@ -394,6 +362,14 @@ function pageinit() {
 
     $('#class-dropdown').change(function() {
         selectclass();
+    })
+
+    $('#domain-dropdown').change(function() {
+        selectdomain();
+    })
+
+    $('#patron-dropdown').change(function() {
+        selectpatron();
     })
 
     $('#abilities-roll-button').click(function() {
