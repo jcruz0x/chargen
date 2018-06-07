@@ -194,6 +194,40 @@
             </tbody>
           </table>
 
+          <div style="display: none" id="divine-domains">
+            <div class="centered">
+              <h3>Divine Domain</h3>
+              <select id="domain-dropdown">
+                {{#divinedomains}}
+                  <option value="{{name}}">{{fullname}}</option>
+                {{/divinedomains}}
+              </select>
+            </div>
+
+            {{#divinedomains}}
+              <div style="display: none" id="domaindiv-{{name}}">
+                {{{html}}}
+              </div>
+            {{/divinedomains}}
+          </div>
+
+          <div style="display: none" id="warlock-patrons">
+            <div class="centered">
+              <h3>Otherworldy Patron</h3>
+              <select id="patron-dropdown">
+                {{#warlockpatrons}}
+                  <option value="{{name}}">{{fullname}}</option>
+                {{/warlockpatrons}}
+              </select>
+            </div>
+
+            {{#warlockpatrons}}
+              <div style="display: none" id="patrondiv-{{name}}">
+                {{{html}}}
+              </div>
+            {{/warlockpatrons}}
+          </div>
+
           <div class="clear"></div>
         </section>
 

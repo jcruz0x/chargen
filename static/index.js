@@ -3,18 +3,32 @@
 // Model
 // --------------------------------------------------
 
-currentRaceSelector = null;
-currentClassSelector = null;
+// currentRaceSelector = null;
+// currentClassSelector = null;
+// currentDomainSelector = null;
+// currentPatronSelector = null;
+
+
+
 var model;
 
 function newmodel() {
     model = {};
+
+    // race and class defaults
     model.raceval = 'human';
     model.classval = 'fighter';
+
+    // cleric domain and warlock patron defaults
+    model.domainval = 'knowledge-domain';
+    model.patronval = 'the-archfey';
+
+    // ability defaults
     model.abilities = {
         str: 10, dex: 10, con: 10, 
         int: 10, wis: 10, cha: 10
     };
+
     model.bonuses = {};
     model.finalAbilities = {};
     model.abilityModifiers = {};
@@ -45,6 +59,26 @@ function objectAssign(target, source) {
 
         target[key] = source[key];
     }
+}
+
+function manageDivSelection(property, changeto) {
+    var modelproperty = property + "val"
+    var oldval = model[modelproperty];
+
+    $dropdown = $("#" + property + "-dropdown");
+
+    $("#" + property + "div-" + oldval).hide();
+
+    if (changeto != undefined)
+        $dropdown.val(changeto);
+    else
+        changeto = $dropdown.val()
+
+    model[modelproperty] = changeto;
+    
+    $("#" + property + "div-" + changeto).show();
+
+    return changeto;
 }
 
 // --------------------------------------------------
@@ -268,18 +302,20 @@ function setupAbilityControls() {
 // --------------------------------------------------
 
 function selectrace(changeto) {
-    if (currentRaceSelector !== null)
-        $(currentRaceSelector).hide();
+    // if (currentRaceSelector !== null)
+    //     $(currentRaceSelector).hide();
 
-    if (changeto !== undefined)
-        $('#race-dropdown').val(changeto);
+    // if (changeto !== undefined)
+    //     $('#race-dropdown').val(changeto);
 
-    var raceval = $('#race-dropdown').val();
-    model.raceval = raceval;
+    // var raceval = $('#race-dropdown').val();
+    // model.raceval = raceval;
 
-    var newRaceSelector = '#racediv-' + raceval;
-    $(newRaceSelector).show();
-    currentRaceSelector = newRaceSelector;
+    // var newRaceSelector = '#racediv-' + raceval;
+    // $(newRaceSelector).show();
+    // currentRaceSelector = newRaceSelector;
+
+    let raceval = manageDivSelection('race', changeto);
 
     // if (raceval == 'dragonborn')
     //     $('#dragonborn-table').show();
@@ -312,20 +348,24 @@ function selectrace(changeto) {
 // --------------------------------------------------
 
 function selectclass(changeto) {
-    if (currentClassSelector !== null)
-        $(currentClassSelector).hide();
+    // if (currentClassSelector !== null)
+    //     $(currentClassSelector).hide();
 
-    if (changeto !== undefined)
-        $('#class-dropdown').val(changeto);
+    // if (changeto !== undefined)
+    //     $('#class-dropdown').val(changeto);
 
-    var classval = $('#class-dropdown').val();
-    model.classval = classval;
+    // var classval = $('#class-dropdown').val();
+    // model.classval = classval;
 
-    var newClassSelector = '#classdiv-' + classval;
-    $(newClassSelector).show();
-    currentClassSelector = newClassSelector;
+    // var newClassSelector = '#classdiv-' + classval;
+    // $(newClassSelector).show();
+    // currentClassSelector = newClassSelector;
+
+    let classval = manageDivSelection('class', changeto);
 
     conditionallyShow('#sorcerous-origin-table', classval === 'sorcerer');
+    conditionallyShow('#divine-domains', classval === 'cleric');
+    conditionallyShow('#warlock-patrons', classval === 'warlock');
 }
 
 
@@ -345,6 +385,8 @@ function pageinit() {
     setupAbilityControls();
     selectrace(model.raceval);
     selectclass(model.classval);
+    // selectdomain(model.domain);
+    // selectpatron(model.patron);
 
     $('#race-dropdown').change(function() {
         selectrace();

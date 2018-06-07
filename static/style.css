@@ -115,12 +115,12 @@ table {
 }
 
 @media screen and (min-width: 720px) {
-    ul {
+    ul.two-column {
         columns: 2;
         column-gap: 100px;
     }
     
-    li {
+    li.two-column {
         -webkit-column-break-inside: avoid;
         page-break-inside: avoid;
         break-inside: avoid;

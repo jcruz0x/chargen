@@ -454,7 +454,7 @@
         "spellsknown": 2,
         "spellslots": 1,
         "gold": 100,
-        "otherworldy-patrons": {
+        "patrons": {
             "the-archfey": {
                 "description": "You patron is a lord or lady of the fey, who holds forgotten secrets. This being's inscrutable, whimsical motivations might involve striving for greater magical power, or settling age-old grudges. Beings of this sort include the Prince Of Frost, the Queen of Air and Darkness, and Titania of the summer court.",
                 "spells": [

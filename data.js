@@ -8,6 +8,9 @@ let util = require('./util.js');
 
 let markdownConverter = new showdown.Converter();
 
+let desclistTemplate = fs.readFileSync('web/desclist.mustache', 'utf8');
+let desclistTwoColTemplate = fs.readFileSync('web/desclist-twocolumn.mustache', 'utf8');
+
 // -------------------------------------------------- 
 // Abilities
 // -------------------------------------------------- 
@@ -49,7 +52,6 @@ let features = JSON.parse(featuresJson);
 // Races
 // -------------------------------------------------- 
 
-let desclistTemplate = fs.readFileSync('web/desclist.mustache', 'utf8');
 
 let raceJson = fs.readFileSync('bookdata/json/races.json', 'utf8');
 let races = JSON.parse(raceJson);
@@ -106,7 +108,7 @@ function getRaceDivHtml(racechoice) {
         view.items = view.items.concat(getRaceFeatureItems(racenames[i]));
     }
 
-    return mustache.render(desclistTemplate, view);
+    return mustache.render(desclistTwoColTemplate, view);
 }
 
 function getRaceProperty(racenames, propertyname) {
@@ -312,7 +314,7 @@ function getClassDivHtml(charclass) {
         view.items.push({ name: fullname, desc: feature.description });
     }
 
-    return mustache.render(desclistTemplate, view);
+    return mustache.render(desclistTwoColTemplate, view);
 }
 
 
@@ -326,6 +328,48 @@ function getClassDivView() {
 
         view.push({name: classkey, html: getClassDivHtml(classes[classkey]), fullname });
     }
+    return view;
+}
+
+function getDomainDivHtml(domain, fullname) {
+    let view = {};
+    view.title = fullname;
+    view.desc = domain.description;
+    view.items = [];
+
+
+    for (let i = 0; i < domain.features.length; i++) {
+        let featurekey = domain.features[i]
+        let feature = features[featurekey];
+        let fullname = util.keynameToFullname(featurekey);
+
+        view.items.push({
+            name: fullname,
+            desc: feature.description
+        })
+    }
+
+    view.items.push({
+        name: "Spells",
+        desc: joinFullnames(domain.spells) + '.'
+    })
+
+    return mustache.render(desclistTemplate, view);
+}
+
+function getDomainDivView(domains) {
+    let view = [];
+    for (let domainkey in domains) {
+        if (!domains.hasOwnProperty(domainkey))
+            continue;
+
+        let domain = domains[domainkey];
+        let fullname = domain.fullname || util.keynameToFullname(domainkey);
+        let html = getDomainDivHtml(domain, fullname);
+
+        view.push({ name: domainkey, fullname, html });
+    }
+
     return view;
 }
 
@@ -372,6 +416,8 @@ function getView() {
     view.racedivs = getRaceDivView();
     view.dragondata = getDragonbornTableView();
     view.classes = getClassDivView();
+    view.divinedomains = getDomainDivView(classes.cleric.domains);
+    view.warlockpatrons = getDomainDivView(classes.warlock.patrons);
 
     // temporary:
     view.skills = getInputView('skill', skills); 
