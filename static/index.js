@@ -15,6 +15,7 @@ function newmodel() {
     // cleric domain and warlock patron defaults
     model.domainval = 'knowledge-domain';
     model.patronval = 'the-archfey';
+    model.originval = 'wild-magic';
 
     // ability defaults
     model.abilities = {
@@ -330,9 +331,17 @@ function selectrace(changeto) {
 function selectclass(changeto) {
     let classval = manageDivSelection('class', changeto);
 
-    conditionallyShow('#sorcerous-origin-table', classval === 'sorcerer');
+    selectSorcerousOrigin();
     conditionallyShow('#divine-domains', classval === 'cleric');
     conditionallyShow('#warlock-patrons', classval === 'warlock');
+}
+
+function selectSorcerousOrigin() {
+    model.originval = $("#sorcerous-origin-dropdown").val();
+
+    conditionallyShow('#sorcerous-origin-dropdown-div', model.classval === 'sorcerer');
+    let showtable = (model.classval === 'sorcerer' && model.originval === 'origin-draconic');
+    conditionallyShow('#sorcerous-origin-table', showtable);
 }
 
 function selectdomain(changeto) {
@@ -340,7 +349,7 @@ function selectdomain(changeto) {
 }
 
 function selectpatron(changeto) {
-    let patronval = manageDivSelection('patron', changeto)
+    let patronval = manageDivSelection('patron', changeto);
 }
 
 
@@ -370,6 +379,10 @@ function pageinit() {
 
     $('#patron-dropdown').change(function() {
         selectpatron();
+    })
+
+    $('#sorcerous-origin-dropdown').change(function() {
+        selectSorcerousOrigin();
     })
 
     $('#abilities-roll-button').click(function() {
