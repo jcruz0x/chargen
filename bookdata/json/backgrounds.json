@@ -54,6 +54,7 @@
         "feature": "false-identity",
         "subtype": {
             "title": "Favorite Scam",
+            "desc": "Every charlatan has an angle he or she uses in preference to other schemes.",
             "values": [
                 "I cheat at games of chance.",
                 "I shave coins or forge documents.",
@@ -105,11 +106,17 @@
             "stealth"
         ],
         "tools": [
-            "gaming-set",
             "thieves-tools"
         ],
+        "tool-choice": {
+            "count": 1,
+            "from": [
+                "gaming-set"
+            ]
+        },
         "subtype": {
             "title": "Criminal Specialty",
+            "desc:": "There are many kinds of criminals, with strong preferences for certain kinds of crimes over others.",
             "values": [
                 "Blackmailer",
                 "Burglar",
@@ -165,11 +172,17 @@
         ],
         "tools": [
             "disguise-kit",
-            "musical-instrument"
         ],
+        "tool-choice": {
+            "count": 1,
+            "from": [
+                "musical-instrument"
+            ]
+        },
         "feature": "by-popular-demand",
         "subtype": {
-            "title": "Entertainer Routine",
+            "title": "Entertainer Routines",
+            "desc:": "A good entertainer is versatile, spicing up performances with a variety of routines. Consider having one to three routines defining your expertise as an entertainer.",
             "values": [
                 "Actor",
                 "Dancer",
@@ -225,12 +238,18 @@
             "survival"
         ],
         "tools": [
-            "artisans-tools",
             "land-vehicles"
         ],
+        "tool-choice": {
+            "count": 1,
+            "from": [
+                "artisans-tools"
+            ]
+        },
         "feature": "rustic-hospitality",
         "subtype": {
             "title": "Defining Event",
+            "desc": "You previously pursued a simple profession among the peasantry. What was the event that set you on a different path and marked you for greater things?",
             "values": [
                 "I stood up to a tyrants agents.",
                 "I saved people during a natural disaster.",
@@ -284,13 +303,17 @@
             "insight",
             "persuasion"
         ],
-        "tools": [
-            "artisans-tools"
-        ],
+        "tool-choice": {
+            "choice": 1,
+            "from": [
+                "artisans-tools"
+            ]
+        },
         "languages": 1,
         "feature": "guild-membership",
         "subtype": {
             "title": "Guild Business",
+            "desc": "What is the nature of your guild?",
             "values": [
                 "Alchemists and apothecaries",
                 "Armorers, locksmithes, and finesmiths",
@@ -316,7 +339,7 @@
         },
         "traits": [
             "I believe that anything worth doing is worth doing right. I can't help it - I'm a perfectionist.",
-            "I'm a snob who looks down on those who can't apperciate fine art.",
+            "I'm a snob who looks down on those who can't appereciate fine art.",
             "I always want to know how things work and what makes people tick.",
             "I'm full of witty aphorisms and have a proverb for every occasion.",
             "I'm rude to people who lack my commitment to hard work and fair play.",
@@ -402,7 +425,6 @@
             "I'd risk too much to uncover a lost bit of knowledge.",
             "I like keeping secrets and won't share them with anyone."
         ]
-        
     },
     "noble": {
         "skills": [
@@ -627,7 +649,7 @@
         "tools": [
             "land-vehicles"
         ],
-        "tool-choices": {
+        "tool-choice": {
             "choice": 1,
             "from": [
                 "gaming-set"
