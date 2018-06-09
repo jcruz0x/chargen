@@ -1,0 +1,23 @@
+You have always had a way with people. You know
+what makes them tick, you can tease out their hearts'
+desires after a few minutes of conversation, and with a
+few leading questions you can read them like they were
+children's books. It's a useful talent, and one that you're
+perfectly willing to use for your advantage.
+You know what people want and you deliver, or rather,
+you promise to deliver. Common sense should steer
+people away from things that sound too good to be true,
+but common sense seems to be in short supply when
+you're around. The bottle of pink-colored liquid will
+surely cure that unseemly rash, this ointment - nothing
+more than a bit of fat with a sprinkle of silver dust - can
+restore youth and vigor, and there's a bridge in the city
+that just happens to be for sale. These marvels sound
+implausible, but you make them sound like the real deal.
+
+Charlatans are colorful characters who conceal their
+true selves behind the masks they construct. They
+reflect what people want to see, what they want to
+believe, and how they see the world. But their true
+selves are sometimes plagued by an uneasy conscience,
+an old enemy, or deep-seated trust issues.

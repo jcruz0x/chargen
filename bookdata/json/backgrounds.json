@@ -171,7 +171,7 @@
             "performance"
         ],
         "tools": [
-            "disguise-kit",
+            "disguise-kit"
         ],
         "tool-choice": {
             "count": 1,
@@ -279,7 +279,7 @@
             "Freedom. Tyrants must not be allowed to oppress the people.",
             "Might. If I become strong, I can take what I want - what I deserve.",
             "Sincerity. There's no good in pretending to be something I'm not.",
-            "Destiny. Nothing and no one can steer me away from my higher calling."j
+            "Destiny. Nothing and no one can steer me away from my higher calling."
         ],
         "bonds": [
             "I have a family, but I have no idea where they are. One day, I hope to see them again.",
@@ -606,7 +606,8 @@
             "water-vehicles"
         ],
         "feature": "ships-passage",
-        "variant-features": "bad-reputation",
+        "variant": "pirate",
+        "variant-feature": "bad-reputation",
         "traits": [
             "My friends know they can rely on me, no matter what.",
             "I work hard so that I can play hard when the work is done.",
