@@ -423,7 +423,7 @@ function getBackgroundViews() {
         }
 
         bgview.featurename = util.keynameToFullname(bg.feature); 
-        bgview.featurehtml = util.getBookMdAsHtml(keyname + '.md');
+        bgview.featurehtml = util.getBookMdAsHtml(bg.feature + '.md');
 
         bgViews.push(bgview);
 

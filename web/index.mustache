@@ -254,21 +254,21 @@
 
 
           {{#backgrounds}}
-            <div style="" id="backgrounddiv-{{name}}">
+            <div style="display: none" id="backgrounddiv-{{name}}">
               <h3>{{fullname}}</h3>
               {{{html}}}
+
+              <ul>
+                <li><b>Skills: </b>{{skills}}</li>
+                <li><b>Tool Proficiencies: </b>{{tools}}</li>
+                {{#languages}}
+                  <li><b>Languages: </b>{{.}}</li>
+                {{/languages}}
+              </ul>
+
+              <h3>Feature: {{featurename}}</h3>
+              {{{featurehtml}}}
             </div>
-
-            <ul>
-              <li><b>Skills: </b>{{skills}}</li>
-              <li><b>Tool Proficiencies: </b>{{tools}}</li>
-              {{#languages}}
-                <li><b>Languages: </b>{{.}}</li>
-              {{/languages}}
-            </ul>
-
-            <h3>Feature: {{featurename}}</h3>
-            {{{featurehtml}}}
           {{/backgrounds}}
 
           <div class="clear"></div>

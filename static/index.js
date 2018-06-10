@@ -5,7 +5,7 @@
 
 var model;
 
-function newmodel() {
+function newModel() {
     model = {};
 
     // race and class defaults
@@ -16,6 +16,7 @@ function newmodel() {
     model.domainval = 'knowledge-domain';
     model.patronval = 'the-archfey';
     model.originval = 'wild-magic';
+    model.backgroundval = 'acolyte';
 
     // ability defaults
     model.abilities = {
@@ -300,7 +301,7 @@ function setupAbilityControls() {
 // Race
 // --------------------------------------------------
 
-function selectrace(changeto) {
+function selectRace(changeto) {
     let raceval = manageDivSelection('race', changeto);
 
     conditionallyShow('#dragonborn-table', raceval === 'dragonborn');
@@ -328,7 +329,7 @@ function selectrace(changeto) {
 // Class
 // --------------------------------------------------
 
-function selectclass(changeto) {
+function selectClass(changeto) {
     let classval = manageDivSelection('class', changeto);
 
     selectSorcerousOrigin();
@@ -344,45 +345,57 @@ function selectSorcerousOrigin() {
     conditionallyShow('#sorcerous-origin-table', showtable);
 }
 
-function selectdomain(changeto) {
+function selectDomain(changeto) {
     let domainval = manageDivSelection('domain', changeto);
 }
 
-function selectpatron(changeto) {
+function selectPatron(changeto) {
     let patronval = manageDivSelection('patron', changeto);
 }
 
+// --------------------------------------------------
+// Background
+// --------------------------------------------------
+
+function selectBackground(changeto) {
+    let backgroundval = manageDivSelection('background', changeto);
+}
 
 // --------------------------------------------------
 // Page
 // --------------------------------------------------
 
 function pageinit() {
-    newmodel();
+    newModel();
     setupAbilityControls();
-    selectrace(model.raceval);
-    selectclass(model.classval);
-    selectdomain(model.domain);
-    selectpatron(model.patron);
+    selectRace(model.raceval);
+    selectClass(model.classval);
+    selectDomain(model.domainval);
+    selectPatron(model.patronval);
+    selectBackground(model.backgroundval)
 
     $('#race-dropdown').change(function() {
-        selectrace();
+        selectRace();
     })
 
     $('#class-dropdown').change(function() {
-        selectclass();
+        selectClass();
     })
 
     $('#domain-dropdown').change(function() {
-        selectdomain();
+        selectDomain();
     })
 
     $('#patron-dropdown').change(function() {
-        selectpatron();
+        selectPatron();
     })
 
     $('#sorcerous-origin-dropdown').change(function() {
         selectSorcerousOrigin();
+    })
+
+    $('#background-dropdown').change(function() {
+        selectBackground();
     })
 
     $('#abilities-roll-button').click(function() {

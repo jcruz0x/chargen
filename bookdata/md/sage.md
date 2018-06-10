@@ -1,4 +1,4 @@
-You spent years learning the lore of the multiverse. Vou
+You spent years learning the lore of the multiverse. You
 scoured manuscripts, studied scrolls, and listened to the
 greatest experts on the subjects that interest you. Your
 efforts have made you a master in your fields of study.
