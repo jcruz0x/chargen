@@ -243,7 +243,38 @@
 
         <section>
           <h2 class="headline">Background</h2>
+
+          <img src="img/resting2.jpg" alt="Image of Adventurers Gathered Around Fire" class="side-image" />
+
+          <select id="background-dropdown">
+            {{#backgrounds}}
+              <option value="{{name}}">{{fullname}}</option>
+            {{/backgrounds}}
+          </select>
+
+
+          {{#backgrounds}}
+            <div style="" id="backgrounddiv-{{name}}">
+              <h3>{{fullname}}</h3>
+              {{{html}}}
+            </div>
+
+            <ul>
+              <li><b>Skills: </b>{{skills}}</li>
+              <li><b>Tool Proficiencies: </b>{{tools}}</li>
+              {{#languages}}
+                <li><b>Languages: </b>{{.}}</li>
+              {{/languages}}
+            </ul>
+
+            <h3>Feature: {{featurename}}</h3>
+            {{{featurehtml}}}
+          {{/backgrounds}}
+
+          <div class="clear"></div>
         </section>
+
+        <!-- BACKGROUND SECTION -->
 
         <section>
           <h2 class="headline">Skills</h2>

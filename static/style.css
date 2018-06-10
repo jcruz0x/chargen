@@ -20,6 +20,7 @@ body {
     width: 50%;
     float: left;
     margin: 30px;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 1100px) {

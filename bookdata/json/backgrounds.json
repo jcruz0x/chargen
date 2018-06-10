@@ -196,7 +196,7 @@
                 "Tumbler"
             ]
         },
-        "variant": "Gladiator",
+        "variant": "gladiator",
         "traits": [
             "I know a story relevant to almost every situation.",
             "Whenever I come to a new place, I collect local rumours and spread gossip.",
@@ -438,7 +438,7 @@
             ]
         },
         "variant": "knight",
-        "variant-feature": "retainers",
+        "variantfeature": "retainers",
         "languages": 1,
         "feature": "position-of-privilege",
         "traits": [
@@ -607,7 +607,7 @@
         ],
         "feature": "ships-passage",
         "variant": "pirate",
-        "variant-feature": "bad-reputation",
+        "variantfeature": "bad-reputation",
         "traits": [
             "My friends know they can rely on me, no matter what.",
             "I work hard so that I can play hard when the work is done.",

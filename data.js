@@ -67,8 +67,9 @@ for (let keyname in races) {
     race.fullname = util.keynameToFullname(keyname);
 
     let descfile = race.descfile || (keyname + ".md");
-    let desc = fs.readFileSync('bookdata/md/' + descfile, 'utf8');
-    race.htmlDesc = markdownConverter.makeHtml(desc);
+    // let desc = fs.readFileSync('bookdata/md/' + descfile, 'utf8');
+    // race.htmlDesc = markdownConverter.makeHtml(desc);
+    race.htmlDesc = util.getBookMdAsHtml(descfile);
 }
 
 function getRaceChoiceView() {
@@ -207,8 +208,10 @@ for (let keyname in classes) {
     let charclass = classes[keyname];
     charclass.fullname = util.keynameToFullname(keyname);
 
-    let desc = fs.readFileSync(`bookdata/md/${keyname}.md`, 'utf8');
-    charclass.htmlDesc = markdownConverter.makeHtml(desc);
+    // let desc = fs.readFileSync(`bookdata/md/${keyname}.md`, 'utf8');
+    // charclass.htmlDesc = markdownConverter.makeHtml(desc);
+
+    charclass.htmlDesc = util.getBookMdAsHtml(keyname + '.md');
 }
 
 function appendHitDieFeatures(charclass, items) {
@@ -374,6 +377,78 @@ function getDomainDivView(domains) {
 }
 
 // -------------------------------------------------- 
+// Backgrounds
+// -------------------------------------------------- 
+
+let backgroundsJson = fs.readFileSync('bookdata/json/backgrounds.json', 'utf8');
+let backgrounds = JSON.parse(backgroundsJson);
+
+function getBgToolsDesc(tools, toolchoices) {
+    let result = '';
+
+    if (tools != undefined)
+        result += joinFullnames(tools) + '. ';
+    
+    if (toolchoices != undefined) {
+        let fromlist = joinFullnames(tools.from);
+        result += `Choose ${tools.count} from ${fromlist}.`;
+    }
+
+    return result;
+}
+
+function getBackgroundViews() {
+    let bgViews = []
+    let bgSubtypeViews = [];
+    let bgVariantFeatureViews = [];
+    let bgVariantViews = [];
+
+    for (let keyname in backgrounds) {
+        if (!backgrounds.hasOwnProperty(keyname))
+            continue;
+        
+        let bgview = {};
+        let bg = backgrounds[keyname];
+
+        bgview.name = keyname;
+        bgview.fullname = util.keynameToFullname(keyname);
+        bgview.html = util.getBookMdAsHtml(keyname + '.md');
+
+        bgview.skills = joinFullnames(bg.skills);
+        bgview.tools = getBgToolsDesc(bg.tools || []);
+        
+        if (bg.languages !== undefined && bg.languages > 0) {
+            let numstr = util.capitalize(util.smallNumberToString(bg.languages));
+            bgview.languages = [`${numstr} of your choice`];
+        }
+
+        bgview.featurename = util.keynameToFullname(bg.feature); 
+        bgview.featurehtml = util.getBookMdAsHtml(keyname + '.md');
+
+        bgViews.push(bgview);
+
+        if (bg.subtype != undefined)
+            bgSubtypeViews.push({ title: bg.subtype.title, html: bg.subtype.desc });
+
+        if (bg.variant != undefined) {
+            bgVariantViews.push({ 
+                title: util.keynameToFullname(bg.variant),
+                html: util.getBookMdAsHtml(bg.variant + '.md')
+            });
+        }
+
+        if (bg.variantfeature != undefined) {
+            bgVariantFeatureViews.push({
+                title: util.keynameToFullname(bg.variantfeature),
+                html: util.getBookMdAsHtml(bg.variantfeature + '.md')
+            });
+        }
+    }
+
+    return { bgViews, bgSubtypeViews, bgVariantFeatureViews, bgVariantViews };
+}
+
+// -------------------------------------------------- 
 // Skills
 // -------------------------------------------------- 
 
@@ -419,20 +494,24 @@ function getView() {
     view.divinedomains = getDomainDivView(classes.cleric.domains);
     view.warlockpatrons = getDomainDivView(classes.warlock.patrons);
 
+    let bgViews = getBackgroundViews();
+
+    view.backgrounds = bgViews.bgViews;
+    view.backgroundSubtypes = bgViews.bgSubtypeViews;
+    view.backgroundVariantFeatures = bgViews.bgVariantFeatureViews;
+    view.backgroundVariants = bgViews.bgVariantViews;
+
     // temporary:
     view.skills = getInputView('skill', skills); 
 
     return view;
 }
 
-
-
-
 // -------------------------------------------------- 
 // Exports, data prep for ajax
 // -------------------------------------------------- 
 
-let joinedData = { races, classes, racechoices, features };
+let joinedData = { races, classes, racechoices, features, backgrounds };
 let joinedJson = JSON.stringify(joinedData);
 
 exports.getView = getView;
