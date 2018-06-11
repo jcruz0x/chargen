@@ -428,10 +428,11 @@ function getBackgroundViews() {
         bgViews.push(bgview);
 
         if (bg.subtype != undefined)
-            bgSubtypeViews.push({ title: bg.subtype.title, html: bg.subtype.desc });
+            bgSubtypeViews.push({ name: keyname, title: bg.subtype.title, desc: bg.subtype.desc });
 
         if (bg.variant != undefined) {
             bgVariantViews.push({ 
+                name: keyname,
                 title: util.keynameToFullname(bg.variant),
                 html: util.getBookMdAsHtml(bg.variant + '.md')
             });
@@ -439,6 +440,7 @@ function getBackgroundViews() {
 
         if (bg.variantfeature != undefined) {
             bgVariantFeatureViews.push({
+                name: keyname,
                 title: util.keynameToFullname(bg.variantfeature),
                 html: util.getBookMdAsHtml(bg.variantfeature + '.md')
             });

@@ -81,6 +81,9 @@ function conditionallyShow(selector, truthval) {
         $(selector).hide();
 }
 
+function sample(arr) {
+   return arr[Math.floor(Math.random() * arr.length)];
+}
 
 // --------------------------------------------------
 // Abilities
@@ -359,7 +362,65 @@ function selectPatron(changeto) {
 
 function selectBackground(changeto) {
     let backgroundval = manageDivSelection('background', changeto);
+
+    clearTextFields([
+        'background-subtype',
+        'personality-trait-one',
+        'personality-trait-two',
+        'ideal',
+        'bond',
+        'flaw'
+    ]);
+
+    // hide all the background subtype divs, then determine if we
+    // should reshow
+    $('.background-subtype-div').hide();
+    let $subtypediv = $('#background-subtype-' + model.backgroundval);
+    if ($subtypediv.length > 0) {
+        $subtypediv.show();
+        $('#background-subtype-entry-div').show();
+    }
+    else {
+        $('#background-subtype-entry-div').hide();
+    }
+
+    $('.background-variant-div').hide();
+    $('#variant-feature-' + backgroundval).show();
+    $('#variant-background-' + backgroundval).show();
 }
+
+function setupSuggestionButton(prefix, section, subsection) {
+    $('#' + prefix + '-button').click(function() {
+        var background = bookdata.backgrounds[model.backgroundval];
+        $textarea = $('#' + prefix + '-text');
+        
+        var text = $textarea.val();
+
+        while($textarea.val() === text) {
+            if (subsection === undefined)
+                text = sample(background[section]);
+            else
+                text = sample(background[section][subsection]);
+        }
+
+        $textarea.val(text);
+    })
+}
+
+function clearTextFields(prefixes) {
+    for (var i = 0; i < prefixes.length; i++)
+        $('#' + prefixes[i] + '-text').val('');
+}
+
+function setupAllSuggestionButtons() {
+    setupSuggestionButton('background-subtype', 'subtype', 'values')
+    setupSuggestionButton('personality-trait-one', 'traits');
+    setupSuggestionButton('personality-trait-two', 'traits');
+    setupSuggestionButton('ideal', 'ideals');
+    setupSuggestionButton('bond', 'bonds');
+    setupSuggestionButton('flaw', 'flaws');
+}
+
 
 // --------------------------------------------------
 // Page
@@ -368,6 +429,7 @@ function selectBackground(changeto) {
 function pageinit() {
     newModel();
     setupAbilityControls();
+    setupAllSuggestionButtons();
     selectRace(model.raceval);
     selectClass(model.classval);
     selectDomain(model.domainval);

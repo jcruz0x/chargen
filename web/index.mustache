@@ -45,8 +45,8 @@
           </p>
 
           <div class="buttons-array">
-            <button id="abilities-roll-button">Roll For Abilities</button>
-            <button id="abilities-array-button">Use Standard Array</button>
+            <button class="big-button" id="abilities-roll-button">Roll For Abilities</button>
+            <button class="big-button" id="abilities-array-button">Use Standard Array</button>
           </div>
 
           <p id="ability-drag-drop-instructions">
@@ -271,19 +271,124 @@
             </div>
           {{/backgrounds}}
 
+          {{#backgroundVariantFeatures}}
+            <div class="pool background-variant-div" style="display: none" id="variant-feature-{{name}}">
+              <h4>Variant Feature: {{title}}</h4>
+              {{{html}}}
+              <input type="checkbox" id="variant-feature-checkbox-{{name}}">
+              <label for="variant-feature-checkbox-{{name}}">Use This Variant Feature</label>
+            </div>
+          {{/backgroundVariantFeatures}}
+
+          {{#backgroundVariants}}
+            <div class="pool background-variant-div" style="display: none" id="variant-background-{{name}}">
+              <h4>Background Variant: {{title}}</h4>
+              {{{html}}}
+              <input type="checkbox" id="variant-background-checkbox-{{name}}">
+              <label for="variant-background-checkbox-{{name}}">Use This Background Variant</label>
+            </div>
+          {{/backgroundVariants}}
+
           <div class="clear"></div>
+
+          <div class="centered">
+
+            <!-- background specific trait, e.g. favorite scam, guild business, etc -->
+
+            {{#backgroundSubtypes}}
+              <div class="background-subtype-div" style="display: none" id="background-subtype-{{name}}">
+                <h3>{{title}}</h3>
+                <p class="trait-desc">
+                  {{desc}}
+                </p>
+              </div>
+            {{/backgroundSubtypes}}
+
+            <div class="traitdiv" style="display: none" id="background-subtype-entry-div">
+              <textarea id="background-subtype-text" class="traitfield"></textarea>
+              <button class="trait-button" id="background-subtype-button">Suggestion</button>
+            </div>
+            <div class="clear"></div>
+
+            <!-- personality traits -->
+
+            <br>
+            <h3>Personality Traits, Ideal, Bond and Flaw</h3>
+
+            <p class="trait-desc">
+            <b>Traits: </b>
+            Come up with two personality traits for your character,
+            or use a random suggestion from your background.
+            Personality traits are small, simple ways to help you set your
+            character apart from every other character.
+            </p>
+            <div class="traitdiv">
+              <textarea id="personality-trait-one-text" class="traitfield"></textarea>
+              <button class="trait-button" id="personality-trait-one-button">Suggestion</button>
+            </div>
+            <div class="clear"></div>
+            <div class="traitdiv">
+              <textarea id="personality-trait-two-text" class="traitfield"></textarea>
+              <button class="trait-button" id="personality-trait-two-button">Suggestion</button>
+            </div>
+            <div class="clear"></div>
+
+            <!-- ideal -->
+
+            <p class="trait-desc">
+              <b>Ideal: </b>
+              Describe an ideal that drives your character, or use a random suggestion from your background.
+              Your ideals are the things that you believe in most strongly, the
+              fundamental moral and ethical principles that compel you to act as you do.
+            </p>
+            <div class="traitdiv">
+              <textarea id="ideal-text" class="traitfield"></textarea>
+              <button class="trait-button" id="ideal-button">Suggestion</button>
+            </div>
+            <div class="clear"></div>
+            
+            <!-- bond -->
+
+            <p class="trait-desc">
+              <b>Bond: </b>
+              Create one bond for your character, or use a random suggestion from your background. 
+              Bonds represent a character's connections to people, places, and events in
+              the world. 
+            </p>
+            <div class="traitdiv">
+              <textarea id="bond-text" class="traitfield"></textarea>
+              <button class="trait-button" id="bond-button">Suggestion</button>
+            </div>
+            <div class="clear"></div>
+
+            <!-- flaw -->
+
+            <p class="trait-desc">
+              <b>Flaw: </b> 
+              Choose a flaw for your character, or use a random suggestion
+              from your background. Your character's flaw represents some vice, 
+              compulsion, fear, or weakness.
+            </p>
+            <div class="traitdiv">
+              <textarea id="flaw-text" class="traitfield"></textarea>
+              <button class="trait-button" id="flaw-button">Suggestion</button>
+            </div>
+            <div class="clear"></div>
+          </div>
+
         </section>
 
         <!-- BACKGROUND SECTION -->
 
         <section>
           <h2 class="headline">Skills</h2>
-          <div class="check-boxes">
+          <div class="checkboxes">
             {{#skills}}
-              <input type="checkbox" id="{{skillchoice}}" name="skills" value="{{skillval}}"><label for="{{skillchoice}}">{{skillname}}</label><br>
+              <input type="checkbox" id="{{skillchoice}}" name="skills" value="{{skillval}}"><label for="{{skillchoice}}"><span>{{skillname}}</span></label><br>
             {{/skills}}
           </div>
         </section>
+
 
         <!-- DESCRIPTION SECTION -->
 

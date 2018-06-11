@@ -54,7 +54,7 @@
         "feature": "false-identity",
         "subtype": {
             "title": "Favorite Scam",
-            "desc": "Every charlatan has an angle he or she uses in preference to other schemes.",
+            "desc": "Every charlatan has an angle he or she uses in preference to other schemes. Pick a favorite scam, or use a random suggestion.",
             "values": [
                 "I cheat at games of chance.",
                 "I shave coins or forge documents.",
@@ -116,7 +116,7 @@
         },
         "subtype": {
             "title": "Criminal Specialty",
-            "desc:": "There are many kinds of criminals, with strong preferences for certain kinds of crimes over others.",
+            "desc": "There are many kinds of criminals, with strong preferences for certain kinds of crimes over others. Come up with the kind of role you played in your criminal life, or use a random suggestion.",
             "values": [
                 "Blackmailer",
                 "Burglar",
@@ -182,7 +182,7 @@
         "feature": "by-popular-demand",
         "subtype": {
             "title": "Entertainer Routines",
-            "desc:": "A good entertainer is versatile, spicing up performances with a variety of routines. Consider having one to three routines defining your expertise as an entertainer.",
+            "desc": "A good entertainer is versatile, spicing up performances with a variety of routines. Describe one to three routines defining your expertise as an entertainer, or use a random suggestion.",
             "values": [
                 "Actor",
                 "Dancer",
@@ -249,7 +249,7 @@
         "feature": "rustic-hospitality",
         "subtype": {
             "title": "Defining Event",
-            "desc": "You previously pursued a simple profession among the peasantry. What was the event that set you on a different path and marked you for greater things?",
+            "desc": "You previously pursued a simple profession among the peasantry. What was the event that set you on a different path and marked you for greater things? Describe the defining event that marked you as a hero of the people, or use a random suggestion.",
             "values": [
                 "I stood up to a tyrants agents.",
                 "I saved people during a natural disaster.",
@@ -313,7 +313,7 @@
         "feature": "guild-membership",
         "subtype": {
             "title": "Guild Business",
-            "desc": "What is the nature of your guild?",
+            "desc": "Guilds are generally found in cities with many artisans practicing the same trade, but some are loose networks of artisans who each work in a different town. Describe the nature of your guild and its business, or use a random suggestion.",
             "values": [
                 "Alchemists and apothecaries",
                 "Armorers, locksmithes, and finesmiths",
@@ -383,7 +383,7 @@
         "feature": "discovery",
         "subtype": {
             "title": "Life Of Seclusion",
-            "desc": "What was the reason for your isolation?",
+            "desc": "What was the reason for your isolation, and what changed to allow you to end your solitude. Describe the nature of your seclusion, or use a random suggestion.",
             "values": [
                 "I was searching for spiritual enlightenment.",
                 "I was partaking of communal living in accordance with the dictates of a relgious order.",
@@ -489,7 +489,7 @@
         },
         "subtype": {
             "title": "Origin",
-            "desc": "Consider some of the distant lands you have visited, and how they impacted you, and what your occupation was during the time in the wild.",
+            "desc": "You've been to strange places and seen unfathomable things. Consider some of the distant lands you have visited and how they impacted you. Describe your occupation during your time in the wild, or use a random suggestion.",
             "values": [
                 "Forester",
                 "Trapper",
@@ -549,7 +549,7 @@
         "feature": "researcher",
         "subtype": {
             "title": "Specialty",
-            "desc:": "What was the nature of your scholarly training?",
+            "desc": "Describe the nature of your scholarly training, or use a random suggestion.",
             "values": [
                 "Alchemist",
                 "Astronomer",
@@ -659,6 +659,7 @@
         "feature": "military-rank",
         "subtype": {
             "title": "Specialty",
+            "desc": "During your time as a soldier, you had a specific role to play in your unit or army. Descibe your role, or use a random suggestion.",
             "values": [
                 "Officer",
                 "Scout",
