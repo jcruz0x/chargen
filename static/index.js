@@ -394,22 +394,22 @@ function setupSuggestionButton(prefix, section, subsection) {
         var background = bookdata.backgrounds[model.backgroundval];
         $textarea = $('#' + prefix + '-text');
         
-        var text = $textarea.val();
+        var text = $textarea.text();
 
-        while($textarea.val() === text) {
+        while($textarea.text() === text) {
             if (subsection === undefined)
                 text = sample(background[section]);
             else
                 text = sample(background[section][subsection]);
         }
 
-        $textarea.val(text);
+        $textarea.text(text);
     })
 }
 
 function clearTextFields(prefixes) {
     for (var i = 0; i < prefixes.length; i++)
-        $('#' + prefixes[i] + '-text').val('');
+        $('#' + prefixes[i] + '-text').text('');
 }
 
 function setupAllSuggestionButtons() {

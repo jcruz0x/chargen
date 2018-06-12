@@ -383,6 +383,13 @@ function getDomainDivView(domains) {
 let backgroundsJson = fs.readFileSync('bookdata/json/backgrounds.json', 'utf8');
 let backgrounds = JSON.parse(backgroundsJson);
 
+for (let bg in backgrounds) {
+    if (!backgrounds.hasOwnProperty(bg))
+        continue;
+    
+    
+}
+
 function getBgToolsDesc(tools, toolchoices) {
     let result = '';
 

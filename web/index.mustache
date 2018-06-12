@@ -81,7 +81,6 @@
             </tbody>
           </table>
 
-
         </section>
 
         <!-- RACE SECTION -->
@@ -115,7 +114,7 @@
             <tbody>
               {{#dragondata}}
                   <tr>
-                    <td class="table-radio">
+                    <td class="table-radio radio-padding-narrow">
                       <input type="radio" id="{{dragon}}-dragonborn-ancestry" name="dragonborn-ancestry" value="{{dragon}}">
                       <label for="{{dragon}}-dragonborn-ancestry">{{dragonname}}</label>
                     </td>
@@ -181,7 +180,7 @@
             </select>
           </div>
 
-          <table style="display: none" id="sorcerous-origin-table">
+          <table class="table-radio" style="display: none" id="sorcerous-origin-table">
             <caption>Draconic Ancestry</caption>
             <thead>
               <tr>
@@ -192,7 +191,7 @@
             <tbody>
               {{#dragondata}}
                   <tr>
-                    <td class="table-radio">
+                    <td class="table-radio radio-padding-wide">
                       <input type="radio" id="{{dragon}}-sorcerous-origin" name="sorcerous-origin" value="{{dragon}}">
                       <label for="{{dragon}}-sorcerous-origin">{{dragonname}}</label>
                     </td>
@@ -235,6 +234,10 @@
               </div>
             {{/warlockpatrons}}
           </div>
+
+          {{#fightingstyles}}
+          
+          {{/fightingstyles}}
 
           <div class="clear"></div>
         </section>
@@ -295,6 +298,8 @@
 
             <!-- background specific trait, e.g. favorite scam, guild business, etc -->
 
+            {{! <div class="editbox" contenteditable="true"></div> }}
+
             {{#backgroundSubtypes}}
               <div class="background-subtype-div" style="display: none" id="background-subtype-{{name}}">
                 <h3>{{title}}</h3>
@@ -305,7 +310,8 @@
             {{/backgroundSubtypes}}
 
             <div class="traitdiv" style="display: none" id="background-subtype-entry-div">
-              <textarea id="background-subtype-text" class="traitfield"></textarea>
+              {{! <textarea rows="4" id="background-subtype-text" class="traitfield"></textarea> }}
+              <div contenteditable="true" class="editbox smaller-editbox" id="background-subtype-text"></div>
               <button class="trait-button" id="background-subtype-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -323,12 +329,14 @@
             character apart from every other character.
             </p>
             <div class="traitdiv">
-              <textarea id="personality-trait-one-text" class="traitfield"></textarea>
+              {{! <textarea rows="4" id="personality-trait-one-text" class="traitfield"></textarea> }}
+              <div contenteditable="true" class="editbox" id="personality-trait-one-text"></div>
               <button class="trait-button" id="personality-trait-one-button">Suggestion</button>
             </div>
             <div class="clear"></div>
             <div class="traitdiv">
-              <textarea id="personality-trait-two-text" class="traitfield"></textarea>
+              {{! <textarea rows="4" id="personality-trait-two-text" class="traitfield"></textarea> }}
+              <div contenteditable="true" class="editbox" id="personality-trait-two-text"></div>
               <button class="trait-button" id="personality-trait-two-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -342,7 +350,8 @@
               fundamental moral and ethical principles that compel you to act as you do.
             </p>
             <div class="traitdiv">
-              <textarea id="ideal-text" class="traitfield"></textarea>
+              {{! <textarea rows="4" id="ideal-text" class="traitfield"></textarea> }}
+              <div contenteditable="true" class="editbox" id="ideal-text"></div>
               <button class="trait-button" id="ideal-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -356,7 +365,8 @@
               the world. 
             </p>
             <div class="traitdiv">
-              <textarea id="bond-text" class="traitfield"></textarea>
+              {{! <textarea rows="4" id="bond-text" class="traitfield"></textarea> }}
+              <div contenteditable="true" class="editbox" id="bond-text"></div>
               <button class="trait-button" id="bond-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -370,7 +380,8 @@
               compulsion, fear, or weakness.
             </p>
             <div class="traitdiv">
-              <textarea id="flaw-text" class="traitfield"></textarea>
+              {{! <textarea rows="4" id="flaw-text" class="traitfield"></textarea> }}
+              <div contenteditable="true" class="editbox" id="flaw-text"></div>
               <button class="trait-button" id="flaw-button">Suggestion</button>
             </div>
             <div class="clear"></div>
