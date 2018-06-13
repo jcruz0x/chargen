@@ -27,50 +27,26 @@ label {
     font-size: 20px;
     vertical-align: middle;
 }
-
-
-@media screen and (max-width: 1100px) {
-    #container {
-        margin: auto;
-    }
-
-    body {
-        background: white;
-    }
-
-    .side-image {
-        margin: 20px;
-    }
+.editbox {
+    /* background-color: snow; */
+    border-color: lightblue;
+    -webkit-box-shadow: inset 0px 0px 4px 0px #000;
+    box-shadow: inset 0px 0px 4px 0px #000;
+    border-style: solid;
+    border-width: 1px;
+    /* border-radius: 8px; */
+    padding: 5px 20px;
+    margin: 10px 0px;
+    text-align:left;
+    vertical-align: middle;
+    /* font-family: monospace; */
+    font-size: 16pt;
+    min-height: 3.5em;
 }
 
-@media screen and (max-width: 720px) {
-    #container {
-        font-size: 12pt;
-    }
-    
-    label {
-        font-size: 12pt;
-    }
-
-    .side-image {
-        box-sizing: border-box; 
-        width: 100%;
-        margin: 10px;
-    }
+.smaller-editbox {
+    min-height: 2.5em;
 }
-
-@media screen and (max-width: 400px) {
-    #container {
-        font-size: 10pt;
-        padding: 10px;
-    }
-
-    .side-image {
-        margin: 5px;
-    }
-}
-
-
 
 header {
     text-align: center;
@@ -112,6 +88,26 @@ table {
     width: 100%;
     table-layout: fixed;
     overflow-x: auto;
+    text-align: left;
+}
+
+table, th, td {
+    border-collapse: collapse;
+}
+
+
+th, td {
+    padding: 3px 0px;
+}
+
+@media screen and (min-width: 600px) {
+    th, td {
+        padding: 5px 40px;
+    }
+}
+
+.stats-table {
+    text-align: center;
 }
 
 @media screen and (min-width: 800px) {
@@ -131,20 +127,7 @@ li {
     padding-bottom: 15px;
 }
 
-table, th, td {
-    border-collapse: collapse;
-    text-align: center; 
-}
 
-.table-radio {
-    text-align: left;
-}
-
-@media screen and (min-width: 600px) {
-    .table-radio {
-        padding-left: 30px;
-    }    
-}
 
 caption {
     font-size: 130%;
@@ -208,12 +191,6 @@ th {
     animation-direction: alternate;
 }
 
-@media screen and (min-width: 900px) {
-    th {
-        min-width: 8em;
-    }
-}
-
 button {
     background: linear-gradient(firebrick, darkred);
     border: 2px solid rgb(36, 2, 2);
@@ -247,20 +224,15 @@ button {
 
 .traitfield {
     width: 100%;
-    /* height: 3em; */
     padding: 0.4em;
-    /* resize: none; */
     font-size: 18px;
-    /* font-family: Georgia, 'Times New Roman', Times, serif; */
 }
-
 
 @media screen and (max-width: 480px) {
     .big-button {
         width: 240px;
         margin: 10px 15px;
     }
-
 }
 
 .buttons-array {
@@ -284,13 +256,8 @@ button:hover {
 }
 
 button:active {
-    /* background: linear-gradient(firebrick, darkred); */
     background: linear-gradient(red, darkred);
 }
-
-/* #short-description {
-    text-align: center;
-} */
 
 .titlebox, .headline {
     font-family: Garamond, Georgia, 'Times New Roman', Times, serif;
@@ -308,7 +275,6 @@ button:active {
 .titlebox {
     line-height: 1;
 }
-
 
 .title {
     font-size: 36pt;
@@ -338,31 +304,74 @@ input[type=checkbox] {
     vertical-align: middle;
 }
 
-/* experiment with text entry alternatives: */
-.editbox {
-    /* background-color: snow; */
-    border-color: lightblue;
-    -webkit-box-shadow: inset 0px 0px 4px 0px #000;
-    box-shadow: inset 0px 0px 4px 0px #000;
-    border-style: solid;
-    border-width: 1px;
-    /* border-radius: 8px; */
-    padding: 5px 25px;
-    margin: 10px 0px;
-    text-align:left;
-    vertical-align: middle;
-    /* font-family: monospace; */
-    font-size: 16pt;
-    min-height: 3.5em;
+
+.shortform {
+    display: none;
 }
 
-.smaller-editbox {
-    min-height: 2.5em;
-}
-/* 
-@media screen and (max-width: 1200px) {
-    .editbox {
-        font-size: 40pt;
-        min-height: 6em;
+@media screen and (max-width: 1100px) {
+    #container {
+        margin: auto;
     }
-} */
+
+    body {
+        background: white;
+    }
+
+    .side-image {
+        margin: 20px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    #container {
+        font-size: 12pt;
+    }
+    
+    label {
+        font-size: 12pt;
+    }
+
+    .editbox {
+        font-size: 12pt;
+        padding: 3px 5px;
+        min-height: 5em;
+    }
+
+    .side-image {
+        box-sizing: border-box; 
+        width: 100%;
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .shortform {
+        display:inline;
+    }
+
+    .editbox {
+        font-size: 10pt;
+        padding: 3px 3px;
+    }
+
+    .longform {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #container {
+        font-size: 10pt;
+        padding: 10px;
+    }
+
+    .side-image {
+        margin: 5px;
+    }
+
+    .stats-table {
+        table-layout: auto;
+        font-size: 10pt;
+    }
+}

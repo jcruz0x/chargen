@@ -32,6 +32,7 @@ function getAbilityView() {
 
         let attribs = {};
         attribs.abilityname = abilities[ability].fullname;
+        attribs.shortname = util.capitalize(ability);
         attribs.abilityid = ability;
 
         view.push(attribs);
@@ -376,6 +377,25 @@ function getDomainDivView(domains) {
     return view;
 }
 
+function getFightingStyleView() {
+    let view = [];
+    let styles = features['fighting-style'].styles;
+    for (let style in styles) {
+        if (!styles.hasOwnProperty(style))
+            continue;
+
+        let item = {};
+
+        item.name = style;
+        item.fullname = util.keynameToFullname(style);
+        item.benefit = styles[style];
+
+        view.push(item);
+    }
+
+    return view;
+}
+
 // -------------------------------------------------- 
 // Backgrounds
 // -------------------------------------------------- 
@@ -386,8 +406,6 @@ let backgrounds = JSON.parse(backgroundsJson);
 for (let bg in backgrounds) {
     if (!backgrounds.hasOwnProperty(bg))
         continue;
-    
-    
 }
 
 function getBgToolsDesc(tools, toolchoices) {
@@ -502,6 +520,7 @@ function getView() {
     view.classes = getClassDivView();
     view.divinedomains = getDomainDivView(classes.cleric.domains);
     view.warlockpatrons = getDomainDivView(classes.warlock.patrons);
+    view.fightingstyles = getFightingStyleView();
 
     let bgViews = getBackgroundViews();
 

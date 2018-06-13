@@ -338,6 +338,7 @@ function selectClass(changeto) {
     selectSorcerousOrigin();
     conditionallyShow('#divine-domains', classval === 'cleric');
     conditionallyShow('#warlock-patrons', classval === 'warlock');
+    conditionallyShow('#fighting-style-table', classval === 'fighter');
 }
 
 function selectSorcerousOrigin() {

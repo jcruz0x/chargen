@@ -61,17 +61,17 @@
           <table class="stats-table">
             <thead>
               <tr>
-                <th>Ability</th>
+                <th><span class="longform">Ability</span><span class="shortform">Ab.</span></th>
                 <th><b>Roll</b></th>
-                <th>Racial Bonuses</th>
+                <th> <span class="longform">Racial Bonuses</span> <span class="shortform">+/-</span> </th>
                 <th>Score</th>
-                <th>Ability Modifier</th>
+                <th> <span class="longform">Ability Modifier</span> <span class="shortform">Mod</span></th>
               </tr>
             </thead>
             <tbody>
             {{#abilities}}
               <tr>
-                <td>{{abilityname}}</td>
+                <td> <span class="longform">{{abilityname}}</span> <span class="shortform">{{shortname}}</span> </td>
                 <td><div class="rolled-score grabbable" id="{{abilityid}}" draggable="true">10</div></td>
                 <td id="{{abilityid}}-bonus"> </td>
                 <td id="{{abilityid}}-final"> </td>
@@ -114,7 +114,7 @@
             <tbody>
               {{#dragondata}}
                   <tr>
-                    <td class="table-radio radio-padding-narrow">
+                    <td>
                       <input type="radio" id="{{dragon}}-dragonborn-ancestry" name="dragonborn-ancestry" value="{{dragon}}">
                       <label for="{{dragon}}-dragonborn-ancestry">{{dragonname}}</label>
                     </td>
@@ -180,7 +180,7 @@
             </select>
           </div>
 
-          <table class="table-radio" style="display: none" id="sorcerous-origin-table">
+          <table style="display: none" id="sorcerous-origin-table">
             <caption>Draconic Ancestry</caption>
             <thead>
               <tr>
@@ -191,13 +191,34 @@
             <tbody>
               {{#dragondata}}
                   <tr>
-                    <td class="table-radio radio-padding-wide">
+                    <td>
                       <input type="radio" id="{{dragon}}-sorcerous-origin" name="sorcerous-origin" value="{{dragon}}">
                       <label for="{{dragon}}-sorcerous-origin">{{dragonname}}</label>
                     </td>
                     <td>{{damage}}</td>
                   </tr>
               {{/dragondata}}
+            </tbody>
+          </table>
+
+          <table style="display: none" id="fighting-style-table">
+            <caption>Fighting Style</caption>
+            <thead>
+              <tr>
+                <th>Style</th>
+                <th>Benefits</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#fightingstyles}}
+                  <tr>
+                    <td>
+                      <input type="radio" id="{{name}}-fighting-style" name="sorcerous-origin" value="{{name}}">
+                      <label for="{{name}}-fighting-style">{{fullname}}</label>
+                    </td>
+                    <td>{{benefit}}</td>
+                  </tr>
+              {{/fightingstyles}}
             </tbody>
           </table>
 
@@ -234,10 +255,6 @@
               </div>
             {{/warlockpatrons}}
           </div>
-
-          {{#fightingstyles}}
-          
-          {{/fightingstyles}}
 
           <div class="clear"></div>
         </section>
