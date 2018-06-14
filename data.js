@@ -42,16 +42,12 @@ function getAbilityView() {
     return view;
 }
 
-
-
 // -------------------------------------------------- 
 // Race and Class Features
 // -------------------------------------------------- 
 
 let featuresJson = fs.readFileSync('bookdata/json/features.json', 'utf8');
 let features = JSON.parse(featuresJson);
-
-
 
 // -------------------------------------------------- 
 // Races
@@ -211,10 +207,6 @@ for (let keyname in classes) {
 
     let _class = classes[keyname];
     _class.fullname = util.keynameToFullname(keyname);
-
-    // let desc = fs.readFileSync(`bookdata/md/${keyname}.md`, 'utf8');
-    // charclass.htmlDesc = markdownConverter.makeHtml(desc);
-
     _class.htmlDesc = util.getBookMdAsHtml(keyname + '.md');
 }
 
@@ -256,7 +248,7 @@ function getSavingThrowsDesc(throws) {
 }
 
 function getSkillsDesc(skillchoices) {
-    if (skillchoices.from == 'all')
+    if (skillchoices.from.length === 1 && skillchoices.from[0] === 'skills')
         return `Choose ${skillchoices.count} skills.`;
 
     let fromlist = joinFullnames(skillchoices.from);
@@ -399,9 +391,6 @@ function getFightingStyleView() {
     return view;
 }
 
-
-
-
 // -------------------------------------------------- 
 // Backgrounds
 // -------------------------------------------------- 
@@ -409,20 +398,25 @@ function getFightingStyleView() {
 let backgroundsJson = fs.readFileSync('bookdata/json/backgrounds.json', 'utf8');
 let backgrounds = JSON.parse(backgroundsJson);
 
-for (let bg in backgrounds) {
-    if (!backgrounds.hasOwnProperty(bg))
+for (let bgkey in backgrounds) {
+    if (!backgrounds.hasOwnProperty(bgkey))
         continue;
+
+    let bg = backgrounds[bgkey];
+
+    if (bg.fullname === undefined)
+        bg.fullname = util.keynameToFullname(bgkey);
 }
 
-function getBgToolsDesc(tools, toolchoices) {
+function getBgToolsDesc(bg) {
     let result = '';
 
-    if (tools != undefined)
-        result += joinFullnames(tools) + '. ';
+    if (bg.tools != undefined)
+        result += joinFullnames(bg.tools) + '. ';
     
-    if (toolchoices != undefined) {
-        let fromlist = joinFullnames(tools.from);
-        result += `Choose ${tools.count} from ${fromlist}.`;
+    if (bg.toolchoice != undefined) {
+        let fromlist = joinFullnames(bg.toolchoice.from);
+        result += `Choose ${bg.toolchoice.count} from ${fromlist}.`;
     }
 
     return result;
@@ -446,7 +440,7 @@ function getBackgroundViews() {
         bgview.html = util.getBookMdAsHtml(keyname + '.md');
 
         bgview.skills = joinFullnames(bg.skills);
-        bgview.tools = getBgToolsDesc(bg.tools || []);
+        bgview.tools = getBgToolsDesc(bg);
         
         if (bg.languages !== undefined && bg.languages > 0) {
             let numstr = util.capitalize(util.smallNumberToString(bg.languages));
@@ -486,7 +480,7 @@ function getBackgroundViews() {
 // -------------------------------------------------- 
 
 let expansionJson = fs.readFileSync('bookdata/json/expansions.json', 'utf8');
-let expansions = JSON.parse(expansions);
+let expansions = JSON.parse(expansionJson);
 
 function getExpertiseView() {
     let view = [];
@@ -507,11 +501,22 @@ function getExpertiseView() {
     return view;
 }
 
+function profExpand(list) {
+    let newlist = [];
+    for (let prof of list) {
+        if (expansions.hasOwnProperty(prof)) {
+            newlist = newlist.concat(expansions[prof]);
+        } else {
+            newlist.push(prof);
+        }
+    }
+    return newlist;
+}
+
 let profsources;
 
 function gatherProficiencies() {
     profsources = [];
-
     for (let classkey in classes) {
         if (!classes.hasOwnProperty(classkey))
             continue;
@@ -523,7 +528,7 @@ function gatherProficiencies() {
         skillsource.title = _class.fullname + ' Skills'
         skillsource.list = []
         skillsource.count = _class.skills.count;
-        skillsource.choices = _class.skills.from;
+        skillsource.choices = profExpand(_class.skills.from);
         profsources.push(skillsource);
 
         if (_class.tools !== undefined) {
@@ -537,7 +542,7 @@ function gatherProficiencies() {
             } else {
                 toolsource.list = [];
                 toolsource.count = _class.tools.count;
-                toolsource.choices = _class.tools.from;
+                toolsource.choices = profExpand(_class.tools.from);
             }
 
             profsources.push(toolsource);
@@ -548,8 +553,7 @@ function gatherProficiencies() {
         wasource.title = _class.fullname + ' Weapon and Armor Proficiencies';
         wasource.count = 0;
         wasource.choices = [];
-        wasource.list = [].concat(_class.armorprof);
-        wasource.list = wasource.list.concat(_class.weaponprof);
+        wasource.list = _class.armorprof.concat(_class.weaponprof);
         profsources.push(wasource)
     }
     
@@ -558,16 +562,20 @@ function gatherProficiencies() {
             continue;
 
         let feature = features[featurekey];
-        let profsoure = {};
+        let pchoices = feature['proficiency-choices'];
+
+        if (feature.proficiencies === undefined && pchoices === undefined)
+            continue;
+
+        let profsource = {};
 
         profsource.sourcekey = featurekey;
         profsource.title = feature.proftitle || feature.fullname || util.keynameToFullname(featurekey);
         profsource.list = feature.proficiencies || [];
         
-        let pchoices = feature['proficiency-choices'];
         if (pchoices !== undefined) {
             profsource.count = pchoices.count;
-            profsource.choices = pchoices.from; 
+            profsource.choices = profExpand(pchoices.from); 
         }
         else {
             profsource.count = 0;
@@ -577,7 +585,70 @@ function gatherProficiencies() {
         profsources.push(profsource);
     }
 
+    for (let bgkey in backgrounds) {
+        if (!backgrounds.hasOwnProperty(bgkey))
+            continue;
+
+        let bg = backgrounds[bgkey];
+
+        let skillsource = {};
+        skillsource.sourcekey = bgkey;
+        skillsource.title = bg.fullname + " Skills";
+        skillsource.list = bg.skills || [];
+        skillsource.count = 0;
+        skillsource.choices = [];
+        profsources.push(skillsource);
+
+
+        if ((bg.tools && bg.tools.length > 0) || bg.toolchoice) {
+
+            let toolsource = {};
+            toolsource.sourcekey = bgkey;
+            toolsource.title = bg.fullname + " Tool Proficiencies";
+            toolsource.list = bg.tools || [];
+    
+            if (bg.toolchoice != undefined) {
+                toolsource.count = bg.toolchoice.count;
+                toolsource.choices = profExpand(bg.toolchoice.from);
+            } else {
+                toolsource.count = 0;
+                toolsource.choices = [];
+            }
+    
+            profsources.push(toolsource);
+        }
+    }
 }
+
+function getProfSourceView() {
+    let view = [];
+
+    for (let source of profsources) {
+        let item = {
+            sourcekey: source.sourcekey,
+            title: source.title,
+            list: util.allKeynamesToFullnames(source.list),
+            dropdowns: []
+        }
+
+        for (let i = 0; i < source.count; i++) {
+            let dropdownitems = []; 
+            for (let choice of source.choices) {
+                dropdownitems.push({
+                    choicekey: choice,
+                    choicename: util.keynameToFullname(choice)
+                })
+            }
+            item.dropdowns.push({ dropdownitems });
+        }
+
+        view.push(item);
+    }
+
+    return view;
+}
+
+gatherProficiencies();
 
 // -------------------------------------------------- 
 // Main View Creation
@@ -597,11 +668,12 @@ function getView() {
     view.expertiseskills = getExpertiseView();
 
     let bgViews = getBackgroundViews();
-
     view.backgrounds = bgViews.bgViews;
     view.backgroundSubtypes = bgViews.bgSubtypeViews;
-    view.backgroundVariantFeatureschoice = bgViews.bgVariantFeatureViews;
+    view.backgroundVariantFeatures = bgViews.bgVariantFeatureViews;
     view.backgroundVariants = bgViews.bgVariantViews;
+
+    view.profSources = getProfSourceView();
 
     return view;
 }

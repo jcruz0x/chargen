@@ -14,6 +14,14 @@ function keynameToFullname(str) {
     return arr.join(' ');
 }
 
+function allKeynamesToFullnames(arr) {
+    let newarr = [];
+    for (let item of arr) {
+        newarr.push(keynameToFullname(item));
+    }
+    return newarr;
+}
+
 function capitalize(str) {
     return str[0].toUpperCase() + str.substr(1);
 }
@@ -41,3 +49,4 @@ exports.capitalize = capitalize;
 exports.keynameToFullname = keynameToFullname;
 exports.getBookMdAsHtml = getBookMdAsHtml;
 exports.smallNumberToString = smallNumberToString;
+exports.allKeynamesToFullnames = allKeynamesToFullnames;

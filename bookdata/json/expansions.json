@@ -1,0 +1,59 @@
+{
+    "skills": [
+        "acrobatics",
+        "animal-handling",
+        "arcana",
+        "athletics",
+        "deception",
+        "history",
+        "insight",
+        "intimidation",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "performance",
+        "persuasion",
+        "religion",
+        "sleight-of-hand",
+        "stealth",
+        "survival"
+    ],
+    "artisans-tools": [
+        "alchemists-supplies",
+        "brewers-supplies",
+        "calligraphers-supplies",
+        "carpenters-tools",
+        "cartographers-tools",
+        "cobblers-tools",
+        "cooks-utensils",
+        "glassblowers-tools",
+        "jewelers-tools",
+        "leatherworkers-tools",
+        "masons-tools",
+        "painters-supplies",
+        "potters-tools",
+        "smiths-tools",
+        "tinkers-tools",
+        "weavers-tools",
+        "woodcarvers-tools"
+    ],
+    "gaming-set": [
+        "dice-set",
+        "dragonchess-set",
+        "playing-card-set",
+        "three-dragon-ante"
+    ],
+    "musical-instrument": [
+        "bagpipes",
+        "drum",
+        "dulcimer",
+        "flute",
+        "lute",
+        "lyre",
+        "horn",
+        "pan-flute",
+        "shawm",
+        "viol"
+    ]
+}

@@ -29,6 +29,14 @@ function newModel() {
     model.abilityModifiers = {};
 }
 
+function getAllFeatures() {
+    var classFeatures = bookdata.classes[model.classval].features;
+    var raceFeatures = bookdata.races[model.raceval].features;
+    var bgFeatures = bookdata.backgrounds[model.backgroundval].features;
+
+    return classFeatures.concat(raceFeatures, classFeatures, bgFeatures);
+}
+
 // --------------------------------------------------
 // Misc / Util
 // --------------------------------------------------
@@ -423,6 +431,22 @@ function setupAllSuggestionButtons() {
     setupSuggestionButton('flaw', 'flaws');
 }
 
+// --------------------------------------------------
+// Proficiencies
+// --------------------------------------------------
+
+function updateProficiencies() {
+    $('.prof-source-div').hide();
+    
+    $('.' + model.raceval + '-prof-source-div').show();
+    $('.' + model.classval + '-prof-source-div').show();
+    $('.' + model.backgroundval + '-prof-source-div').show();
+
+    var allFeatures = getAllFeatures();
+    for (var i = 0; i < allFeatures.length; i++) {
+        $('.' + allFeatures[i] + '-prof-source-div').show();
+    }
+}
 
 // --------------------------------------------------
 // Page
@@ -437,29 +461,36 @@ function pageinit() {
     selectDomain(model.domainval);
     selectPatron(model.patronval);
     selectBackground(model.backgroundval)
+    updateProficiencies();
 
     $('#race-dropdown').change(function() {
         selectRace();
+        updateProficiencies();
     })
 
     $('#class-dropdown').change(function() {
         selectClass();
+        updateProficiencies();
     })
 
     $('#domain-dropdown').change(function() {
         selectDomain();
+        updateProficiencies();
     })
 
     $('#patron-dropdown').change(function() {
         selectPatron();
+        updateProficiencies();
     })
 
     $('#sorcerous-origin-dropdown').change(function() {
         selectSorcerousOrigin();
+        updateProficiencies();
     })
 
     $('#background-dropdown').change(function() {
         selectBackground();
+        updateProficiencies();
     })
 
     $('#abilities-roll-button').click(function() {

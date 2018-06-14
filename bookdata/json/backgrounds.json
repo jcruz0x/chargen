@@ -108,7 +108,7 @@
         "tools": [
             "thieves-tools"
         ],
-        "tool-choice": {
+        "toolchoice": {
             "count": 1,
             "from": [
                 "gaming-set"
@@ -173,7 +173,7 @@
         "tools": [
             "disguise-kit"
         ],
-        "tool-choice": {
+        "toolchoice": {
             "count": 1,
             "from": [
                 "musical-instrument"
@@ -240,7 +240,7 @@
         "tools": [
             "land-vehicles"
         ],
-        "tool-choice": {
+        "toolchoice": {
             "count": 1,
             "from": [
                 "artisans-tools"
@@ -303,7 +303,7 @@
             "insight",
             "persuasion"
         ],
-        "tool-choice": {
+        "toolchoice": {
             "count": 1,
             "from": [
                 "artisans-tools"
@@ -431,7 +431,7 @@
             "history",
             "persuasion"
         ],
-        "tool-choice": {
+        "toolchoice": {
             "count": 1,
             "from": [
                 "gaming-set"
@@ -481,7 +481,7 @@
             "athletics",
             "survival"
         ],
-        "tool-choice": {
+        "toolchoice": {
             "count": 1,
             "from": [
                 "musical-instrument"
@@ -650,7 +650,7 @@
         "tools": [
             "land-vehicles"
         ],
-        "tool-choice": {
+        "toolchoice": {
             "choice": 1,
             "from": [
                 "gaming-set"

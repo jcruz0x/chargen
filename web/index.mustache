@@ -427,13 +427,28 @@
 
         <section>
           <h2 class="headline">Proficiencies</h2>
-          <div class="checkboxes">
-            {{#skills}}
-              <input type="checkbox" id="{{skillchoice}}" name="skills" value="{{skillval}}"><label for="{{skillchoice}}"><span>{{skillname}}</span></label><br>
-            {{/skills}}
-          </div>
-        </section>
+          <ul class="two-column">
+            {{#profSources}}
+              <li class="{{sourcekey}}-prof-source-div prof-source-div two-column">
+                <h4> {{title}} </h4>
+                <ul>
+                  {{#list}}
+                    <li>{{.}}</li>
+                  {{/list}}
+                </ul>
+                {{#dropdowns}}
+                  <select id="{{sourcekey}}-prof-dropdown">
+                    {{#dropdownitems}}
+                      <option value={{choicekey}}>{{choicename}}</option>
+                    {{/dropdownitems}}
+                  </select>
+                {{/dropdowns}}
+              </li>
+            {{/profSources}}
+          </ul>
 
+
+        </section>
 
         <!-- DESCRIPTION SECTION -->
 

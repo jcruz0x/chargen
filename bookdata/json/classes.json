@@ -54,7 +54,7 @@
         ],
         "skills": {
             "count": 3,
-            "from": "all"
+            "from": ["skills"]
         },
         "features": [
             "bardic-spellcasting",
