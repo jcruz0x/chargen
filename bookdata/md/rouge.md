@@ -7,7 +7,7 @@ into thieves' guilds or crime families.
 A few rogues make an honest living as
 locksmiths, investigators, or exterminators, which can
 be a dangerous job in a world where dire rats and
-wererats haunt the sewers. As adventurers, rogues fall 
+were-rats haunt the sewers. As adventurers, rogues fall 
 on both sides of the law.
 
 Rogues rely on skill, stealth, and their foes'

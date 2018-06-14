@@ -1,4 +1,4 @@
-Far fram the bustle of cities and towns, past the
+Far from the bustle of cities and towns, past the
 hedges that shelter the most distant farms from the
 terrors of the wild, amid the dense-packed trees of
 trackless forests and across wide and empty plains,
@@ -6,7 +6,7 @@ rangers keep their unending watch.
 
 Though a ranger might make a living as a hunter, a
 guide, or a tracker, a ranger's true calling is to defend
-the outskirts of civilization fram lhe ravages of monsters
+the outskirts of civilization from lhe ravages of monsters
 and humanoid hordes that press in from the wild. In
 some places, rangers gather in secretive orders or join
 forces with druidic circles. 

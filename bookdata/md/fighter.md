@@ -8,7 +8,7 @@ staring it defiantly in the face.
 
 Fighters learn the basics of all combat styles. Every
 fighter can swing an axe, fence with a rapier, wield a
-longsword or a greatsword, or use a bow. Beyond that
+long-sword or a great-sword, or use a bow. Beyond that
 basic degree of familiarity, each fighter specializes in a
 certain style of combat. Some concentrate on archery,
 some on fighting with two weapons at once, and some

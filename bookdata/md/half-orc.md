@@ -4,7 +4,7 @@ of civilized lands nearby. When these alliances are
 sealed by marriages, half-orcs are born. 
 
 Some half-orcs
-rise to beeome proud chiefs of orc tribes, their human
+rise to become proud chiefs of orc tribes, their human
 blood giving them an edge over their full-blooded orc
 rivals. Some venture into the world to prove their worth
 among humans and other more civilized races. Many of

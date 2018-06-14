@@ -10,7 +10,7 @@ spells and powers.
 The greatest strength of bards is their sheer
 versatility. Many bards prefer to stick to the sidelines
 in combat, using their magic to inspire their allies and
-hinder their foes fram a distance. But bards are capable
+hinder their foes from a distance. But bards are capable
 of defending themselves in melee if necessary, using
 their magic to bolster their swords and armor. Their
 spells lean toward charms and illusions and 

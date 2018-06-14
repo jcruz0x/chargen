@@ -6,7 +6,7 @@ and brute-force mind control. Their magic conjures
 monsters from other planes of existence, glimpses the
 future, or turns slain foes into zombies. Their mightiest
 spells change one substance into another, call meteors
-down from the sky, or open portaIs to other worlds.
+down from the sky, or open portals to other worlds.
 
 Wizards' lives are seldom mundane, The closest a
 wizard is likely to come to an ordinary life is working
