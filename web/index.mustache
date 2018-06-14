@@ -213,7 +213,7 @@
               {{#fightingstyles}}
                   <tr>
                     <td>
-                      <input type="radio" id="{{name}}-fighting-style" name="sorcerous-origin" value="{{name}}">
+                      <input type="radio" id="{{name}}-fighting-style" name="fighting-style" value="{{name}}">
                       <label for="{{name}}-fighting-style">{{fullname}}</label>
                     </td>
                     <td>{{benefit}}</td>
@@ -254,6 +254,23 @@
                 {{{html}}}
               </div>
             {{/warlockpatrons}}
+          </div>
+
+          <div class="centered" style="display: none" id="expertise-div">
+            <h3>Expertise</h3>
+            <p>
+            Select two skills you will be taking, or thieves tools and a skill.
+            </p>
+            <select id="expertise-dropdown-one">
+              {{#expertiseskills}}
+                <option value="{{name}}">{{fullname}}</option>
+              {{/expertiseskills}}
+            </select>
+            <select id="expertise-dropdown-one">
+              {{#expertiseskills}}
+                <option value="{{name}}">{{fullname}}</option>
+              {{/expertiseskills}}
+            </select>
           </div>
 
           <div class="clear"></div>
@@ -406,10 +423,10 @@
 
         </section>
 
-        <!-- BACKGROUND SECTION -->
+        <!-- PROFICIENCIES SECTION -->
 
         <section>
-          <h2 class="headline">Skills</h2>
+          <h2 class="headline">Proficiencies</h2>
           <div class="checkboxes">
             {{#skills}}
               <input type="checkbox" id="{{skillchoice}}" name="skills" value="{{skillval}}"><label for="{{skillchoice}}"><span>{{skillname}}</span></label><br>

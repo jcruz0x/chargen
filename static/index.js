@@ -339,6 +339,7 @@ function selectClass(changeto) {
     conditionallyShow('#divine-domains', classval === 'cleric');
     conditionallyShow('#warlock-patrons', classval === 'warlock');
     conditionallyShow('#fighting-style-table', classval === 'fighter');
+    conditionallyShow('#expertise-div', classval === 'rouge');
 }
 
 function selectSorcerousOrigin() {
@@ -479,7 +480,9 @@ function pageinit() {
         updateAbilities();
     })
 
-    // $('#classdiv-fighter').show();
+    $('#black-dragonborn-ancestry').prop("checked", true);
+    $('#black-sorcerous-origin').prop("checked", true);
+    $('#archery-fighting-style').prop("checked", true);
 }
 
 var bookdata;

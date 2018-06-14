@@ -15,6 +15,7 @@ let desclistTwoColTemplate = fs.readFileSync('web/desclist-twocolumn.mustache', 
 // Abilities
 // -------------------------------------------------- 
 
+
 let abilities = { 
     'str': { fullname: "Strength", },
     'dex': { fullname: "Dexterity", },
@@ -42,6 +43,7 @@ function getAbilityView() {
 }
 
 
+
 // -------------------------------------------------- 
 // Race and Class Features
 // -------------------------------------------------- 
@@ -49,10 +51,11 @@ function getAbilityView() {
 let featuresJson = fs.readFileSync('bookdata/json/features.json', 'utf8');
 let features = JSON.parse(featuresJson);
 
+
+
 // -------------------------------------------------- 
 // Races
 // -------------------------------------------------- 
-
 
 let raceJson = fs.readFileSync('bookdata/json/races.json', 'utf8');
 let races = JSON.parse(raceJson);
@@ -206,13 +209,13 @@ for (let keyname in classes) {
     if (!classes.hasOwnProperty(keyname))
         continue;
 
-    let charclass = classes[keyname];
-    charclass.fullname = util.keynameToFullname(keyname);
+    let _class = classes[keyname];
+    _class.fullname = util.keynameToFullname(keyname);
 
     // let desc = fs.readFileSync(`bookdata/md/${keyname}.md`, 'utf8');
     // charclass.htmlDesc = markdownConverter.makeHtml(desc);
 
-    charclass.htmlDesc = util.getBookMdAsHtml(keyname + '.md');
+    _class.htmlDesc = util.getBookMdAsHtml(keyname + '.md');
 }
 
 function appendHitDieFeatures(charclass, items) {
@@ -235,7 +238,7 @@ function appendHitDieFeatures(charclass, items) {
 }
 
 function joinFullnames(keynames) {
-    if (keynames.length == 0)
+if (keynames.length == 0)
         return "None";
 
     let fullnames = [];
@@ -396,6 +399,9 @@ function getFightingStyleView() {
     return view;
 }
 
+
+
+
 // -------------------------------------------------- 
 // Backgrounds
 // -------------------------------------------------- 
@@ -476,39 +482,106 @@ function getBackgroundViews() {
 }
 
 // -------------------------------------------------- 
-// Skills
+// Skills and Proficienies
 // -------------------------------------------------- 
 
-// testdata
-let skills = [
-    'acrobatics',
-    'perception',
-    'stealth',
-]
+let expansionJson = fs.readFileSync('bookdata/json/expansions.json', 'utf8');
+let expansions = JSON.parse(expansions);
 
-// -------------------------------------------------- 
-// Other
-// -------------------------------------------------- 
-
-function getInputView(prefix, items) {
+function getExpertiseView() {
     let view = [];
+    let skills = expansions.skills;
 
-    // attributes
-    let choice = prefix + "choice";
-    let val = prefix + "val";
-    let name = prefix + "name";
-
-    for (let item of items) {
-        let attribs = {};
-        attribs[choice] = item + "-choice"
-        attribs[val] = item;
-        attribs[name] = util.capitalize(item);
-        
-        view.push(attribs);
+    for (let i = 0; i < skills.length; i++) {
+        view.push({
+            name: skills[i],
+            fullname: util.keynameToFullname(skills[i])
+        })
     }
+    
+    view.push({
+        name: "thieves-tools",
+        fullname: "Thieves Tools"
+    });
 
     return view;
 }
+
+let profsources;
+
+function gatherProficiencies() {
+    profsources = [];
+
+    for (let classkey in classes) {
+        if (!classes.hasOwnProperty(classkey))
+            continue;
+
+        let _class = classes[classkey];
+
+        let skillsource = {}
+        skillsource.sourcekey = classkey;
+        skillsource.title = _class.fullname + ' Skills'
+        skillsource.list = []
+        skillsource.count = _class.skills.count;
+        skillsource.choices = _class.skills.from;
+        profsources.push(skillsource);
+
+        if (_class.tools !== undefined) {
+            let toolsource = {}
+            toolsource.sourcekey = classkey;
+            toolsource.title = _class.fullname + ' Tool Proficiencies'
+            if (Array.isArray(_class.tools)) {
+                toolsource.list = _class.tools;
+                toolsource.count = 0;
+                toolsource.choices = [];
+            } else {
+                toolsource.list = [];
+                toolsource.count = _class.tools.count;
+                toolsource.choices = _class.tools.from;
+            }
+
+            profsources.push(toolsource);
+        }
+
+        let wasource = {};
+        wasource.sourcekey = classkey;
+        wasource.title = _class.fullname + ' Weapon and Armor Proficiencies';
+        wasource.count = 0;
+        wasource.choices = [];
+        wasource.list = [].concat(_class.armorprof);
+        wasource.list = wasource.list.concat(_class.weaponprof);
+        profsources.push(wasource)
+    }
+    
+    for (let featurekey in features) {
+        if (!features.hasOwnProperty(featurekey))
+            continue;
+
+        let feature = features[featurekey];
+        let profsoure = {};
+
+        profsource.sourcekey = featurekey;
+        profsource.title = feature.proftitle || feature.fullname || util.keynameToFullname(featurekey);
+        profsource.list = feature.proficiencies || [];
+        
+        let pchoices = feature['proficiency-choices'];
+        if (pchoices !== undefined) {
+            profsource.count = pchoices.count;
+            profsource.choices = pchoices.from; 
+        }
+        else {
+            profsource.count = 0;
+            profsource.choices = [];
+        }
+
+        profsources.push(profsource);
+    }
+
+}
+
+// -------------------------------------------------- 
+// Main View Creation
+// -------------------------------------------------- 
 
 function getView() {
     let view = {};
@@ -521,16 +594,14 @@ function getView() {
     view.divinedomains = getDomainDivView(classes.cleric.domains);
     view.warlockpatrons = getDomainDivView(classes.warlock.patrons);
     view.fightingstyles = getFightingStyleView();
+    view.expertiseskills = getExpertiseView();
 
     let bgViews = getBackgroundViews();
 
     view.backgrounds = bgViews.bgViews;
     view.backgroundSubtypes = bgViews.bgSubtypeViews;
-    view.backgroundVariantFeatures = bgViews.bgVariantFeatureViews;
+    view.backgroundVariantFeatureschoice = bgViews.bgVariantFeatureViews;
     view.backgroundVariants = bgViews.bgVariantViews;
-
-    // temporary:
-    view.skills = getInputView('skill', skills); 
 
     return view;
 }

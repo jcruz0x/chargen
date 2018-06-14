@@ -304,7 +304,7 @@
             "persuasion"
         ],
         "tool-choice": {
-            "choice": 1,
+            "count": 1,
             "from": [
                 "artisans-tools"
             ]

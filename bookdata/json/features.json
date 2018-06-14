@@ -22,7 +22,7 @@
             "You gain proficiency with one of: smiths tools, brewers supplies, or masons tools.",
         "proficiency-choices": {
             "count": 1,
-            "choices": [
+            "from": [
                 "smiths-tools",
                 "brewers-supplies",
                 "masons-tools"
@@ -342,6 +342,7 @@
             "You learn two languages of your choice. You also become proficient in your choice of two of the following skills: Arcana, History, Nature, or Religion. Your proficiency bonus is doubled for any ability check you make that uses either of those skills."
     },
     "domain-heavy-armor": {
+        "proftitle": "Domain Bonus Proficiency",
         "fullname": "Bonus Proficiency",
         "description":
             "You gain proficiency with heavy armor.",
@@ -350,6 +351,7 @@
         ]
     },
     "domain-heavy-armor-martial-weapons": {
+        "proftitle": "Domain Bonus Proficiencies",
         "fullname": "Bonus Proficiencies",
         "description":
             "You gain proficiency with heavy armor and martial weapons.",
