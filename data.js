@@ -3,10 +3,12 @@
 let fs = require('fs');
 let showdown = require('showdown');
 let mustache = require('mustache');
+let database = require('better-sqlite3');
 
 let util = require('./util.js');
 
 let markdownConverter = new showdown.Converter();
+let bookdb = new database('db/bookdb.sqlite', {readonly: true, fileMustExist: true});
 
 let desclistTemplate = fs.readFileSync('web/desclist.mustache', 'utf8');
 let desclistTwoColTemplate = fs.readFileSync('web/desclist-twocolumn.mustache', 'utf8');
@@ -14,7 +16,6 @@ let desclistTwoColTemplate = fs.readFileSync('web/desclist-twocolumn.mustache', 
 // -------------------------------------------------- 
 // Abilities
 // -------------------------------------------------- 
-
 
 let abilities = { 
     'str': { fullname: "Strength", },
@@ -651,6 +652,157 @@ function getProfSourceView() {
 gatherProficiencies();
 
 // -------------------------------------------------- 
+// Equipment
+// -------------------------------------------------- 
+
+// get data synchronously from db
+let weapons = bookdb.prepare('SELECT * FROM weapons').all();
+let armors = bookdb.prepare('SELECT * FROM armor').all();
+let items = bookdb.prepare('SELECT * FROM items').all();
+let packs = bookdb.prepare('SELECT * FROM packs').all();
+
+for (let weapon of weapons) {
+    if (weapon.properties !== '' && weapon.properties.trim() !== '') 
+        weapon.proparr = weapon.properties.split(' ');
+    else 
+        weapon.proparr = [];
+
+    let niceprops = [];
+
+    for (let prop of weapon.proparr) {
+        if (prop === 'versatile-8')
+            prop = 'versatile (d8)';
+        else if (prop === 'versatile-10')
+            prop = 'versatile (d10)';
+        else if (prop === 'ammunition' || prop === 'thrown')
+            prop += ` (range ${weapon.near}/${weapon.far})`
+
+        niceprops.push(prop);
+    }
+
+    if (niceprops.length > 0) {
+        niceprops[0] = util.capitalize(niceprops[0]);
+        weapon.propdesc = niceprops.join(', ');
+    } else {
+        weapon.propdesc = '--';
+    }
+}
+
+let damageTypes = {
+    p: 'piercing',
+    b: 'bludgeoning',
+    s: 'slashing'
+}
+
+function damageStr(dice, damagetype) {
+    return `${dice} ${damageTypes[damagetype]}`;
+}
+
+function getWeaponView() {
+    let view = [];
+    for (let weapon of weapons) {
+        let viewitem = {};
+
+        viewitem.keyname = weapon.keyname;
+        viewitem.fullname = weapon.fullname;
+        viewitem.cost = goldStr(weapon.cost);
+        viewitem.damage = damageStr(weapon.damage, weapon.type);
+        viewitem.weight = weightStr(weapon.weight) ;
+        viewitem.properties = weapon.propdesc;
+
+        view.push(viewitem);
+    }
+
+    return view;
+}
+
+function getArmorView() {
+    let view = [];
+    for (let armor of armors) {
+        let viewitem = {};
+
+        viewitem.keyname = armor.keyname;
+        viewitem.fullname = armor.fullname;
+        viewitem.category = util.keynameToFullname(armor.category);
+        viewitem.cost = goldStr(armor.cost);
+        viewitem.desc = armor.desc;
+        viewitem.stealth = armor.stealth || '--';
+        viewitem.weight = weightStr(armor.weight);
+
+        view.push(viewitem);
+    }
+
+    return view;
+}
+
+function getPackView() {
+    let view = [];
+    for (let pack of packs) {
+        let viewitem = {};
+
+        viewitem.keyname = pack.keyname;
+        viewitem.fullname = pack.fullname;
+        viewitem.desc = pack.description;
+        viewitem.cost = goldStr(pack.cost);
+        viewitem.weight = weightStr(pack.weight);
+
+        view.push(viewitem)
+    }
+    return view;
+}
+
+function getItemView() {
+    let view = [];
+    for (let item of items) {
+        let viewitem = {};
+        
+        viewitem.keyname = item.keyname;
+        viewitem.fullname = item.fullname;
+        viewitem.cost = goldStr(item.cost);
+        viewitem.weight = weightStr(item.weight);
+
+        let itemlist = getOrAddItemViewAndGetList(item.category, view);
+        itemlist.push(viewitem);
+    }
+    return view;
+}
+
+function getOrAddItemViewAndGetList(category, view) {
+    for (let subview of view) {
+        if (subview.category === category)
+            return subview.itemlist
+    }
+
+    let categoryView = { category, itemlist: [] };
+    view.push(categoryView);
+
+    return categoryView.itemlist;
+}
+
+// -------------------------------------------------- 
+// Misc
+// -------------------------------------------------- 
+
+function goldStr(gold) {
+    if (gold > 1)
+        return `${gold} gp`;
+    if (gold > 0.1)
+        return `${gold * 10} sp`;
+
+    return `${gold * 100} cp`;
+}
+
+function weightStr(pounds) {
+    if (pounds = 0.5)
+        return '1/2 lb.';
+    if (pounds = 0.25)
+        return '1/4 lb.';
+    
+    return `${pounds} lb.`
+}
+
+
+// -------------------------------------------------- 
 // Main View Creation
 // -------------------------------------------------- 
 
@@ -674,6 +826,10 @@ function getView() {
     view.backgroundVariants = bgViews.bgVariantViews;
 
     view.profSources = getProfSourceView();
+    view.weapons = getWeaponView();
+    view.armors = getArmorView();
+    view.packs = getPackView();
+    view.items = getItemView();
 
     return view;
 }
