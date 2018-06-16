@@ -694,8 +694,30 @@ let damageTypes = {
     s: 'slashing'
 }
 
+let categoryFullnames = {
+    common: "Common Items and Equipment",
+    magical: "Magical, Holy, and Alchemical Items",
+    outdoor: "Travel and Adventure Items",
+    clothes: "Clothing and Storage",
+    ammo: "Ammunition and Traps",
+    artisan: "Tools (Artisan's)",
+    tool: "Tools (Miscellaneous)",
+    instrument: "Tools (Musical Instruments)",
+    sm: "Simple Melee Weapons",
+    sr: "Simple Ranged Weapons",
+    mm: "Martial Melee Weapons",
+    mr: "Martial Ranged Weapons",
+    "light-armor": " (L)",
+    "medium-armor": " (M)",
+    "heavy-armor": " (H)",
+    "shields": "",
+}
+
 function damageStr(dice, damagetype) {
     return `${dice} ${damageTypes[damagetype]}`;
+}
+
+let weaponCategoryFullnames = {
 }
 
 function getWeaponView() {
@@ -710,7 +732,8 @@ function getWeaponView() {
         viewitem.weight = weightStr(weapon.weight) ;
         viewitem.properties = weapon.propdesc;
 
-        view.push(viewitem);
+        let list = getOrAddCategory(weapon.category, view);
+        list.push(viewitem);
     }
 
     return view;
@@ -723,11 +746,13 @@ function getArmorView() {
 
         viewitem.keyname = armor.keyname;
         viewitem.fullname = armor.fullname;
-        viewitem.category = util.keynameToFullname(armor.category);
+        viewitem.fullname += categoryFullnames[armor.category];
         viewitem.cost = goldStr(armor.cost);
         viewitem.desc = armor.desc;
-        viewitem.stealth = armor.stealth || '--';
         viewitem.weight = weightStr(armor.weight);
+
+        if (armor.stealth === 'Disadvantage')
+            viewitem.weight += " (D/S)";
 
         view.push(viewitem);
     }
@@ -748,6 +773,7 @@ function getPackView() {
 
         view.push(viewitem)
     }
+
     return view;
 }
 
@@ -761,22 +787,26 @@ function getItemView() {
         viewitem.cost = goldStr(item.cost);
         viewitem.weight = weightStr(item.weight);
 
-        let itemlist = getOrAddItemViewAndGetList(item.category, view);
-        itemlist.push(viewitem);
-    }
+        let list = getOrAddCategory(item.category, view);
+        list.push(viewitem);
+    } 
     return view;
 }
 
-function getOrAddItemViewAndGetList(category, view) {
+function getOrAddCategory(category, view) {
     for (let subview of view) {
         if (subview.category === category)
-            return subview.itemlist
+            return subview.list
     }
 
-    let categoryView = { category, itemlist: [] };
+    let categoryView = {
+        category: category, 
+        categoryFullname: categoryFullnames[category],
+        list: [] 
+    };
     view.push(categoryView);
 
-    return categoryView.itemlist;
+    return categoryView.list;
 }
 
 // -------------------------------------------------- 
@@ -793,9 +823,9 @@ function goldStr(gold) {
 }
 
 function weightStr(pounds) {
-    if (pounds = 0.5)
+    if (pounds === 0.5)
         return '1/2 lb.';
-    if (pounds = 0.25)
+    if (pounds === 0.25)
         return '1/4 lb.';
     
     return `${pounds} lb.`

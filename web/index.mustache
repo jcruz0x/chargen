@@ -61,7 +61,11 @@
           <table class="stats-table">
             <thead>
               <tr>
-                <th><span class="longform">Ability</span><span class="shortform">Ab.</span></th>
+                <th>
+                  <span class="midform">Ability</span>
+                  <span class="tinyform">Ab.</span>
+
+                </th>
                 <th><b>Roll</b></th>
                 <th> <span class="longform">Racial Bonuses</span> <span class="shortform">+/-</span> </th>
                 <th>Score</th>
@@ -450,6 +454,95 @@
 
         </section>
 
+        <!-- EQUIPMENT SECTION -->
+
+        <section>
+          <h2 class="headline">Equipment</h2>
+
+          <h3 class="centered"> Purchase Equipment </h3>
+
+          <div id="select-equipment-category-div">
+            <b>Select Equipment Category: </b>
+            <select>
+              {{#weapons}}
+                <option value="select-weapons-{{category}}">{{categoryFullname}}</option>
+              {{/weapons}}
+
+              <option value="select-equipment-armor">Armor and Shields</option>
+              <option value="select-equipment-packs">Adventurers Packs</option>
+
+              {{#items}}
+                <option value="{{category}}">{{categoryFullname}}</option>
+              {{/items}}
+            </select>
+          </div>
+
+
+          {{#weapons}}
+            <table id="weapons-table-{{category}}" class="equipment-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Cost</th>
+                  <th>Damage</th>
+                  <th>Weight</th>
+                  <th>Properties</th>
+                  <th>Buy</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#list}}
+                  <tr>
+                    <td>{{fullname}}</td>
+                    <td>{{cost}}</td>
+                    <td>{{damage}}</td>
+                    <td>{{weight}}</td>
+                    <td>{{properties}}</td>
+                    <td>
+                      <button class="buy-button" id="{{keyname}}-weapon-buy-button">Buy</button>
+                    </td>
+                  </tr>
+                {{/list}}
+              </tbody>
+            </table>
+            <br>
+          {{/weapons}}
+
+          <table id="armor-table" class="equipment-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>
+                  <span class="midform">Armor Class</span>
+                  <span class="tinyform">AC</span>
+                </th>
+                <th>
+                  <span class="midform">Weight</span>
+                  <span class="tinyform">Wt.</span>
+                </th>
+                <th>Buy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#armors}}
+                <tr>
+                  <td>{{fullname}}</td>
+                  <td>{{cost}}</td>
+                  <td>{{desc}}</td>
+                  <td>{{weight}}</td>
+                  <td>
+                    <button class="buy-button" id="{{keyname}}-armor-buy-button">Buy</button>
+                  </td>
+                </tr>
+              {{/armors}}
+            </tbody>
+          </table>
+          <i class="small-print">(D/S) = Disadvantage On Stealth Checks</i>
+          <div class="clear"></div>
+
+        </section>
+        
         <!-- DESCRIPTION SECTION -->
 
         <section>

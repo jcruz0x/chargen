@@ -83,6 +83,11 @@ select {
     }
 }
 
+#select-equipment-category-div {
+    float: left;
+    margin: 40px 10px;
+}
+
 table {
     margin: auto;
     width: 100%;
@@ -95,16 +100,37 @@ table, th, td {
     border-collapse: collapse;
 }
 
+.equipment-table {
+    padding: 5px;
+    font-size: 12pt;
+    table-layout: auto;
+    padding: 8px;
+}
+
+.small-print {
+    font-size: 12pt;
+}
+
 
 th, td {
     padding: 3px 0px;
 }
 
+.equipment-table th, .equipment-table td {
+    padding: 4px;
+}
+
+
 @media screen and (min-width: 600px) {
     th, td {
         padding: 5px 40px;
     }
+
+    .equipment-table th, .equipment-table td {
+        padding: 10px;
+    }
 }
+
 
 .stats-table {
     text-align: center;
@@ -219,6 +245,39 @@ button {
     float: right;
 }
 
+.buy-button {
+    font-size: 12pt;
+    font-weight: bold;
+    height: 2em;
+    width: 3em;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+@media screen and (min-width: 800px) {
+    .buy-button {
+        font-size: 14pt;
+        width: 4em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .buy-button {
+        font-size: 10pt;
+        padding: 2px;
+        border-radius: 4px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .buy-button {
+        font-size: 10pt;
+        padding: 2px;
+        width: auto;
+        border-radius: 4px;
+    }
+}
+
 .traitdiv {
     height: 3em; 
     margin: 10px;
@@ -306,8 +365,11 @@ input[type=checkbox] {
     vertical-align: middle;
 }
 
-
 .shortform {
+    display: none;
+}
+
+.tinyform {
     display: none;
 }
 
@@ -345,16 +407,20 @@ input[type=checkbox] {
         width: 100%;
         margin: 10px;
     }
-}
 
-@media screen and (max-width: 600px) {
-    .shortform {
-        display:inline;
+    .equipment-table {
+        font-size: 12pt;
+        padding: 2px;
     }
 
-    .editbox {
+    .small-print {
         font-size: 10pt;
-        padding: 3px 3px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .shortform {
+        display:inline;
     }
 
     .longform {
@@ -362,7 +428,26 @@ input[type=checkbox] {
     }
 }
 
+@media screen and (max-width: 600px) {
+    .editbox {
+        font-size: 10pt;
+        padding: 3px 3px;
+    }
+
+    #container {
+        padding: 20px;
+    }
+}
+
 @media screen and (max-width: 400px) {
+    .tinyform {
+        display:inline;
+    }
+
+    .midform {
+        display: none;
+    }
+
     #container {
         font-size: 10pt;
         padding: 10px;
@@ -374,6 +459,10 @@ input[type=checkbox] {
 
     .stats-table {
         table-layout: auto;
+        font-size: 10pt;
+    }
+
+    .equipment-table {
         font-size: 10pt;
     }
 }
