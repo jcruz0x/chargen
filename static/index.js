@@ -449,6 +449,20 @@ function updateProficiencies() {
 }
 
 // --------------------------------------------------
+// Equipment 
+// --------------------------------------------------
+
+function updateEquipmentTables() {
+    $('.equipment-table-div').hide();
+
+    var category = $('#equipment-dropdown').val();
+    $('#buy-' + category + '-table').show()
+
+    $('#armor-small-print').toggle(category === 'armor');
+}
+
+
+// --------------------------------------------------
 // Page
 // --------------------------------------------------
 
@@ -462,6 +476,7 @@ function pageinit() {
     selectPatron(model.patronval);
     selectBackground(model.backgroundval)
     updateProficiencies();
+    updateEquipmentTables();
 
     $('#race-dropdown').change(function() {
         selectRace();
@@ -491,6 +506,10 @@ function pageinit() {
     $('#background-dropdown').change(function() {
         selectBackground();
         updateProficiencies();
+    })
+
+    $('#equipment-dropdown').change(function() {
+        updateEquipmentTables();
     })
 
     $('#abilities-roll-button').click(function() {

@@ -463,13 +463,13 @@
 
           <div id="select-equipment-category-div">
             <b>Select Equipment Category: </b>
-            <select>
+            <select id="equipment-dropdown">
               {{#weapons}}
-                <option value="select-weapons-{{category}}">{{categoryFullname}}</option>
+                <option value="{{category}}">{{categoryFullname}}</option>
               {{/weapons}}
 
-              <option value="select-equipment-armor">Armor and Shields</option>
-              <option value="select-equipment-packs">Adventurers Packs</option>
+              <option value="armor">Armor and Shields</option>
+              <option value="packs">Adventurers Packs</option>
 
               {{#items}}
                 <option value="{{category}}">{{categoryFullname}}</option>
@@ -477,38 +477,49 @@
             </select>
           </div>
 
+          <div class="clear"></div>
 
           {{#weapons}}
-            <table id="weapons-table-{{category}}" class="equipment-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Cost</th>
-                  <th>Damage</th>
-                  <th>Weight</th>
-                  <th>Properties</th>
-                  <th>Buy</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#list}}
+            <div id="buy-{{category}}-table" class="table-overflow-container equipment-table-div">
+              <table class="equipment-table">
+                <thead>
                   <tr>
-                    <td>{{fullname}}</td>
-                    <td>{{cost}}</td>
-                    <td>{{damage}}</td>
-                    <td>{{weight}}</td>
-                    <td>{{properties}}</td>
-                    <td>
-                      <button class="buy-button" id="{{keyname}}-weapon-buy-button">Buy</button>
-                    </td>
+                    <th>Name</th>
+                    <th>Cost</th>
+                    <th>
+                      <span class="longform">Damage</span>
+                      <span class="shortform">Dam</span>
+                    </th>
+                    <th>
+                      <span class="longform">Weight</span>
+                      <span class="shortform">Wt</span>
+                    </th>
+                    <th>
+                      <span class="longform">Properties</span>
+                      <span class="shortform">Prop</span>
+                    </th>
+                    <th class="buy-header">Buy</th>
                   </tr>
-                {{/list}}
-              </tbody>
-            </table>
-            <br>
+                </thead>
+                <tbody>
+                  {{#list}}
+                    <tr>
+                      <td>{{fullname}}</td>
+                      <td>{{cost}}</td>
+                      <td>{{damage}}</td>
+                      <td>{{weight}}</td>
+                      <td>{{properties}}</td>
+                      <td>
+                        <button class="buy-button" id="{{keyname}}-weapon-buy-button">Buy</button>
+                      </td>
+                    </tr>
+                  {{/list}}
+                </tbody>
+              </table>
+            </div>
           {{/weapons}}
 
-          <table id="armor-table" class="equipment-table">
+          <table id="buy-armor-table" class="equipment-table equipment-table-div">
             <thead>
               <tr>
                 <th>Name</th>
@@ -521,7 +532,7 @@
                   <span class="midform">Weight</span>
                   <span class="tinyform">Wt.</span>
                 </th>
-                <th>Buy</th>
+                <th class="buy-header">Buy</th>
               </tr>
             </thead>
             <tbody>
@@ -538,11 +549,71 @@
               {{/armors}}
             </tbody>
           </table>
-          <i class="small-print">(D/S) = Disadvantage On Stealth Checks</i>
-          <div class="clear"></div>
 
-        </section>
+          <div id="buy-packs-table" class="table-overflow-container equipment-table-div">
+            <table class="equipment-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Contents</th>
+                  <th>Cost</th>
+                  <th>
+                    <span class="midform">Weight</span>
+                    <span class="tinyform">Wt.</span>
+                  </th>
+                  <th class="buy-header">Buy</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#packs}}
+                  <tr>
+                    <td>{{fullname}}</td>
+                    <td class="pack-description-cell">{{desc}}</td>
+                    <td>{{cost}}</td>
+                    <td>{{weight}}</td>
+                    <td>
+                      <button class="buy-button" id="{{keyname}}-buy-button">Buy</button>
+                    </td>
+                  </tr>
+                {{/packs}}
+              </tbody>
+            </table>
+          </div>
+
+          {{#items}}
+          <table id="buy-{{category}}-table" class="equipment-table item-table equipment-table-div">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Cost</th>
+                  <th>Weight</th>
+                  <th class="buy-header">Buy</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#list}}
+                  <tr>
+                    <td>{{fullname}}</td>
+                    <td>{{cost}}</td>
+                    <td>{{weight}}</td>
+                    <td>
+                      <button class="buy-button" id="{{keyname}}-weapon-buy-button">Buy</button>
+                    </td>
+                  </tr>
+                {{/list}}
+              </tbody>
+            </table>
+          {{/items}}
+
+          <div id="armor-small-print" class="small-print">
+            <i>Armors marked with (D/S) cause Disadvantage on stealth checks</i>
+          </div>
+
+          <div class="clear"></div>
         
+        </section>
+
+
         <!-- DESCRIPTION SECTION -->
 
         <section>

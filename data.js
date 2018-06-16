@@ -674,8 +674,10 @@ for (let weapon of weapons) {
             prop = 'versatile (d8)';
         else if (prop === 'versatile-10')
             prop = 'versatile (d10)';
-        else if (prop === 'ammunition' || prop === 'thrown')
-            prop += ` (range ${weapon.near}/${weapon.far})`
+        else if (prop === 'ammunition')
+            prop = `ammo (${weapon.near}/${weapon.far})`
+        else if (prop === 'thrown')
+            prop = `thrown (${weapon.near}/${weapon.far})`
 
         niceprops.push(prop);
     }
@@ -689,9 +691,9 @@ for (let weapon of weapons) {
 }
 
 let damageTypes = {
-    p: 'piercing',
-    b: 'bludgeoning',
-    s: 'slashing'
+    p: '(P)',
+    b: '(B)',
+    s: '(S)'
 }
 
 let categoryFullnames = {
@@ -714,6 +716,9 @@ let categoryFullnames = {
 }
 
 function damageStr(dice, damagetype) {
+    if (dice == '--')
+        return '--';
+
     return `${dice} ${damageTypes[damagetype]}`;
 }
 
