@@ -17,6 +17,9 @@ function newModel() {
     model.patronval = 'the-archfey';
     model.originval = 'wild-magic';
     model.backgroundval = 'acolyte';
+    model.initialGold = 0;
+    model.spentGold = 0;
+    model.inventory = [];
 
     // ability defaults
     model.abilities = {
@@ -91,6 +94,37 @@ function conditionallyShow(selector, truthval) {
 
 function sample(arr) {
    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function weightStr(pounds) {
+    if (pounds === 0.5)
+        return '1/2 lb.';
+    if (pounds === 0.25)
+        return '1/4 lb.';
+    
+    return `${pounds} lb.`
+}
+
+function goldStr(gold) {
+    if (gold == 0)
+        return '0 gp';
+
+    var neg = gold < 0? '-' : '';
+    gold = Math.abs(gold);
+
+    if (gold >= 1)
+        return `${neg}${fixedIfNeeded(gold)} gp`;
+    if (gold >= 0.1)
+        return `${neg}${fixedIfNeeded(gold) * 10} sp`;
+
+    return `${neg}${fixedIfNeeded(gold) * 100} cp`;
+}
+
+function fixedIfNeeded(num) {
+    if (num - (num | 0) < 0.001)
+        return num.toString();
+    else
+        return num.toFixed(2);
 }
 
 // --------------------------------------------------
@@ -348,6 +382,8 @@ function selectClass(changeto) {
     conditionallyShow('#warlock-patrons', classval === 'warlock');
     conditionallyShow('#fighting-style-table', classval === 'fighter');
     conditionallyShow('#expertise-div', classval === 'rouge');
+
+    $('#starting-gold-class-label').text(bookdata.classes[model.classval].fullname);
 }
 
 function selectSorcerousOrigin() {
@@ -452,7 +488,7 @@ function updateProficiencies() {
 // Equipment 
 // --------------------------------------------------
 
-function updateEquipmentTables() {
+function selectEquipmentTable() {
     $('.equipment-table-div').hide();
 
     var category = $('#equipment-dropdown').val();
@@ -461,6 +497,92 @@ function updateEquipmentTables() {
     $('#armor-small-print').toggle(category === 'armor');
 }
 
+function updateInventory() {
+    var goldstr = bookdata.classes[model.classval].goldstr;
+    $('#amount-gold-text').text(goldstr);
+
+    var currentGold = model.initialGold - model.spentGold;
+
+    $('#initial-gold-tracker').text(goldStr(model.initialGold));
+    $('#spent-gold-tracker').text(goldStr(model.spentGold));
+    $('#current-gold-tracker').text(goldStr(currentGold));
+
+    $inventory = $('#inventory-table-body');
+    $inventory.html('');
+    for (var i = 0; i < model.inventory.length; i++) {
+        var name = model.inventory[i].item.fullname;
+        var qty = model.inventory[i].qty;
+        var weight = weightStr(model.inventory[i].item.weight * qty);
+        var key = model.inventory[i].item.keyname;
+        $inventory.append(`
+            <tr>
+                <td>${name}</td>
+                <td>x ${qty}</td>
+                <td>${weight}</td>
+                <td>
+                    <button class="remove-button table-button" id="{{key}}-remove-button">Remove</button>
+                </td>
+            </tr>
+        `);
+    }
+
+    $('#no-inventory-div').toggle(model.inventory.length == 0);
+    $('#inventory-table').toggle(model.inventory.length > 0);
+}
+
+function calculateGold(takeAverage) {
+    if (takeAverage) {
+        var goldavg = bookdata.classes[model.classval].goldavg;
+        model.initialGold = goldavg;
+    }
+    else {
+        var goldarr = bookdata.classes[model.classval].gold;
+
+        var dicenumber = goldarr[0];
+        var dicetype   = goldarr[1];
+        var multiplier = goldarr[2];
+
+        var sum = 0;
+        for (var i = 0; i < dicenumber; i++)
+            sum += rolld(dicetype);
+        
+        model.initialGold = sum * multiplier;
+    }
+    updateInventory();
+}
+
+function addInventoryItem(item) {
+    for (var i = 0; i < model.inventory.length; i++) {
+        if (model.inventory[i].item.keyname == item.keyname) {
+            model.inventory[i].qty += 1;
+            return;
+        }
+    }
+    model.inventory.push({ item, qty: 1 });
+}
+
+function setupEquipmentControls() {
+    for (var i = 0; i < equipmentList.length; i++) {
+        (function () {
+            var item = equipmentList[i];
+
+            $('#' + item.keyname + '-buy-button').click(function() {
+                addInventoryItem(item);
+                model.spentGold += item.cost;
+                updateInventory();
+            });
+        })();
+    }
+}
+
+var equipmentList;
+function gatherEquipmentList() {
+    equipmentList = bookdata.weapons.concat(
+        bookdata.armors,
+        bookdata.packs,
+        bookdata.items
+    );
+}
 
 // --------------------------------------------------
 // Page
@@ -468,15 +590,20 @@ function updateEquipmentTables() {
 
 function pageinit() {
     newModel();
+
     setupAbilityControls();
     setupAllSuggestionButtons();
+    gatherEquipmentList();
+    setupEquipmentControls();
+
     selectRace(model.raceval);
     selectClass(model.classval);
     selectDomain(model.domainval);
     selectPatron(model.patronval);
     selectBackground(model.backgroundval)
     updateProficiencies();
-    updateEquipmentTables();
+    selectEquipmentTable();
+    updateInventory();
 
     $('#race-dropdown').change(function() {
         selectRace();
@@ -486,6 +613,7 @@ function pageinit() {
     $('#class-dropdown').change(function() {
         selectClass();
         updateProficiencies();
+        updateInventory();
     })
 
     $('#domain-dropdown').change(function() {
@@ -509,7 +637,7 @@ function pageinit() {
     })
 
     $('#equipment-dropdown').change(function() {
-        updateEquipmentTables();
+        selectEquipmentTable();
     })
 
     $('#abilities-roll-button').click(function() {
@@ -524,15 +652,23 @@ function pageinit() {
 
     $('#bonus-choice-primary').change(function() {
         updateAbilities();
-    })
+    });
 
     $('#bonus-choice-secondary').change(function() {
         updateAbilities();
-    })
+    });
 
     $('#black-dragonborn-ancestry').prop("checked", true);
     $('#black-sorcerous-origin').prop("checked", true);
     $('#archery-fighting-style').prop("checked", true);
+
+    $('#gold-roll-button').click(function() {
+        calculateGold(false);
+    });
+
+    $('#gold-avg-button').click(function() {
+        calculateGold(true);
+    });
 }
 
 var bookdata;

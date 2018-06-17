@@ -459,6 +459,29 @@
         <section>
           <h2 class="headline">Equipment</h2>
 
+          <br>
+          <div id="class-gold-amount" class="centered">
+            <b> <span id="starting-gold-class-label"></span> Starting Gold: </b>
+            <span id="amount-gold-text"></span>
+          </div>
+          <br>
+
+          <div class="buttons-array">
+            <button class="big-button" id="gold-roll-button">Roll For Gold</button>
+            <button class="big-button" id="gold-avg-button">Take Average</button>
+          </div>
+
+          <div class="pool gold-pool"> 
+            <b> Initial Gold: </b> 
+            <span id="initial-gold-tracker"></span>
+            <br>
+            <b> Gold Spent: </b> 
+            <span id="spent-gold-tracker"></span>
+            <br>
+            <b> Current Gold: </b> 
+            <span id="current-gold-tracker"></span>
+          </div>
+
           <h3 class="centered"> Purchase Equipment </h3>
 
           <div id="select-equipment-category-div">
@@ -498,7 +521,7 @@
                       <span class="longform">Properties</span>
                       <span class="shortform">Prop</span>
                     </th>
-                    <th class="buy-header">Buy</th>
+                    <th class="buy-header"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -510,7 +533,7 @@
                       <td>{{weight}}</td>
                       <td>{{properties}}</td>
                       <td>
-                        <button class="buy-button" id="{{keyname}}-weapon-buy-button">Buy</button>
+                        <button class="buy-button table-button" id="{{keyname}}-buy-button">Buy</button>
                       </td>
                     </tr>
                   {{/list}}
@@ -532,7 +555,7 @@
                   <span class="midform">Weight</span>
                   <span class="tinyform">Wt.</span>
                 </th>
-                <th class="buy-header">Buy</th>
+                <th class="buy-header"></th>
               </tr>
             </thead>
             <tbody>
@@ -543,7 +566,7 @@
                   <td>{{desc}}</td>
                   <td>{{weight}}</td>
                   <td>
-                    <button class="buy-button" id="{{keyname}}-armor-buy-button">Buy</button>
+                    <button class="buy-button table-button" id="{{keyname}}-buy-button">Buy</button>
                   </td>
                 </tr>
               {{/armors}}
@@ -561,7 +584,7 @@
                     <span class="midform">Weight</span>
                     <span class="tinyform">Wt.</span>
                   </th>
-                  <th class="buy-header">Buy</th>
+                  <th class="buy-header"></th>
                 </tr>
               </thead>
               <tbody>
@@ -572,7 +595,7 @@
                     <td>{{cost}}</td>
                     <td>{{weight}}</td>
                     <td>
-                      <button class="buy-button" id="{{keyname}}-buy-button">Buy</button>
+                      <button class="buy-button table-button" id="{{keyname}}-buy-button">Buy</button>
                     </td>
                   </tr>
                 {{/packs}}
@@ -597,7 +620,7 @@
                     <td>{{cost}}</td>
                     <td>{{weight}}</td>
                     <td>
-                      <button class="buy-button" id="{{keyname}}-weapon-buy-button">Buy</button>
+                      <button class="buy-button table-button" id="{{keyname}}-buy-button">Buy</button>
                     </td>
                   </tr>
                 {{/list}}
@@ -610,9 +633,32 @@
           </div>
 
           <div class="clear"></div>
-        
-        </section>
 
+          <br>
+          <br>
+          <h3 class="centered">Your Inventory</h3>
+
+          <div id="no-inventory-div" class="centered">
+            <br>
+            <i> You have no inventory items currently </i>
+          </div>
+
+          <br>
+
+          <table id="inventory-table" class="equipment-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Total Weight</th>
+                <th class="remove-header"></th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-body">
+            </tbody>
+          </table>
+
+        </section>
 
         <!-- DESCRIPTION SECTION -->
 

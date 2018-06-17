@@ -131,7 +131,7 @@ td button {
     float: right;
 }
 
-.buy-header {
+.buy-header, .remove-header {
     text-align: right;
 }
 
@@ -283,31 +283,45 @@ button {
     float: right;
 }
 
-.buy-button {
+.table-button {
     font-size: 12pt;
     font-weight: bold;
-    height: 2em;
-    width: 3em;
     padding: 8px;
     border-radius: 8px;
+    height: 2em;
+} 
+
+.buy-button {
+    width: 3em;
+}
+
+.remove-button {
+    font-size: 12pt;
+    width: 5em;
 }
 
 @media screen and (min-width: 800px) {
-    .buy-button {
+    .table-button {
         font-size: 14pt;
+    }
+    .buy-button {
         width: 4em;
+    }
+    .remove-button {
+        width: 6em;
     }
 }
 
-@media screen and (max-width: 600px) {
-    .buy-button {
+/* @media screen and (max-width: 600px) {
+} */
+
+@media screen and (max-width: 400px) {
+    .table-button {
         font-size: 10pt;
         padding: 2px;
         border-radius: 4px;
     }
-}
 
-@media screen and (max-width: 400px) {
     .buy-button {
         font-size: 10pt;
         padding: 2px;
@@ -393,6 +407,16 @@ button:active {
     border-radius: 16px;
     padding: 30px;
     margin: 15px 0px;
+}
+
+#class-gold-amount {
+    font-size: 20pt;
+}
+
+.gold-pool {
+    width: 50%;
+    margin: 40px auto;
+    font-size: 18pt;
 }
 
 input[type=checkbox] {

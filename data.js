@@ -819,9 +819,9 @@ function getOrAddCategory(category, view) {
 // -------------------------------------------------- 
 
 function goldStr(gold) {
-    if (gold > 1)
+    if (gold >= 1)
         return `${gold} gp`;
-    if (gold > 0.1)
+    if (gold >= 0.1)
         return `${gold * 10} sp`;
 
     return `${gold * 100} cp`;
@@ -873,7 +873,7 @@ function getView() {
 // Exports, data prep for ajax
 // -------------------------------------------------- 
 
-let joinedData = { races, classes, racechoices, features, backgrounds };
+let joinedData = { races, classes, racechoices, features, backgrounds, weapons, armors, items, packs };
 let joinedJson = JSON.stringify(joinedData);
 
 exports.getView = getView;

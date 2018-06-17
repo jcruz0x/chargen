@@ -29,7 +29,9 @@
             "rage",
             "barbarian-unarmored-defense"
         ],
-        "gold": 50
+        "gold": [2,4,10],
+        "goldstr": "2d4 x 10 gp",
+        "goldavg": 50
     },
     "bard": {
         "hitdie": 8,
@@ -63,7 +65,9 @@
         "cantrips": 2,
         "spellsknown": 4,
         "spellslots": 2,
-        "gold": 125
+        "gold": [5, 4, 10],
+        "goldstr": "5d4 x 10 gp",
+        "goldavg": 125
     },
     "cleric": {
         "hitdie": 8,
@@ -94,7 +98,9 @@
         ],
         "cantrips": 3,
         "spellslots": 2,
-        "gold": 125,
+        "gold": [5, 4, 10],
+        "goldstr": "5d4 x 10 gp",
+        "goldavg": 125,
         "domains": {
             "knowledge-domain": {
                 "description": "The gods of knowledge value learning and understanding above all. Followers of these gods study esoteric lore, collect old tomes, delve into the secret places of the earth, and learn all they can.",
@@ -217,7 +223,9 @@
         ],
         "cantrips": 2,
         "slots": 2,
-        "gold": 50
+        "gold": [2, 4, 10],
+        "goldstr": "2d4 x 10 gp",
+        "goldavg": 50
     },
     "fighter": {
         "hitdie": 10,
@@ -251,7 +259,9 @@
             "fighting-style",
             "second-wind"
         ],
-        "gold": 125
+        "gold": [5,4,10],
+        "goldstr": "5d4 x 10 gp",
+        "goldavg": 125
     },
     "monk": {
         "hitdie": 8,
@@ -285,7 +295,9 @@
             "monk-unarmored-defense",
             "martial-arts"
         ],
-        "gold": 27
+        "gold": [5,4,1],
+        "goldstr": "5d4",
+        "goldavg": 12
     },
     "paladin": {
         "hitdie": 10,
@@ -317,7 +329,9 @@
             "divine-sense",
             "lay-on-hands"
         ],
-        "gold": 125
+        "gold": [5,4,10],
+        "goldstr": "5d4 x 10 gp",
+        "goldavg": 125
     },
     "ranger": {
         "hitdie": 10,
@@ -350,7 +364,9 @@
             "favored-enemy",
             "natural-explorer"
         ],
-        "gold": 125
+        "gold": [5,4,10],
+        "goldstr": "5d4 x 10 gp",
+        "goldavg": 125
     },
     "rouge": {
         "hitdie": 8,
@@ -391,7 +407,9 @@
             "sneak-attack",
             "thieves-cant"
         ],
-        "gold": 100
+        "gold": [4,4,10],
+        "goldstr": "4d4 x 10 gp",
+        "goldavg": 100
     },
     "sorcerer": {
         "hitdie": 6,
@@ -421,7 +439,9 @@
             "sorcerer-spellcasting",
             "sorcerous-origin"
         ],
-        "gold": 75
+        "gold": [3,4,10],
+        "goldstr": "3d4 x 10 gp",
+        "goldavg": 75
     },
     "warlock": {
         "hitdie": 8,
@@ -453,7 +473,9 @@
         "cantrips": 2,
         "spellsknown": 2,
         "spellslots": 1,
-        "gold": 100,
+        "gold": [4,4,10],
+        "goldstr": "4d4 x 10 gp",
+        "goldavg": 100,
         "patrons": {
             "the-archfey": {
                 "description": "You patron is a lord or lady of the fey, who holds forgotten secrets. This being's inscrutable, whimsical motivations might involve striving for greater magical power, or settling age-old grudges. Beings of this sort include the Prince Of Frost, the Queen of Air and Darkness, and Titania of the summer court.",
@@ -517,6 +539,8 @@
         ],
         "cantrips": 3,
         "spellslots": 2,
-        "gold": 100
+        "gold": [4,4,10],
+        "goldstr": "4d4 x 10 gp",
+        "goldavg": 100
     }
 }
