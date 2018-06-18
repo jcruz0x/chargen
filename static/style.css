@@ -64,15 +64,19 @@ header {
     clear: both;
 }
 
-select {
+select, input[type=text] {
     font-size: 18px;
     margin: 10px;
     padding: 5px;
 }
 
+h5 {
+    margin: 5px;
+    padding: 5px;
+}
 
 @media screen and (min-width: 360px) {
-    select {
+    select, input[type=text] {
         width: 240px;
     }
 
@@ -82,7 +86,7 @@ select {
 }
 
 @media screen and (max-width: 960px) {
-    select {
+    select, input[type=text] {
         max-width: 240px;
     }
 
@@ -92,7 +96,7 @@ select {
 }
 
 @media screen and (min-width: 960px) {
-    select {
+    select, input[type=text] {
         width: 320px;
     }
 
@@ -173,11 +177,24 @@ th, td {
         columns: 2;
         column-gap: 80px;
     }
+
+    div.two-column {
+        columns: 2;
+        column-gap: 80px;
+    }
     
     li.two-column {
         -webkit-column-break-inside: avoid;
         page-break-inside: avoid;
         break-inside: avoid;
+    }
+
+    .two-column-section {
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        padding: 5px;
+        margin: 5px;
     }
 }
 

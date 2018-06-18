@@ -221,7 +221,7 @@
         "fullname":
             "Spellcasting",
         "description":
-            "As a conduit for divine power,k you can cast cleric spells. See the Players Handbook for full rules on Cleric Spellcasting."
+            "As a conduit for divine power, you can cast cleric spells. See the Players Handbook for full rules on Cleric Spellcasting."
     },
     "divine-domain": {
         "description":
@@ -235,7 +235,7 @@
         "description":
             "Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will. See the Players Handbook for full rules on Druid Spellcasting."
     },
-    "fighting-style": {
+    "fighting-style": { 
         "description":
             "You adopt a particular style of fighting as your specialty, chosen from Archery, Defense, Dueling, Great Weapon Fighting, Protection, or Two-Weapon Fighting.",
         "styles": {
