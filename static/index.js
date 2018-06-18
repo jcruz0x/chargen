@@ -106,23 +106,23 @@ function weightStr(pounds) {
 }
 
 function goldStr(gold) {
-    if (gold == 0)
+    var neg = gold < 0? '-' : '';
+    var goldabs = Math.abs(gold);
+
+    if (goldabs < 0.001)
         return '0 gp';
 
-    var neg = gold < 0? '-' : '';
-    gold = Math.abs(gold);
+    if (goldabs >= 1)
+        return `${neg}${fixedIfNeeded(goldabs)} gp`;
+    if (goldabs >= 0.1)
+        return `${neg}${fixedIfNeeded(goldabs) * 10} sp`;
 
-    if (gold >= 1)
-        return `${neg}${fixedIfNeeded(gold)} gp`;
-    if (gold >= 0.1)
-        return `${neg}${fixedIfNeeded(gold) * 10} sp`;
-
-    return `${neg}${fixedIfNeeded(gold) * 100} cp`;
+    return `${neg}${fixedIfNeeded(goldabs) * 100} cp`;
 }
 
 function fixedIfNeeded(num) {
-    if (num - (num | 0) < 0.001)
-        return num.toString();
+    if ((num - (num | 0)) < 0.001)
+        return Math.floor(num).toString();
     else
         return num.toFixed(2);
 }
@@ -510,24 +510,45 @@ function updateInventory() {
     $inventory = $('#inventory-table-body');
     $inventory.html('');
     for (var i = 0; i < model.inventory.length; i++) {
-        var name = model.inventory[i].item.fullname;
-        var qty = model.inventory[i].qty;
-        var weight = weightStr(model.inventory[i].item.weight * qty);
-        var key = model.inventory[i].item.keyname;
-        $inventory.append(`
-            <tr>
-                <td>${name}</td>
-                <td>x ${qty}</td>
-                <td>${weight}</td>
-                <td>
-                    <button class="remove-button table-button" id="{{key}}-remove-button">Remove</button>
-                </td>
-            </tr>
-        `);
+        (function() {
+            var name = model.inventory[i].item.fullname;
+            var qty = model.inventory[i].qty;
+            var cost = goldStr(model.inventory[i].item.cost);
+            var weight = weightStr(model.inventory[i].item.weight);
+            var key = model.inventory[i].item.keyname;
+            $inventory.append(
+                '<tr>' + 
+                ' <td>' + name + '</td>' +
+                ' <td>' + cost + '</td>' +
+                ' <td>' + weight + '</td>' + 
+                ' <td>x ' + qty + '</td>' +
+                ' <td> ' +
+                '  <button class="remove-button table-button" id="' + key + '-remove-button">Remove</button>' +
+                ' </td>' +
+                '</tr>'
+            );
+
+            $('#' + key + '-remove-button').click(function() {
+                for (var i = 0; i < model.inventory.length; i++) {
+                    if (model.inventory[i].item.keyname == key) {
+                        model.spentGold -= model.inventory[i].item.cost;
+                        
+                        if (model.inventory[i].qty > 1)
+                            model.inventory[i].qty--;
+                        else
+                            model.inventory.splice(i, 1);
+
+                        updateInventory();
+                        return;
+                    }
+                }
+            });
+        })();
     }
 
     $('#no-inventory-div').toggle(model.inventory.length == 0);
     $('#inventory-table').toggle(model.inventory.length > 0);
+    $('#remove-all-button-div').toggle(model.inventory.length > 0);
 }
 
 function calculateGold(takeAverage) {
@@ -582,6 +603,16 @@ function gatherEquipmentList() {
         bookdata.packs,
         bookdata.items
     );
+}
+
+function clearInventory() {
+    for (var i = 0; i < model.inventory.length; i++) {
+        var cost = model.inventory[i].item.cost;
+        var qty = model.inventory[i].qty;
+        model.spentGold -= cost * qty;
+    }
+
+    model.inventory = [];
 }
 
 // --------------------------------------------------
@@ -656,6 +687,11 @@ function pageinit() {
 
     $('#bonus-choice-secondary').change(function() {
         updateAbilities();
+    });
+
+    $('#remove-all-button').click(function() {
+        clearInventory();
+        updateInventory();
     });
 
     $('#black-dragonborn-ancestry').prop("checked", true);

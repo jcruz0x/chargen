@@ -274,6 +274,15 @@ button {
     margin: 20px 30px;
 }
 
+.med-button {
+    width: 200px;
+    font-size: 14pt;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 20px 20px;
+    float: right;
+}
+
 .trait-button {
     font-size: 14pt;
     height: 1.2em;
