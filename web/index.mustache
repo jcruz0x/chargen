@@ -44,7 +44,7 @@
           assign the standard array to your ability scores.
           </p>
 
-          <div class="buttons-array">
+          <div class="centered">
             <button class="big-button" id="abilities-roll-button">Roll For Abilities</button>
             <button class="big-button" id="abilities-array-button">Use Standard Array</button>
           </div>
@@ -278,6 +278,72 @@
           </div>
 
           <div class="clear"></div>
+          <br>
+
+          <div style="display: none" id="ranger-favor-div">
+            <h3 class="centered">Favored Enemies and Terrain</h3>
+
+            <p>
+            Select one favored type of enemy, and one favored terrain type.
+            If you choose Humanoids for your favored enemy, you must choose two
+            races of humanoid for your favored enemy benefits to apply to.
+            </p>
+
+            <div class="centered two-column">
+              <div class="two-column-section">
+                <h4>Favored Enemy</h4>
+                <select id="favored-enemy-dropdown">
+                  {{#rangerEnemies}}
+                    <option value="{{keyname}}">{{fullname}}</option>
+                  {{/rangerEnemies}}
+                </select>
+              </div>
+              <div>
+                <h4>Favored Terrain</h4>
+                <select id="favored-terrain-dropdown">
+                  {{#rangerTerrains}}
+                    <option value="{{keyname}}">{{fullname}}</option>
+                  {{/rangerTerrains}}
+                </select>
+              </div>
+            </div>
+
+            <div class="clear"></div>
+
+            <div id="ranger-humanoids-div" style="display: none">
+              <br>
+              <h4 class="centered">Favored Humanoid Enemies:</h4>
+              <div class="centered two-column">
+                <div class="two-column-section">
+                  <select id="humanoid-dropdown-first">
+                    {{#rangerHumanoids}}
+                      <option value="{{keyname}}">{{fullname}}</option>
+                    {{/rangerHumanoids}}
+                  </select>
+                </div>
+                <div class="two-column-section">
+                  <select id="humanoid-dropdown-second">
+                    {{#rangerHumanoids}}
+                      <option value="{{keyname}}">{{fullname}}</option>
+                    {{/rangerHumanoids}}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="clear"></div>
+
+            <div id="ranger-language-div" class="centered">
+              <h4>Favored Enemy Language</h4>
+              <select id="ranger-language-dropdown">
+              </select>
+              <p id="ranger-language-none-text" style="display: none">
+                <i>There are no languages available for that choice of favored enemy.</i>
+              </p>
+            </div>
+          </div>
+
+          <div class="clear"></div>
         </section>
 
         <!-- BACKGROUND SECTION -->
@@ -451,7 +517,22 @@
             {{/profSources}}
           </ul>
 
+          <div class="clear"></div>
+          <h3 class="centered">Languages Known</h3>
 
+          <ul id="languages-list" class="two-column">
+          </ul>
+
+          <div class="clear"></div>
+
+          <div id="extra-languages-div">
+            <h3 class="centered">Extra Languages</h3>
+
+            <ul id="languages-dropdown-list" class="two-column">
+            </ul>
+          </div>
+          
+          <div class="clear"></div>
         </section>
 
         <!-- EQUIPMENT SECTION -->
@@ -466,7 +547,7 @@
           </div>
           <br>
 
-          <div class="buttons-array">
+          <div class="centered">
             <button class="big-button" id="gold-roll-button">Roll For Gold</button>
             <button class="big-button" id="gold-avg-button">Take Average</button>
           </div>
@@ -663,7 +744,14 @@
             <button class="med-button" id="remove-all-button">Remove all</button>
           </div>
 
-          <div class="clear"></div> 
+          <div class="clear"></div>
+          <br>
+          <h3 class="centered">Trinket</h3>
+          Your character may also have a random trinket, a simple item lightly touched by mystery.
+          <div id="trinket-div" class="pool"> </div>
+          <button class="trait-button" id="trinket-button">Roll for Trinket</button>
+
+          <div class="clear"></div>
         </section>
 
         <!-- SPELLS SECTION -->
@@ -711,7 +799,7 @@
               <select id="gender-dropdown">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="atypical">Atypical</option>
               </select>
             </div>
           </div>

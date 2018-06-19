@@ -374,7 +374,7 @@ button {
     }
 }
 
-.buttons-array {
+.centered-array {
     margin:auto;
     text-align:center;
 }
@@ -431,8 +431,9 @@ button:active {
     border-style: solid;
     border-width: 1px;
     border-radius: 16px;
-    padding: 30px;
+    padding: 25px;
     margin: 15px 0px;
+    min-height: 2em;
 }
 
 #class-gold-amount {
@@ -450,6 +451,7 @@ input[type=checkbox] {
     height: 20px;
     /* transform: scale(1.5); */
     margin: 10px;
+    /* padding: 10px; */
     vertical-align: middle;
 }
 

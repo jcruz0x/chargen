@@ -1,3 +1,4 @@
+"use strict"
 
 // --------------------------------------------------
 // Model
@@ -73,7 +74,7 @@ function manageDivSelection(property, changeto) {
     var oldval = model[modelproperty];
     $("#" + property + "div-" + oldval).hide();
     
-    $dropdown = $("#" + property + "-dropdown");
+    var $dropdown = $("#" + property + "-dropdown");
     if (changeto != undefined)
         $dropdown.val(changeto);
     else
@@ -125,6 +126,28 @@ function fixedIfNeeded(num) {
         return Math.floor(num).toString();
     else
         return num.toFixed(2);
+}
+
+function removeDuplicates(arr) {
+    var uniq = [];
+    for (var i = 0; i < arr.length; i++) {
+        if ($.inArray(arr[i], uniq) === -1)
+            uniq.push(arr[i]);
+    }
+    return uniq;
+}
+
+function keynameToFullname(str) {
+    var arr = str.split('-');
+
+    for (var i = 0; i < arr.length; i++)
+        arr[i] = capitalize(arr[i]);
+
+    return arr.join(' ');
+}
+
+function capitalize(str) {
+    return str[0].toUpperCase() + str.substr(1);
 }
 
 // --------------------------------------------------
@@ -349,23 +372,12 @@ function setupAbilityControls() {
 function selectRace(changeto) {
     let raceval = manageDivSelection('race', changeto);
 
-    conditionallyShow('#dragonborn-table', raceval === 'dragonborn');
-
-    if (raceval == 'variant-human') {
-        $('#bonus-choice-dropdowns').show();
-        $('#variant-human-bonus-text').show();
-        $('#half-elf-bonus-text').hide();
-    }
-    else if (raceval == 'half-elf') {
-        $('#bonus-choice-dropdowns').show();
-        $('#variant-human-bonus-text').hide();
-        $('#half-elf-bonus-text').show();
-    }
-    else {
-        $('#bonus-choice-dropdowns').hide();
-        $('#variant-human-bonus-text').hide();
-        $('#half-elf-bonus-text').hide();
-    }
+    $('#dragonborn-table').toggle(raceval === 'dragonborn');
+    $('#variant-human-bonus-text').toggle(raceval === 'variant-human');
+    $('#half-elf-human-bonus-text').toggle(raceval === 'half-elf');
+    $('#bonus-choice-dropdowns').toggle(
+        raceval === 'variant-human' || raceval === 'half-elf'
+    )
 
     updateAbilities();
 }
@@ -378,10 +390,12 @@ function selectClass(changeto) {
     let classval = manageDivSelection('class', changeto);
 
     selectSorcerousOrigin();
-    conditionallyShow('#divine-domains', classval === 'cleric');
-    conditionallyShow('#warlock-patrons', classval === 'warlock');
-    conditionallyShow('#fighting-style-table', classval === 'fighter');
-    conditionallyShow('#expertise-div', classval === 'rouge');
+    $('#divine-domains').toggle(model.classval === 'cleric');
+    $('#warlock-patrons').toggle(model.classval === 'warlock');
+    $('#fighting-style-table').toggle(model.classval === 'fighter');
+    $('#expertise-div').toggle(model.classval === 'rouge');
+
+    updateRangerDiv();
 
     $('#starting-gold-class-label').text(bookdata.classes[model.classval].fullname);
 }
@@ -400,6 +414,37 @@ function selectDomain(changeto) {
 
 function selectPatron(changeto) {
     let patronval = manageDivSelection('patron', changeto);
+}
+
+function updateRangerDiv() {
+    $('#ranger-favor-div').toggle(model.classval === 'ranger');
+
+    var favoredEnemy = $('#favored-enemy-dropdown').val();
+    $('#ranger-humanoids-div').toggle(favoredEnemy === "humanoids");
+
+    var langs;
+    if (favoredEnemy === "humanoids") {
+        var humanoid1 = $('#humanoid-dropdown-first').val();
+        var humanoid2 = $('#humanoid-dropdown-second').val();
+        var langs1 = bookdata.languages.byrace[humanoid1];
+        var langs2 = bookdata.languages.byrace[humanoid2];
+
+        langs = removeDuplicates(langs1.concat(langs2));
+    }
+    else {
+        langs = bookdata.languages.byrace[favoredEnemy]
+    }
+
+    $('#ranger-language-none-text').toggle(langs.length === 0);
+    $('#ranger-language-dropdown').toggle(langs.length > 0);
+    var $langdrop = $('#ranger-language-dropdown');
+
+    $langdrop.html('');
+    for (var i = 0; i < langs.length; i++) {
+        var keyname = langs[i];
+        var fullname = keynameToFullname(keyname);
+        $langdrop.append('<option value="' + keyname + '">' + fullname + '</option>')
+    }
 }
 
 // --------------------------------------------------
@@ -438,7 +483,7 @@ function selectBackground(changeto) {
 function setupSuggestionButton(prefix, section, subsection) {
     $('#' + prefix + '-button').click(function() {
         var background = bookdata.backgrounds[model.backgroundval];
-        $textarea = $('#' + prefix + '-text');
+        var $textarea = $('#' + prefix + '-text');
         
         var text = $textarea.text();
 
@@ -468,7 +513,7 @@ function setupAllSuggestionButtons() {
 }
 
 // --------------------------------------------------
-// Proficiencies
+// Proficiencies and languages
 // --------------------------------------------------
 
 function updateProficiencies() {
@@ -482,6 +527,10 @@ function updateProficiencies() {
     for (var i = 0; i < allFeatures.length; i++) {
         $('.' + allFeatures[i] + '-prof-source-div').show();
     }
+}
+
+function updateLanguages() {
+        
 }
 
 // --------------------------------------------------
@@ -507,7 +556,7 @@ function updateInventory() {
     $('#spent-gold-tracker').text(goldStr(model.spentGold));
     $('#current-gold-tracker').text(goldStr(currentGold));
 
-    $inventory = $('#inventory-table-body');
+    var $inventory = $('#inventory-table-body');
     $inventory.html('');
     for (var i = 0; i < model.inventory.length; i++) {
         (function() {
@@ -705,6 +754,15 @@ function pageinit() {
     $('#gold-avg-button').click(function() {
         calculateGold(true);
     });
+
+    $('#trinket-button').click(function() {
+        $('#trinket-div').text(sample(bookdata.trinkets));
+    });
+
+    $( '#favored-enemy-dropdown, #humanoid-dropdown-first, #humanoid-dropdown-second')
+        .change(function() {
+            updateRangerDiv();
+        });
 }
 
 var bookdata;

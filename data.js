@@ -392,6 +392,18 @@ function getFightingStyleView() {
     return view;
 }
 
+function getRangerViews() {
+    let enemies = features['favored-enemy'].types;
+    let humanoids = features['favored-enemy'].humanoids;
+    let terrains = features['natural-explorer'].types;
+
+    return {
+        enemies: keysToKeyFullnamePairs(enemies),
+        humanoids: keysToKeyFullnamePairs(humanoids),
+        terrains: keysToKeyFullnamePairs(terrains),
+    }
+}
+
 // -------------------------------------------------- 
 // Backgrounds
 // -------------------------------------------------- 
@@ -480,8 +492,12 @@ function getBackgroundViews() {
 // Skills and Proficienies
 // -------------------------------------------------- 
 
+// proficiency expansions, e.g. 'musical-instrument' to full list of them
 let expansionJson = fs.readFileSync('bookdata/json/expansions.json', 'utf8');
 let expansions = JSON.parse(expansionJson);
+
+let languagesJson = fs.readFileSync('bookdata/json/languages.json', 'utf8');
+let languages = JSON.parse(languagesJson);
 
 function getExpertiseView() {
     let view = [];
@@ -661,6 +677,10 @@ let armors = bookdb.prepare('SELECT * FROM armor').all();
 let items = bookdb.prepare('SELECT * FROM items').all();
 let packs = bookdb.prepare('SELECT * FROM packs').all();
 
+let trinketsJson = fs.readFileSync('bookdata/json/trinkets.json', 'utf8');
+let trinkets = JSON.parse(trinketsJson);
+
+
 for (let weapon of weapons) {
     if (weapon.properties !== '' && weapon.properties.trim() !== '') 
         weapon.proparr = weapon.properties.split(' ');
@@ -823,7 +843,7 @@ function gatherSpellSources() {
 }
 
 // -------------------------------------------------- 
-// Misc
+// Misc / Util
 // -------------------------------------------------- 
 
 function goldStr(gold) {
@@ -844,6 +864,17 @@ function weightStr(pounds) {
     return `${pounds} lb.`
 }
 
+function keysToKeyFullnamePairs(arr) {
+    console.log(arr);
+    let newarr = [];
+    for (let i = 0; i < arr.length; i++) {
+        let keyname = arr[i];
+        let fullname = util.keynameToFullname(keyname)
+        newarr.push({ keyname, fullname })
+    }
+    return newarr;
+}
+
 
 // -------------------------------------------------- 
 // Main View Creation
@@ -861,6 +892,11 @@ function getView() {
     view.warlockpatrons = getDomainDivView(classes.warlock.patrons);
     view.fightingstyles = getFightingStyleView();
     view.expertiseskills = getExpertiseView();
+
+    let rangerViews = getRangerViews();
+    view.rangerEnemies = rangerViews.enemies;
+    view.rangerHumanoids = rangerViews.humanoids;
+    view.rangerTerrains = rangerViews.terrains;
 
     let bgViews = getBackgroundViews();
     view.backgrounds = bgViews.bgViews;
@@ -881,7 +917,10 @@ function getView() {
 // Exports, data prep for ajax
 // -------------------------------------------------- 
 
-let joinedData = { races, classes, racechoices, features, backgrounds, weapons, armors, items, packs };
+let joinedData = { 
+    races, classes, racechoices, features, backgrounds, 
+    weapons, armors, items, packs, trinkets, languages 
+};
 let joinedJson = JSON.stringify(joinedData);
 
 exports.getView = getView;
