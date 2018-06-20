@@ -9,15 +9,18 @@ var model;
 function newModel() {
     model = {};
 
-    // race and class defaults
+    // race, class, and background defaults
     model.raceval = 'human';
     model.classval = 'fighter';
-
-    // cleric domain and warlock patron defaults
-    model.domainval = 'knowledge-domain';
-    model.patronval = 'the-archfey';
-    model.originval = 'wild-magic';
     model.backgroundval = 'acolyte';
+
+    // cleric domain, sorcerous origin, 
+    // and warlock patron defaults
+    model.domainval = 'knowledge-domain';
+    model.originval = 'wild-magic';
+    model.patronval = 'the-archfey';
+
+    // gold and inventory defaults
     model.initialGold = 0;
     model.spentGold = 0;
     model.inventory = [];
@@ -33,12 +36,36 @@ function newModel() {
     model.abilityModifiers = {};
 }
 
-function getAllFeatures() {
+function getFeatures() {
     var classFeatures = bookdata.classes[model.classval].features;
-    var raceFeatures = bookdata.races[model.raceval].features;
-    var bgFeatures = bookdata.backgrounds[model.backgroundval].features;
 
-    return classFeatures.concat(raceFeatures, classFeatures, bgFeatures);
+    var races = getRaces(); 
+    var mainRaceFeatures = races.main.features;
+    var subRaceFeatures = races.sub === undefined ? [] : races.sub.features;
+
+    var features = classFeatures.concat(mainRaceFeatures, subRaceFeatures);
+
+    if (model.classval === 'sorcerer') {
+        features = features.concat(bookdata.classes.sorcerer.origins[model.originval].features)
+    }
+    else if (model.classval === 'cleric') {
+        features = features.concat(bookdata.classes.cleric.domains[model.domainval].features);
+    }
+    else if (model.classval === 'warlock') {
+        features = features.concat(bookdata.classes.warlock.patrons[model.patronval].features);
+    }
+
+    return features;
+}
+
+function getRaces() {
+    var mainRaceKey = bookdata.racechoices[model.raceval][0];
+    var subRaceKey = bookdata.racechoices[model.raceval][1];
+
+    var mainrace = bookdata.races[mainRaceKey];
+    var subrace = subRaceKey === undefined ? undefined : bookdata.races[subRaceKey];
+
+    return { main: mainrace, sub: subrace };
 }
 
 // --------------------------------------------------
@@ -84,13 +111,6 @@ function manageDivSelection(property, changeto) {
     $("#" + property + "div-" + changeto).show();
 
     return changeto;
-}
-
-function conditionallyShow(selector, truthval) {
-    if (truthval)
-        $(selector).show();
-    else
-        $(selector).hide();
 }
 
 function sample(arr) {
@@ -403,9 +423,16 @@ function selectClass(changeto) {
 function selectSorcerousOrigin() {
     model.originval = $("#sorcerous-origin-dropdown").val();
 
-    conditionallyShow('#sorcerous-origin-dropdown-div', model.classval === 'sorcerer');
-    let showtable = (model.classval === 'sorcerer' && model.originval === 'origin-draconic');
-    conditionallyShow('#sorcerous-origin-table', showtable);
+    $('#sorcerous-origin-dropdown-div').toggle(model.classval === 'sorcerer');
+    $('#sorcerer-wild-div').toggle(
+        model.classval === 'sorcerer' && model.originval === 'wild-magic'
+    )
+    $('#sorcerer-draconic-div').toggle(
+        model.classval === 'sorcerer' && model.originval === 'draconic-ancestry'
+    )
+    $('#sorcerous-origin-table').toggle(
+        model.classval === 'sorcerer' && model.originval === 'draconic-ancestry'
+    );
 }
 
 function selectDomain(changeto) {
@@ -523,14 +550,54 @@ function updateProficiencies() {
     $('.' + model.classval + '-prof-source-div').show();
     $('.' + model.backgroundval + '-prof-source-div').show();
 
-    var allFeatures = getAllFeatures();
-    for (var i = 0; i < allFeatures.length; i++) {
-        $('.' + allFeatures[i] + '-prof-source-div').show();
+    var features = getFeatures();
+    for (var i = 0; i < features.length; i++) {
+        $('.' + features[i] + '-prof-source-div').show();
     }
 }
 
+function getLanguages() {
+    var extra = 0;
+    var languages = getRaces().main.languages;
+    var features = getFeatures();
+
+    for (var i = 0; i < features.length; i++) {
+        var feature = bookdata.features[features[i]];
+        if (feature['bonus-languages'] !== undefined) {
+            extra += feature['bonus-languages'];
+        }
+
+        if (feature['languages'] !== undefined)
+            languages = languages.concat(feature['languages']);
+    }
+
+    extra += bookdata.backgrounds[model.backgroundval].languages || 0;
+
+    return { list: languages, extra: extra };
+}
+
 function updateLanguages() {
-        
+    var languages = getLanguages();
+    var $langlist = $("#languages-list");
+
+    $langlist.html('');
+
+    for (var i = 0; i < languages.list.length; i++) {
+        var fullname = keynameToFullname(languages.list[i]);
+        $langlist.append( '<li class="two-column-section"><b>' + fullname + '<b></li>');
+    }
+
+    for (var i = 0; i < languages.extra; i++) {
+        var html = '<li class="two-column-section">' 
+        html += '<b>Extra Language:</b>'
+        html += '<select class="extra-language-dropdown">';
+        bookdata.languages.list.forEach(function (lang) {
+            var fullname = keynameToFullname(lang);
+            html += '<option value="' + lang + '">' + fullname + '</option>';
+        });
+        html += '</select>';
+        $langlist.append(html);
+    }
 }
 
 // --------------------------------------------------
@@ -665,6 +732,14 @@ function clearInventory() {
 }
 
 // --------------------------------------------------
+// Summary / Model Processing
+// --------------------------------------------------
+
+function gatherFeatures() {
+    
+}
+
+// --------------------------------------------------
 // Page
 // --------------------------------------------------
 
@@ -684,36 +759,43 @@ function pageinit() {
     updateProficiencies();
     selectEquipmentTable();
     updateInventory();
+    updateLanguages();
 
     $('#race-dropdown').change(function() {
         selectRace();
         updateProficiencies();
+        updateLanguages();
     })
 
     $('#class-dropdown').change(function() {
         selectClass();
         updateProficiencies();
         updateInventory();
+        updateLanguages();
     })
 
     $('#domain-dropdown').change(function() {
         selectDomain();
         updateProficiencies();
+        updateLanguages();
     })
 
     $('#patron-dropdown').change(function() {
         selectPatron();
         updateProficiencies();
+        updateLanguages();
     })
 
     $('#sorcerous-origin-dropdown').change(function() {
         selectSorcerousOrigin();
         updateProficiencies();
+        updateLanguages();
     })
 
     $('#background-dropdown').change(function() {
         selectBackground();
         updateProficiencies();
+        updateLanguages();
     })
 
     $('#equipment-dropdown').change(function() {

@@ -76,7 +76,8 @@
     },
     "extra-language": {
         "description":
-            "You can speak, read, and write one extra language of your choice."
+            "You can speak, read, and write one extra language of your choice.",
+        "bonus-languages": 1
     },
     "mask-of-the-wild": {
         "description":
@@ -229,7 +230,10 @@
     },
     "druidic": {
         "description":
-            "You know druidic, the secret language of druids."
+            "You know druidic, the secret language of druids.",
+        "languages": [
+            "druidic"
+        ]
     },
     "druidic-spellcasting": {
         "description":
@@ -394,7 +398,8 @@
     },
     "blessings-of-knowledge": {
         "description":
-            "You learn two languages of your choice. You also become proficient in your choice of two of the following skills: Arcana, History, Nature, or Religion. Your proficiency bonus is doubled for any ability check you make that uses either of those skills."
+            "You learn two languages of your choice. You also become proficient in your choice of two of the following skills: Arcana, History, Nature, or Religion. Your proficiency bonus is doubled for any ability check you make that uses either of those skills.",
+        "bonus-languages": 2
     },
     "domain-heavy-armor": {
         "proftitle": "Domain Bonus Proficiency",
@@ -462,5 +467,24 @@
     "awakened-mind": {
         "description":
             "Your alien knowledge gives you the ability to touch the minds of other creatures. You can communicate telepathically with any creature you can see within 30 feet of you. You don't need to share a language with the creature for it to understand you, but the creature must be able to understand at least one langauge."
+    },
+    "wild-magic-surge": {
+        "description":
+            "Your spellcasting can unleash surges of untamed magic. Immediately after you cast a sorcerer spell of 1st level or higher, the DM can have you roll a d20. If you roll a 1, roll on the Wild Magic Surge table to create a random magical effect."
+    },
+    "tides-of-chaos": {
+        "description":
+            "You can manipulate the forces of chance and chaos to gain advantage on one attack roll, ability check, or saving throw. Once you do so, you must finish a long rest before you can use this feature again. Any time before you regain the use of this feature, the DM can have you roll on the Wild Magic Surge table immediately after you cast a sorcerer spell of 1st level or higher. You then regain the use of this feature."
+    },
+    "dragon-ancestor": {
+        "description":
+            "Choose one type of dragon as your ancestor. The damage type associated with each dragon is used by features you gain later. You know Draconic. You can add double your proficiency bonus to Charisma checks when interacting with dragons.",
+        "languages": [
+            "draconic"
+        ]
+    },
+    "draconic-resilience": {
+        "description":
+            "At first level, your hit point maximum increases by 1, and increases by 1 again whenever you gain a level in this class. Parts of your skin are covered by a thin sheen of dragon-like scales. When not wearing armor, your AC is 13 + your Dexterity modifier."
     }
 }

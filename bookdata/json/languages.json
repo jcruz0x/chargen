@@ -1,0 +1,137 @@
+{
+    "list": [
+        "dwarvish",
+        "elvish",
+        "giant",
+        "gnomish",
+        "goblin",
+        "halfling",
+        "orc",
+        "abyssal",
+        "celestial",
+        "draconic",
+        "deep-speech",
+        "infernal",
+        "primordial",
+        "sylvan",
+        "undercommon"
+    ],
+    "byrace": {
+        "aasimar": ["celestial"],
+        "bugbear": ["goblin"],
+        "bullywug": ["bullywug"],
+        "catfolk": [],
+        "darfellan": ["darfellan"],
+        "dark-one": [],
+        "dragonborn": ["draconic"],
+        "drow": ["elvish"],
+        "dwarf": ["dwarvish"],
+        "eladrin": ["elvish"],
+        "elf": ["elvish"],
+        "genasi": ["primoridial"],
+        "gibberling": [],
+        "githyanki": ["gith"],
+        "githzerai": ["gith","deep-speech"],
+        "gnoll": ["gnoll"],
+        "gnome": ["gnomish"],
+        "goblin": ["goblin"],
+        "goliath": ["giant"],
+        "grimlock": ["undercommon"],
+        "grippli": ["grippli"],
+        "half-elf": ["elvish"],
+        "half-orc": ["orc"],
+        "halfling": ["halfling"],
+        "hobgoblin": ["goblin"],
+        "human": [],
+        "kenku": ["auran","kenku"],
+        "kobold": ["draconic"],
+        "lizardfolk": ["draconic"],
+        "locathah": ["aquan"],
+        "merfolk": ["aquan", "aklo", "draconic", "elven", "sylvan"],
+        "mongrelfolk": [],
+        "mul": ["dwarvish"],
+        "nilbog": ["goblin"],
+        "norker": ["goblin"],
+        "orc": ["orc"],
+        "orog": ["orc"],
+        "rakasta": [],
+        "rakshasha": ["infernal"],
+        "saurial": ["draconic"],
+        "sahuagin": ["sahuagin"],
+        "selkie": [],
+        "shifter": [],
+        "skulk": ["undercommon"],
+        "swanmay": [],
+        "tasloi": ["tasloi","sylvan"],
+        "tiefling": ["infernal"],
+        "troglodyte": ["troglodyte"],
+        "werebear": [],
+        "wereboar": [],
+        "wererat": [],
+        "weretiger": [],
+        "werewolf": [],
+        "abberations": [
+            "deep-speech",
+            "beholder",
+            "undercommon",
+            "slaad",
+            "grell",
+            "qualith",
+            "mindwitness",
+            "kazzjakn",
+            "otyugh"
+        ],
+        "beasts": [
+            "giant-eagle",
+            "giant-elk",
+            "giant-owl",
+            "auran",
+            "elvish",
+            "sylvan"
+        ],
+        "celestials": [
+            "celestial",
+            "elvish",
+            "sylvan"
+        ],
+        "constructs": [ ],
+        "dragons": ["draconic"],
+        "elementals": [
+            "auran",
+            "auquan",
+            "ignan",
+            "terran",
+            "primordial",
+            ""
+        ],
+        "fey": [
+            "sylvan",
+            "elvish",
+            "draconic",
+            "giant"
+        ],
+        "fiends": [
+            "abyssal",
+            "infernal"
+        ],
+        "giants": [
+            "giant",
+            "orc"
+        ],
+        "monstrosities": [
+            "abyssal",
+            "celestial",
+            "infernal",
+            "primordial"
+        ],
+        "oozes": [],
+        "plants": [
+            "elvish",
+            "sylvan"
+        ],
+        "undead": [
+            "abyssal",
+            "giant"
+        ]
+    }
+}

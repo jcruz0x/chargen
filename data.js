@@ -50,6 +50,21 @@ function getAbilityView() {
 let featuresJson = fs.readFileSync('bookdata/json/features.json', 'utf8');
 let features = JSON.parse(featuresJson);
 
+function getFeaturesDescHtml(featurelist, title, text) {
+    let view = { title, items: [] };
+    for (let feature of featurelist) {
+        view.items.push({
+            name: util.keynameToFullname(feature),
+            desc: features[feature].description
+        });
+    }
+
+    if (text != undefined)
+        view.desc = text;
+
+    return mustache.render(desclistTwoColTemplate, view);
+}
+
 // -------------------------------------------------- 
 // Races
 // -------------------------------------------------- 
@@ -193,6 +208,16 @@ function getDragonbornTableView() {
         });
     }
     return view;
+}
+
+function getSorcererWildView() {
+    let wildFeatures = classes.sorcerer.origins['wild-magic'].features;
+    return getFeaturesDescHtml(wildFeatures, "Wild Magic");
+}
+
+function getSorcererDraconicView() {
+    let draconicFeatures = classes.sorcerer.origins['draconic-ancestry'].features;
+    return getFeaturesDescHtml(draconicFeatures, "Draconic Ancestry");
 }
 
 // -------------------------------------------------- 
@@ -865,7 +890,6 @@ function weightStr(pounds) {
 }
 
 function keysToKeyFullnamePairs(arr) {
-    console.log(arr);
     let newarr = [];
     for (let i = 0; i < arr.length; i++) {
         let keyname = arr[i];
@@ -897,6 +921,9 @@ function getView() {
     view.rangerEnemies = rangerViews.enemies;
     view.rangerHumanoids = rangerViews.humanoids;
     view.rangerTerrains = rangerViews.terrains;
+
+    view.sorcererDraconicView = getSorcererDraconicView();
+    view.sorcererWildView = getSorcererWildView();
 
     let bgViews = getBackgroundViews();
     view.backgrounds = bgViews.bgViews;

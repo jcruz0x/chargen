@@ -179,10 +179,19 @@
           <div id="sorcerous-origin-dropdown-div" class="centered"> 
             <h3> Sorcerous Origin </h3>
             <select id="sorcerous-origin-dropdown">
-              <option value="origin-wild-magic">Wild Magic</option>
-              <option value="origin-draconic">Draconic Ancestry</option>
+              <option value="wild-magic">Wild Magic</option>
+              <option value="draconic-ancestry">Draconic Ancestry</option>
             </select>
           </div>
+
+          <div id="sorcerer-wild-div">
+            {{{sorcererWildView}}}
+          </div>
+
+          <div id="sorcerer-draconic-div">
+            {{{sorcererDraconicView}}}
+          </div>
+
 
           <table style="display: none" id="sorcerous-origin-table">
             <caption>Draconic Ancestry</caption>
@@ -338,7 +347,7 @@
               <select id="ranger-language-dropdown">
               </select>
               <p id="ranger-language-none-text" style="display: none">
-                <i>There are no languages available for that choice of favored enemy.</i>
+                <i>There are no languages available for that favored enemy selection.</i>
               </p>
             </div>
           </div>
@@ -518,20 +527,16 @@
           </ul>
 
           <div class="clear"></div>
-          <h3 class="centered">Languages Known</h3>
+        </section>
+
+        <!-- LANGUAGES SECTION -->
+
+        <section>
+          <h2 class="headline">Languages</h2>
 
           <ul id="languages-list" class="two-column">
           </ul>
 
-          <div class="clear"></div>
-
-          <div id="extra-languages-div">
-            <h3 class="centered">Extra Languages</h3>
-
-            <ul id="languages-dropdown-list" class="two-column">
-            </ul>
-          </div>
-          
           <div class="clear"></div>
         </section>
 

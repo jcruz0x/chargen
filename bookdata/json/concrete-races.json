@@ -7,7 +7,6 @@
     "lightfoot-halfling": ["halfling", "lightfoot-halfling"],
     "stout-halfling": ["halfling", "stout-halfling"],
     "human": ["human"],
-    "variant-human": ["variant-human"],
     "dragonborn": ["dragonborn"],
     "forest-gnome": ["gnome","forest-gnome"],
     "rock-gnome": ["gnome","rock-gnome"],

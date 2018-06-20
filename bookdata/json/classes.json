@@ -574,7 +574,21 @@
             "sleep",
             "thunderwave",
             "witch-bolt"
-        ]
+        ],
+        "origins": {
+            "draconic-ancestry": {
+                "features": [
+                    "dragon-ancestor",
+                    "draconic-resilience"
+                ]
+            },
+            "wild-magic": {
+                "features": [
+                    "wild-magic-surge",
+                    "tides-of-chaos"
+                ]
+            }
+        }
     },
     "warlock": {
         "hitdie": 8,
