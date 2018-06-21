@@ -540,6 +540,67 @@
           <div class="clear"></div>
         </section>
 
+        <!-- SPELLS SECTION -->
+
+        <section id="spells-section">
+          <h2 class="headline">Spellcasting</h2>
+
+          <ul class="two-column">
+
+            <!-- Cantrips -->
+            <li id="cantrips-div" class="two-column">
+              <b>Cantrips Known</b>
+              <div id="cantrips-list">
+              </div>
+            </li>
+
+            <!-- 1st level spells -->
+            <li id="spells-known-div" class="two-column">
+              <b>Spells Known</b>
+              <div id="spells-known-list">
+              </div>
+            </li>
+
+            <li id="prepared-spells-div" class="two-column">
+              <b>Prepared Spells: </b>
+              <span id="prepared-spell-text"></span>
+            </li>
+
+            <!-- Feature Cantrips -->
+            {{#featureCantrips}}
+            <li id="feature-cantrip-{{name}}" class="two-column feature-cantrip">
+              <b>{{fullname}}: </b>
+              {{desc}}
+            </li>
+            {{/featureCantrips}}
+
+
+            <!-- elf cantrip -->
+            <li id="elf-cantrip-div" class="two-column">
+              <b>Elf Cantrip: </b>
+              <p>As a high elf, you gain a cantrip from the Wizard cantrip list. Intelligence is your spellcasting ability for it.</p>
+              <select id="elf-cantrip-dropdown">
+              {{#wizardCantrips}}
+                <option val="{{keyname}}">{{fullname}}</option>
+              {{/wizardCantrips}}
+              </select>
+            </li>
+
+            <!-- acolyte of nature -->
+            <li id="acolyte-of-nature-div" class="two-column">
+              <b>Acolyte Of Nature Cantrip: </b>
+              You learn a cantrip from the druid cantrip list.
+              <select id="acolyte-cantrip-dropdown">
+              {{#druidCantrips}}
+                <option val="{{name}}">{{fullname}}</option>
+              {{/druidCantrips}}
+              </select>
+            </li>
+          </ul>
+
+          <div class="clear"></div> 
+        </section>
+
         <!-- EQUIPMENT SECTION -->
 
         <section>
@@ -759,14 +820,6 @@
           <div class="clear"></div>
         </section>
 
-        <!-- SPELLS SECTION -->
-
-        <section id="spells-section">
-          <h2 class="headline">Spellcasting</h2>
-
-          <div class="clear"></div> 
-        </section>
-
         <!-- DESCRIPTION SECTION -->
 
         <section>
@@ -774,7 +827,7 @@
 
           <div class="two-column">
             <div class="two-column-section description-section-item">
-              <h5>Character Name:<h5>
+              <h5>Character Name:</h5>
               <input type="text" id="character-name-field">
             </div>
             <div class="two-column-section description-section-item">

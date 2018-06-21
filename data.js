@@ -243,7 +243,7 @@ function appendHitDieFeatures(charclass, items) {
     });
     items.push({
         name: "Hit Points At First Level",
-        desc: `${charclass.hitdie} + your constitution modifier,`
+        desc: `${charclass.hitdie} + your constitution modifier.`
     });
 
     let halfdie = (charclass.hitdie / 2) + 1;
@@ -303,9 +303,13 @@ function getClassDivHtml(charclass) {
 
     appendHitDieFeatures(charclass, view.items);
 
+    let armorProfDesc = joinFullnames(charclass.armorprof) + "."
+    if (charclass.fullname == "Druid")
+        armorProfDesc += " Druids cannot use metal armor or shields."
+
     view.items.push({
         name: "Armor Proficiencies",
-        desc: joinFullnames(charclass.armorprof) + "."
+        desc: armorProfDesc
     });
 
     view.items.push({
@@ -863,8 +867,12 @@ function getOrAddCategory(category, view) {
 // Spells
 // -------------------------------------------------- 
 
-function gatherSpellSources() {
-    
+function getDruidCantripView() {
+    return keysToKeyFullnamePairs(classes.druid.cantrips);
+}
+
+function getWizardCantripView() {
+    return keysToKeyFullnamePairs(classes.wizard.cantrips);
 }
 
 // -------------------------------------------------- 
@@ -892,11 +900,32 @@ function weightStr(pounds) {
 function keysToKeyFullnamePairs(arr) {
     let newarr = [];
     for (let i = 0; i < arr.length; i++) {
-        let keyname = arr[i];
-        let fullname = util.keynameToFullname(keyname)
-        newarr.push({ keyname, fullname })
+        newarr.push(keyToKeyFullnamePair(arr[i]));
     }
     return newarr;
+}
+
+function keyToKeyFullnamePair(keyname) {
+    return { keyname, fullname: util.keynameToFullname(keyname) };
+}
+
+function getFeatureCantripsView() {
+    let view = [];
+    for (let featurekey in features) {
+        if (!features.hasOwnProperty(featurekey))
+            continue;
+
+        let feature = features[featurekey];
+
+        if (feature.cantrip !== undefined) {
+            view.push({
+                name: featurekey,
+                fullname: util.keynameToFullname(featurekey),
+                desc: feature.description
+            });
+        }
+    }
+    return view;
 }
 
 
@@ -924,6 +953,10 @@ function getView() {
 
     view.sorcererDraconicView = getSorcererDraconicView();
     view.sorcererWildView = getSorcererWildView();
+
+    view.druidCantrips = getDruidCantripView();
+    view.wizardCantrips = getWizardCantripView();
+    view.featureCantrips = getFeatureCantripsView();
 
     let bgViews = getBackgroundViews();
     view.backgrounds = bgViews.bgViews;

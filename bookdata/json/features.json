@@ -72,7 +72,7 @@
     },
     "elf-cantrip": {
         "description":
-            "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting stat for it."
+            "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it."
     },
     "extra-language": {
         "description":
@@ -93,7 +93,8 @@
     },
     "drow-magic": {
         "description":
-            "You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once per day. When you reach 5th level, you can cast darkness once per day. Charisma is your spellcasting ability for these spells."
+            "You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once per day. When you reach 5th level, you can cast darkness once per day. Charisma is your spellcasting ability for these spells.",
+        "cantrip": "dancing-lights"
     },
     "drow-weapon-training": {
         "description":
@@ -148,7 +149,8 @@
     },
     "natural-illusionist": {
         "description":
-            "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it."
+            "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it.",
+        "cantrip":"minor-illusion"
     },
     "speak-with-small-beasts": {
         "description":
@@ -190,7 +192,8 @@
     },
     "infernal-legacy": {
         "description":
-            "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells." 
+            "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells.",
+        "cantrip": "thaumaturgy"
     },
     "rage": {
         "description":
@@ -425,8 +428,10 @@
             "Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spells level."
     },
     "light-domain-cantrip": {
+        "fullname": "Extra Cantrip",
         "description":
-            "You gain the light cantrip if you don't already know it."
+            "You gain the light cantrip if you don't already know it.",
+        "cantrip": "light"
     },
     "warding-flare": {
         "description":

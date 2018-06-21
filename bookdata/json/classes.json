@@ -680,7 +680,7 @@
             }
         }
     },
-    "Wizard": {
+    "wizard": {
         "hitdie": 6,
         "armorprof": [ ],
         "weaponprof": [
@@ -710,6 +710,7 @@
         ],
         "cantripsknown": 3,
         "spellslots": 2,
+        "spellsknown": 6,
         "cantrips": [
             "acid-splash",
             "blade-ward",

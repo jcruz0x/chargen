@@ -55,6 +55,7 @@ function getFeatures() {
         features = features.concat(bookdata.classes.warlock.patrons[model.patronval].features);
     }
 
+
     return features;
 }
 
@@ -240,6 +241,7 @@ function updateAbilities() {
     }
 
     updateAbilityHtml();
+    updateSpellcasting();
 }
 
 // 4d6, drop the lowest
@@ -589,7 +591,7 @@ function updateLanguages() {
 
     for (var i = 0; i < languages.extra; i++) {
         var html = '<li class="two-column-section">' 
-        html += '<b>Extra Language:</b>'
+        html += '<b>Extra Language: </b>'
         html += '<select class="extra-language-dropdown">';
         bookdata.languages.list.forEach(function (lang) {
             var fullname = keynameToFullname(lang);
@@ -732,11 +734,91 @@ function clearInventory() {
 }
 
 // --------------------------------------------------
-// Summary / Model Processing
+// Spellcasting
 // --------------------------------------------------
 
-function gatherFeatures() {
+var spellcasters = ['bard', 'cleric', 'druid', 'sorcerer', 'warlock', 'wizard'];
+var spellPreppers = ['wizard', 'cleric', 'druid'];
+
+function updateSpellcasting() {
+    var features = getFeatures();
+
+    var isSpellCastingClass = $.inArray(model.classval, spellcasters) !== -1;
+    var preparesSpells = $.inArray(model.classval, spellPreppers) !== -1;
+    var hasSpellsKnown = isSpellCastingClass && (model.classval != 'cleric' && model.classval != 'druid');
     
+    var canCastSpells = isSpellCastingClass;
+
+    if (model.raceval === 'high-elf')
+        canCastSpells = true; 
+
+    $('#elf-cantrip-div').toggle(model.raceval === 'high-elf');
+    $('#acolyte-of-nature-div').toggle( model.classval === 'cleric' && model.domainval === 'nature-domain');
+
+    $('.feature-cantrip').hide();
+    for (var i = 0; i < features.length; i++) {
+        if (bookdata.features[features[i]].cantrip !== undefined) {
+            $('#feature-cantrip-' + features[i]).show();
+            canCastSpells = true;
+        }
+    }
+
+    $('#cantrips-div').toggle(isSpellCastingClass);
+    $('#spells-known-div').toggle(isSpellCastingClass);
+    $('#spells-section').toggle(canCastSpells);
+    $('#spells-known-div').toggle(hasSpellsKnown);
+    $('#prepared-spells-div').toggle(preparesSpells);
+
+    var $cantrips = $('#cantrips-list');
+    $cantrips.html('');
+
+    if (isSpellCastingClass) {
+        var cantripsKnown = bookdata.classes[model.classval].cantripsknown;
+        var cantripsList = bookdata.classes[model.classval].cantrips;
+        var html = '';
+        for (var i = 0; i < cantripsKnown; i++) {
+            html += '<select id="cantrips-known-dropdown">';
+            for (var j = 0; j < cantripsList.length; j++) {
+                var keyname = cantripsList[j];
+                var fullname = keynameToFullname(keyname);
+                html += '<option value="' + keyname + '">' + fullname + '</option>';
+            }
+            html += '</select>';
+        }
+
+        $cantrips.html(html);
+    }
+
+    var $spellsknown = $('#spells-known-list');
+    $spellsknown.html('');
+
+    if (hasSpellsKnown) {
+        var spellsKnown = bookdata.classes[model.classval].spellsknown;
+        var spellsList = bookdata.classes[model.classval].spells;
+        var html = '';
+        for (var i = 0; i < spellsKnown; i++) {
+            html += '<select id="spells-known-dropdown">';
+            for (var j = 0; j < cantripsList.length; j++) {
+                var keyname = spellsList[j];
+                var fullname = keynameToFullname(keyname);
+                html += '<option value="' + keyname + '">' + fullname + '</option>';
+            }
+            html += '</select>'
+        }
+        $spellsknown.html(html);
+    }
+
+    if (preparesSpells) {
+        if (model.classval == 'cleric' || model.classval == 'druid') {
+            var nspells = Math.max(1, model.abilityModifiers.wis + 1);
+            var classname = capitalize(model.classval);
+            $('#prepared-spell-text').text('You can prepare ' + nspells + ' spell(s) from the ' + classname + ' spell list.');
+        }
+        else {
+            var nspells = Math.max(1, model.abilityModifiers.int + 1);
+            $('#prepared-spell-text').text('You can prepare ' + nspells + ' spell(s) from your spellbook.');
+        }
+    }
 }
 
 // --------------------------------------------------
@@ -760,11 +842,13 @@ function pageinit() {
     selectEquipmentTable();
     updateInventory();
     updateLanguages();
+    updateSpellcasting();
 
     $('#race-dropdown').change(function() {
         selectRace();
         updateProficiencies();
         updateLanguages();
+        updateSpellcasting();
     })
 
     $('#class-dropdown').change(function() {
@@ -772,24 +856,28 @@ function pageinit() {
         updateProficiencies();
         updateInventory();
         updateLanguages();
+        updateSpellcasting();
     })
 
     $('#domain-dropdown').change(function() {
         selectDomain();
         updateProficiencies();
         updateLanguages();
+        updateSpellcasting();
     })
 
     $('#patron-dropdown').change(function() {
         selectPatron();
         updateProficiencies();
         updateLanguages();
+        updateSpellcasting();
     })
 
     $('#sorcerous-origin-dropdown').change(function() {
         selectSorcerousOrigin();
         updateProficiencies();
         updateLanguages();
+        updateSpellcasting();
     })
 
     $('#background-dropdown').change(function() {
