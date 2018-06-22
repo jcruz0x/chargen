@@ -119,7 +119,7 @@
               {{#dragondata}}
                   <tr>
                     <td>
-                      <input type="radio" id="{{dragon}}-dragonborn-ancestry" name="dragonborn-ancestry" value="{{dragon}}">
+                      <input type="radio" id="{{dragon}}-dragonborn-ancestry" name="dragonborn-ancestry" value="{{dragon}}" class="trigger-model-update-onchange">
                       <label for="{{dragon}}-dragonborn-ancestry">{{dragonname}}</label>
                     </td>
                     <td>{{damage}}</td>
@@ -142,12 +142,12 @@
               abilities of your choice.
             </p>
 
-            <select id="bonus-choice-primary">
+            <select id="bonus-choice1">
               {{#abilities}}
                 <option value="{{abilityid}}">{{abilityname}}</option>
               {{/abilities}}
             </select>
-            <select id="bonus-choice-secondary">
+            <select id="bonus-choice2">
               {{#abilities}}
                 <option value="{{abilityid}}">{{abilityname}}</option>
               {{/abilities}}
@@ -205,7 +205,7 @@
               {{#dragondata}}
                   <tr>
                     <td>
-                      <input type="radio" id="{{dragon}}-sorcerous-origin" name="sorcerous-origin" value="{{dragon}}">
+                      <input type="radio" id="{{dragon}}-origin-dragontype" name="origin-dragontype" value="{{dragon}}" class="trigger-model-update-onchange">
                       <label for="{{dragon}}-sorcerous-origin">{{dragonname}}</label>
                     </td>
                     <td>{{damage}}</td>
@@ -226,7 +226,7 @@
               {{#fightingstyles}}
                   <tr>
                     <td>
-                      <input type="radio" id="{{name}}-fighting-style" name="fighting-style" value="{{name}}">
+                      <input type="radio" id="{{name}}-fighting-style" name="fighting-style" value="{{name}}" class="trigger-model-update-onchange">
                       <label for="{{name}}-fighting-style">{{fullname}}</label>
                     </td>
                     <td>{{benefit}}</td>
@@ -274,12 +274,12 @@
             <p>
             Select two skills you will be taking, or thieves tools and a skill.
             </p>
-            <select id="expertise-dropdown-one">
+            <select id="expertise-dropdown1" class="trigger-model-update-onchange">
               {{#expertiseskills}}
                 <option value="{{name}}">{{fullname}}</option>
               {{/expertiseskills}}
             </select>
-            <select id="expertise-dropdown-one">
+            <select id="expertise-dropdown2" class="trigger-model-update-onchange">
               {{#expertiseskills}}
                 <option value="{{name}}">{{fullname}}</option>
               {{/expertiseskills}}
@@ -324,14 +324,14 @@
               <h4 class="centered">Favored Humanoid Enemies:</h4>
               <div class="centered two-column">
                 <div class="two-column-section">
-                  <select id="humanoid-dropdown-first">
+                  <select id="humanoid-dropdown1">
                     {{#rangerHumanoids}}
                       <option value="{{keyname}}">{{fullname}}</option>
                     {{/rangerHumanoids}}
                   </select>
                 </div>
                 <div class="two-column-section">
-                  <select id="humanoid-dropdown-second">
+                  <select id="humanoid-dropdown2">
                     {{#rangerHumanoids}}
                       <option value="{{keyname}}">{{fullname}}</option>
                     {{/rangerHumanoids}}
@@ -344,7 +344,7 @@
 
             <div id="ranger-language-div" class="centered">
               <h4>Favored Enemy Language</h4>
-              <select id="ranger-language-dropdown">
+              <select id="ranger-language-dropdown" class="trigger-model-update-onchange">
               </select>
               <p id="ranger-language-none-text" style="display: none">
                 <i>There are no languages available for that favored enemy selection.</i>
@@ -391,7 +391,7 @@
             <div class="pool background-variant-div" style="display: none" id="variant-feature-{{name}}">
               <h4>Variant Feature: {{title}}</h4>
               {{{html}}}
-              <input type="checkbox" id="variant-feature-checkbox-{{name}}">
+              <input type="checkbox" id="variant-feature-checkbox-{{name}}" class="bg-variant-checkbox trigger-model-update-onchange">
               <label for="variant-feature-checkbox-{{name}}">Use This Variant Feature</label>
             </div>
           {{/backgroundVariantFeatures}}
@@ -400,7 +400,7 @@
             <div class="pool background-variant-div" style="display: none" id="variant-background-{{name}}">
               <h4>Background Variant: {{title}}</h4>
               {{{html}}}
-              <input type="checkbox" id="variant-background-checkbox-{{name}}">
+              <input type="checkbox" id="variant-background-checkbox-{{name}}" class="bg-variant-checkbox trigger-model-update-onchange">
               <label for="variant-background-checkbox-{{name}}">Use This Background Variant</label>
             </div>
           {{/backgroundVariants}}
@@ -424,7 +424,7 @@
 
             <div class="traitdiv" style="display: none" id="background-subtype-entry-div">
               {{! <textarea rows="4" id="background-subtype-text" class="traitfield"></textarea> }}
-              <div contenteditable="true" class="editbox smaller-editbox" id="background-subtype-text"></div>
+              <div contenteditable="true" class="editbox smaller-editbox trigger-model-update-onblur" id="background-subtype-text"></div>
               <button class="trait-button" id="background-subtype-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -443,13 +443,13 @@
             </p>
             <div class="traitdiv">
               {{! <textarea rows="4" id="personality-trait-one-text" class="traitfield"></textarea> }}
-              <div contenteditable="true" class="editbox" id="personality-trait-one-text"></div>
+              <div contenteditable="true" class="editbox trigger-model-update-onblur" id="personality-trait-one-text"></div>
               <button class="trait-button" id="personality-trait-one-button">Suggestion</button>
             </div>
             <div class="clear"></div>
             <div class="traitdiv">
               {{! <textarea rows="4" id="personality-trait-two-text" class="traitfield"></textarea> }}
-              <div contenteditable="true" class="editbox" id="personality-trait-two-text"></div>
+              <div contenteditable="true" class="editbox trigger-model-update-onblur" id="personality-trait-two-text"></div>
               <button class="trait-button" id="personality-trait-two-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -464,7 +464,7 @@
             </p>
             <div class="traitdiv">
               {{! <textarea rows="4" id="ideal-text" class="traitfield"></textarea> }}
-              <div contenteditable="true" class="editbox" id="ideal-text"></div>
+              <div contenteditable="true" class="editbox trigger-model-update-onblur" id="ideal-text"></div>
               <button class="trait-button" id="ideal-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -479,7 +479,7 @@
             </p>
             <div class="traitdiv">
               {{! <textarea rows="4" id="bond-text" class="traitfield"></textarea> }}
-              <div contenteditable="true" class="editbox" id="bond-text"></div>
+              <div contenteditable="true" class="editbox trigger-model-update-onblur" id="bond-text"></div>
               <button class="trait-button" id="bond-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -494,7 +494,7 @@
             </p>
             <div class="traitdiv">
               {{! <textarea rows="4" id="flaw-text" class="traitfield"></textarea> }}
-              <div contenteditable="true" class="editbox" id="flaw-text"></div>
+              <div contenteditable="true" class="editbox trigger-model-update-onblur" id="flaw-text"></div>
               <button class="trait-button" id="flaw-button">Suggestion</button>
             </div>
             <div class="clear"></div>
@@ -516,7 +516,7 @@
                   {{/list}}
                 </ul>
                 {{#dropdowns}}
-                  <select id="{{sourcekey}}-prof-dropdown">
+                  <select class="{{sourcekey}}-prof-dropdown trigger-model-update-onchange">
                     {{#dropdownitems}}
                       <option value={{choicekey}}>{{choicename}}</option>
                     {{/dropdownitems}}
@@ -579,7 +579,7 @@
             <li id="elf-cantrip-div" class="two-column">
               <b>Elf Cantrip: </b>
               <p>As a high elf, you gain a cantrip from the Wizard cantrip list. Intelligence is your spellcasting ability for it.</p>
-              <select id="elf-cantrip-dropdown">
+              <select id="elf-cantrip-dropdown" class="trigger-model-update-onchange">
               {{#wizardCantrips}}
                 <option val="{{keyname}}">{{fullname}}</option>
               {{/wizardCantrips}}
@@ -590,7 +590,7 @@
             <li id="acolyte-of-nature-div" class="two-column">
               <b>Acolyte Of Nature Cantrip: </b>
               You learn a cantrip from the druid cantrip list.
-              <select id="acolyte-cantrip-dropdown">
+              <select id="acolyte-cantrip-dropdown" class="trigger-model-update-onchange">
               {{#druidCantrips}}
                 <option val="{{name}}">{{fullname}}</option>
               {{/druidCantrips}}
@@ -814,7 +814,7 @@
           <br>
           <h3 class="centered">Trinket</h3>
           Your character may also have a random trinket, a simple item lightly touched by mystery.
-          <div id="trinket-div" class="pool"> </div>
+          <div id="trinket-div" class="pool"></div>
           <button class="trait-button" id="trinket-button">Roll for Trinket</button>
 
           <div class="clear"></div>
@@ -828,19 +828,15 @@
           <div class="two-column">
             <div class="two-column-section description-section-item">
               <h5>Character Name:</h5>
-              <input type="text" id="character-name-field">
+              <input type="text" id="character-name-field" class="trigger-model-update-onchange">
             </div>
-            <div class="two-column-section description-section-item">
-              <h5>Appearance:</h5>
-              <input type="text" id="appearance-field">
-            </div>
-            <div class="two-column-section description-section-item">
-              <h5>Age:</h5>
-              <input type="text" id="age-field">
+            <div class="two-column-section description-section-item" >
+              <h5>Age, Sex, and Appearance:</h5>
+              <input type="text" id="appearance-field" class="trigger-model-update-onchange">
             </div>
             <div class="two-column-section description-section-item">
               <h5>Alignment:</h5>
-              <select id="alignment-dropdown">
+              <select id="alignment-dropdown" class="trigger-model-update-onchange">
                 <option value="lawful-good">Lawful Good</option>
                 <option value="lawful-neutral">Lawful Neutral</option>
                 <option value="lawful-evil">Lawful Evil</option>
@@ -852,22 +848,18 @@
                 <option value="chaotic-evil">Chaotic Evil</option>
               </select>
             </div>
-            <div class="two-column-section description-section-item">
-              <h5>Gender:</h5>
-              <select id="gender-dropdown">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="atypical">Atypical</option>
-              </select>
-            </div>
           </div>
         </section>
 
         <div class="clear"></div> 
+
         <!-- SUMMARY SECTION -->
 
         <section>
           <h2 class="headline">Summary</h2>
+          <div id="summary-div">
+          </div>
+          <div class="clear"></div>
         </section>
       </main>
       <footer>

@@ -1,5 +1,5 @@
-"use strict"
 
+"use strict"
 // --------------------------------------------------
 // Model
 // --------------------------------------------------
@@ -171,6 +171,12 @@ function capitalize(str) {
     return str[0].toUpperCase() + str.substr(1);
 }
 
+function escapeText(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
 // --------------------------------------------------
 // Abilities
 // --------------------------------------------------
@@ -209,8 +215,8 @@ function updateBonuses() {
         }
 
         if (bonuses.choice !== undefined) {
-            var primary = $("#bonus-choice-primary").val();
-            var secondary = $("#bonus-choice-secondary").val();
+            var primary = $("#bonus-choice1").val();
+            var secondary = $("#bonus-choice2").val();
 
             if (primary === ability || secondary === ability) {
                 model.bonuses[ability] = 1;
@@ -242,6 +248,7 @@ function updateAbilities() {
 
     updateAbilityHtml();
     updateSpellcasting();
+    updateModel();
 }
 
 // 4d6, drop the lowest
@@ -402,6 +409,10 @@ function selectRace(changeto) {
     )
 
     updateAbilities();
+    updateProficiencies();
+    updateLanguages();
+    updateSpellcasting();
+    updateModel();
 }
 
 // --------------------------------------------------
@@ -453,8 +464,8 @@ function updateRangerDiv() {
 
     var langs;
     if (favoredEnemy === "humanoids") {
-        var humanoid1 = $('#humanoid-dropdown-first').val();
-        var humanoid2 = $('#humanoid-dropdown-second').val();
+        var humanoid1 = $('#humanoid-dropdown1').val();
+        var humanoid2 = $('#humanoid-dropdown2').val();
         var langs1 = bookdata.languages.byrace[humanoid1];
         var langs2 = bookdata.languages.byrace[humanoid2];
 
@@ -524,6 +535,8 @@ function setupSuggestionButton(prefix, section, subsection) {
         }
 
         $textarea.text(text);
+        updateModel();
+        updateSummary();
     })
 }
 
@@ -600,6 +613,11 @@ function updateLanguages() {
         html += '</select>';
         $langlist.append(html);
     }
+
+    $('.extra-language-dropdown').change(function() {
+        updateModel();
+        updateSummary();
+    });
 }
 
 // --------------------------------------------------
@@ -629,11 +647,12 @@ function updateInventory() {
     $inventory.html('');
     for (var i = 0; i < model.inventory.length; i++) {
         (function() {
-            var name = model.inventory[i].item.fullname;
+            var key = model.inventory[i].itemkey;
+            var item = getEquipmentItem(key);
+            var name = item.fullname;
             var qty = model.inventory[i].qty;
-            var cost = goldStr(model.inventory[i].item.cost);
-            var weight = weightStr(model.inventory[i].item.weight);
-            var key = model.inventory[i].item.keyname;
+            var cost = goldStr(item.cost);
+            var weight = weightStr(item.weight);
             $inventory.append(
                 '<tr>' + 
                 ' <td>' + name + '</td>' +
@@ -648,8 +667,8 @@ function updateInventory() {
 
             $('#' + key + '-remove-button').click(function() {
                 for (var i = 0; i < model.inventory.length; i++) {
-                    if (model.inventory[i].item.keyname == key) {
-                        model.spentGold -= model.inventory[i].item.cost;
+                    if (model.inventory[i].itemkey == key) {
+                        model.spentGold -= item.cost;
                         
                         if (model.inventory[i].qty > 1)
                             model.inventory[i].qty--;
@@ -665,8 +684,7 @@ function updateInventory() {
     }
 
     $('#no-inventory-div').toggle(model.inventory.length == 0);
-    $('#inventory-table').toggle(model.inventory.length > 0);
-    $('#remove-all-button-div').toggle(model.inventory.length > 0);
+    $('#inventory-table, #remove-all-button-div').toggle(model.inventory.length > 0);
 }
 
 function calculateGold(takeAverage) {
@@ -690,14 +708,14 @@ function calculateGold(takeAverage) {
     updateInventory();
 }
 
-function addInventoryItem(item) {
+function addInventoryItem(itemkey) {
     for (var i = 0; i < model.inventory.length; i++) {
-        if (model.inventory[i].item.keyname == item.keyname) {
+        if (model.inventory[i].itemkey == itemkey) {
             model.inventory[i].qty += 1;
             return;
         }
     }
-    model.inventory.push({ item, qty: 1 });
+    model.inventory.push({ itemkey, qty: 1 });
 }
 
 function setupEquipmentControls() {
@@ -706,7 +724,7 @@ function setupEquipmentControls() {
             var item = equipmentList[i];
 
             $('#' + item.keyname + '-buy-button').click(function() {
-                addInventoryItem(item);
+                addInventoryItem(item.keyname);
                 model.spentGold += item.cost;
                 updateInventory();
             });
@@ -725,12 +743,21 @@ function gatherEquipmentList() {
 
 function clearInventory() {
     for (var i = 0; i < model.inventory.length; i++) {
-        var cost = model.inventory[i].item.cost;
+        var item = getEquipmentItem(model.inventory[i].itemkey);
+        var cost = item.cost;
         var qty = model.inventory[i].qty;
         model.spentGold -= cost * qty;
     }
 
     model.inventory = [];
+}
+
+function getEquipmentItem(keyname) {
+    for (var i = 0; i < equipmentList.length; i++) {
+        if (equipmentList[i].keyname === keyname)
+            return equipmentList[i];
+    }
+    return null;
 }
 
 // --------------------------------------------------
@@ -777,7 +804,7 @@ function updateSpellcasting() {
         var cantripsList = bookdata.classes[model.classval].cantrips;
         var html = '';
         for (var i = 0; i < cantripsKnown; i++) {
-            html += '<select id="cantrips-known-dropdown">';
+            html += '<select class="cantrips-known-dropdown trigger-model-update-onchange">';
             for (var j = 0; j < cantripsList.length; j++) {
                 var keyname = cantripsList[j];
                 var fullname = keynameToFullname(keyname);
@@ -797,7 +824,7 @@ function updateSpellcasting() {
         var spellsList = bookdata.classes[model.classval].spells;
         var html = '';
         for (var i = 0; i < spellsKnown; i++) {
-            html += '<select id="spells-known-dropdown">';
+            html += '<select class="spells-known-dropdown trigger-model-update-onchange">';
             for (var j = 0; j < cantripsList.length; j++) {
                 var keyname = spellsList[j];
                 var fullname = keynameToFullname(keyname);
@@ -822,6 +849,157 @@ function updateSpellcasting() {
 }
 
 // --------------------------------------------------
+// Summary / Model Updating 
+// --------------------------------------------------
+
+function AppendListItem(html, title, desc, subpoints) {
+    html += '<li class="two-column">';
+    var onlyTitle = ( typeof desc !== 'string' && (subpoints === undefined || subpoints.length === 0));
+
+    html += ('<b>' + escapeText(title) + (onlyTitle ? '</b>' : ': </b>'));
+
+    if (typeof desc === 'string') 
+        html += escapeText(desc);
+
+    if (subpoints !== undefined && subpoints.length > 0) {
+        html += '<ul>';
+        for (var i = 0; i < subpoints.length; i++) {
+            if (typeof subpoints[i] === 'string') {
+                html += '<li>' + escapeText(subpoints[i]) + '</li>';
+            }
+            else {
+                html += '<li>';
+                html += '<b>' + escapeText(subpoints[i][0]) + ': </b>';
+                html += escapeText(subpoints[i][1]);
+                html += '</li>'
+            }
+        }
+        html += '</ul>';
+    }
+
+    html += '</li>'
+
+    return html;
+}
+
+function updateSummary() {
+    var html = '<ul class="two-column">';
+
+    html = AppendListItem(html, "Description", null, [
+        ['Name', model.charname],
+        ['Appearance', model.appearance],
+        ['Race', keynameToFullname(model.raceval)],
+        ['Class and Level', 'Level 1 ' + keynameToFullname(model.classval)],
+        ['Alignment', keynameToFullname(model.alignment)]
+    ]);
+
+    html = AppendListItem(html, "Ability Scores", null, [
+        ['Strength', model.finalAbilities.str.toString()],
+        ['Dexterity', model.finalAbilities.dex.toString()],
+        ['Constitution', model.finalAbilities.con.toString()],
+        ['Intelligence', model.finalAbilities.int.toString()],
+        ['Wisdom', model.finalAbilities.wis.toString()],
+        ['Charisma', model.finalAbilities.cha.toString()],
+    ]);
+
+    html += '</ul>';
+    $('#summary-div').html(html);
+}
+
+
+// read all data from the page into the model, except the
+// stuff that directly updates itself
+function updateModel() {
+    model.charname = $('#character-name-field').val();
+    model.appearance = $('#appearance-field').val();
+    model.alignment = $('#alignment-dropdown').val();
+
+    model.fightingStyle = $('input[type="radio"][name="fighting-style"]:checked').val();
+    model.dragonbornAncestry = $('input[type="radio"][name="dragonborn-ancestry"]:checked').val();
+    model.originDragontype = $('input[type="radio"][name="origin-dragontype"]:checked').val();
+
+    model.rangerEnemy = $('#favored-enemy-dropdown').val();
+    model.rangerTerrain = $('#favored-terrain-dropdown').val();
+    model.rangerHumanoid1 = $('#humanoid-dropdown1').val();
+    model.rangerHumanoid2 = $('#humanoid-dropdown2').val();
+    model.rangerLanguage = $('#ranger-language-dropdown').val();
+
+    model.expertise1 = $('#expertise-dropdown1').val();
+    model.expertise2 = $('#expertise-dropdown2').val();
+
+    model.bonusChoice1 = $('#bonus-choice1').val();
+    model.bonusChoice2 = $('#bonus-choice2').val();
+
+    model.bgVariants = [];
+    $('.bg-variant-checkbox').each(function() {
+        if (this.checked)
+            model.bgVariants.push(this.id);
+    });
+
+    model.bgSubtype = $('#background-subtype-text').text();
+
+    model.trait1 = $('#personality-trait-one-text').text();
+    model.trait2 = $('#personality-trait-two-text').text();
+
+    model.ideal = $('#ideal-text').text();
+    model.bond = $('#bond-text').text();
+    model.flaw = $('#flaw-text').text();
+
+    model.profchoices = [];
+    
+    // get values of proficiency dropdowns associated with class
+    $('.' + model.classval + '-prof-dropdown').each(function() {
+        model.profchoices.push({
+            sourcekey: model.classval,
+            value: this.value
+        });
+    });
+
+    // get values of proficiency dropdowns associated with features
+    var features = getFeatures();
+    for (var i = 0; i < features.length; i++) {
+        $('#' + features[i] + '-prof-dropdown').each(function() {
+            model.profchoices.push({
+                sourcekey: features[i],
+                value: this.value
+            });
+        });
+    }
+
+    // get values of proficiency dropdowns associated with background
+    $('.' + model.backgroundval + '-prof-dropdown').each(function() {
+        model.profchoices.push({
+            sourcekey: model.backgroundval,
+            value: this.value
+        });
+    });
+
+    model.languageChoices = []
+    $('.extra-language-dropdown').each(function() {
+        model.languageChoices.push(this.value);
+    })
+
+    model.acolyteCantrip = $('#acolyte-cantrip-dropdown').val();
+    model.elfCantrip = $('#elf-cantrip-dropdown').val();
+
+    model.cantrips = [];
+    model.spells = [];
+
+    $('.cantrips-known-dropdown').each(function() {
+        model.cantrips.push(this.value);
+    })
+    
+    $('.spells-known-dropdown').each(function() {
+        model.spells.push(this.value);
+    })
+
+    model.trinket = $('#trinket-div').text();
+
+    updateSummary();
+}
+
+
+// --------------------------------------------------
 // Page
 // --------------------------------------------------
 
@@ -833,6 +1011,10 @@ function pageinit() {
     gatherEquipmentList();
     setupEquipmentControls();
 
+    $('#black-dragonborn-ancestry').prop("checked", true);
+    $('#black-origin-dragontype').prop("checked", true);
+    $('#archery-fighting-style').prop("checked", true);
+
     selectRace(model.raceval);
     selectClass(model.classval);
     selectDomain(model.domainval);
@@ -843,12 +1025,14 @@ function pageinit() {
     updateInventory();
     updateLanguages();
     updateSpellcasting();
+    updateModel();
 
     $('#race-dropdown').change(function() {
         selectRace();
         updateProficiencies();
         updateLanguages();
         updateSpellcasting();
+        updateModel();
     })
 
     $('#class-dropdown').change(function() {
@@ -857,6 +1041,7 @@ function pageinit() {
         updateInventory();
         updateLanguages();
         updateSpellcasting();
+        updateModel();
     })
 
     $('#domain-dropdown').change(function() {
@@ -864,6 +1049,7 @@ function pageinit() {
         updateProficiencies();
         updateLanguages();
         updateSpellcasting();
+        updateModel();
     })
 
     $('#patron-dropdown').change(function() {
@@ -871,6 +1057,7 @@ function pageinit() {
         updateProficiencies();
         updateLanguages();
         updateSpellcasting();
+        updateModel();
     })
 
     $('#sorcerous-origin-dropdown').change(function() {
@@ -878,12 +1065,14 @@ function pageinit() {
         updateProficiencies();
         updateLanguages();
         updateSpellcasting();
+        updateModel();
     })
 
     $('#background-dropdown').change(function() {
         selectBackground();
         updateProficiencies();
         updateLanguages();
+        updateModel();
     })
 
     $('#equipment-dropdown').change(function() {
@@ -900,39 +1089,51 @@ function pageinit() {
        updateAbilities();
     });
 
-    $('#bonus-choice-primary').change(function() {
+    $('#bonus-choice1').change(function() {
         updateAbilities();
     });
 
-    $('#bonus-choice-secondary').change(function() {
+    $('#bonus-choice2').change(function() {
         updateAbilities();
     });
 
     $('#remove-all-button').click(function() {
         clearInventory();
         updateInventory();
+        updateSummary();
     });
-
-    $('#black-dragonborn-ancestry').prop("checked", true);
-    $('#black-sorcerous-origin').prop("checked", true);
-    $('#archery-fighting-style').prop("checked", true);
 
     $('#gold-roll-button').click(function() {
         calculateGold(false);
+        updateSummary();
     });
 
     $('#gold-avg-button').click(function() {
         calculateGold(true);
+        updateSummary();
     });
 
     $('#trinket-button').click(function() {
         $('#trinket-div').text(sample(bookdata.trinkets));
+        updateModel();
+        updateSummary();
     });
 
-    $( '#favored-enemy-dropdown, #humanoid-dropdown-first, #humanoid-dropdown-second')
-        .change(function() {
-            updateRangerDiv();
-        });
+    $('#favored-enemy-dropdown, #humanoid-dropdown1, #humanoid-dropdown2').change(function() {
+        updateRangerDiv();
+        updateModel();
+        updateSummary();
+    });
+
+    $('.trigger-model-update-onchange').change(function() {
+        updateModel();
+        updateSummary();
+    });
+
+    $('.trigger-model-update-onblur').blur(function() {
+        updateModel();
+        updateSummary();
+    });
 }
 
 var bookdata;
