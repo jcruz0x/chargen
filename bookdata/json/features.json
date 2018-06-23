@@ -75,6 +75,7 @@
             "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it."
     },
     "extra-language": {
+        "summaryhidden": true,
         "description":
             "You can speak, read, and write one extra language of your choice.",
         "bonus-languages": 1
@@ -92,6 +93,7 @@
             "You have disadvantage on attack rolls and ability checks that rely on sight when you, your target, or what you are trying to perceive is in direct sunlight"
     },
     "drow-magic": {
+        "summaryname": "Drow Magic (Dancing Lights, Charisma)",
         "description":
             "You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once per day. When you reach 5th level, you can cast darkness once per day. Charisma is your spellcasting ability for these spells.",
         "cantrip": "dancing-lights"
@@ -148,6 +150,7 @@
             "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."
     },
     "natural-illusionist": {
+        "summaryname": "Natural Illusionist (Minor Illusion, Intelligence)",
         "description":
             "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it.",
         "cantrip":"minor-illusion"
@@ -191,6 +194,7 @@
             "You have resistance to fire damage."
     },
     "infernal-legacy": {
+        "summaryname": "Infernal Legacy (Thaumaturgy, Charisma)",
         "description":
             "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells.",
         "cantrip": "thaumaturgy"
@@ -212,6 +216,7 @@
             "While you are wearing no armor and not using a shield, your Armor Class equals 10 + your Dexterity modifier + your Wisdom modifier."
     },
     "bardic-spellcasting": {
+        "summary-hidden": true,
         "fullname":
             "Spellcasting",
         "description":
@@ -222,16 +227,19 @@
             "You can inspire others within 60 feet through stirring words or music. They gain a d6. Once, within 10 minutes, they can roll the die and add the number to an ability check, attack roll, or saving throw. A creature can only have on bardic inpiration die at a time."
     },
     "cleric-spellcasting": {
+        "summary-hidden": true,
         "fullname":
             "Spellcasting",
         "description":
             "As a conduit for divine power, you can cast cleric spells. See the Players Handbook for full rules on Cleric Spellcasting."
     },
     "divine-domain": {
+        "summary-hidden": true,
         "description":
             "Your choice of a domain associated with your deity grants you domain spells and other features."
     },
     "druidic": {
+        "summary-hidden": true,
         "description":
             "You know druidic, the secret language of druids.",
         "languages": [
@@ -239,6 +247,7 @@
         ]
     },
     "druidic-spellcasting": {
+        "summary-hidden": true,
         "description":
             "Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will. See the Players Handbook for full rules on Druid Spellcasting."
     },
@@ -372,6 +381,7 @@
             "Once per turn, you deal an extra 1d6 damage to a creature you hit with advantage on the attack roll. You must use a finesse or ranged weapon. You don't need advantage on the attack if an ally is within 5 feet of the target and you don't have disadvantage on the attack roll. The extra damage increases as you level, per the Sneak Attack column of the Rouge table."
     },
     "sorcerer-spellcasting": {
+        "summary-hidden": true,
         "fullname":
             "Spellcasting",
         "description":
@@ -386,10 +396,12 @@
             "You have struck a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One. Your choice grants you special features."
     },
     "pact-magic": {
+        "summary-hidden": true,
         "description":
             "Your arcane research and the magic bestowed on you by your patron have given you facility with spells. See the Players Handbook for full rules on Pact Magic."
     },
     "wizard-spellcasting": {
+        "summary-hidden": true,
         "fullname":
             "Spellcasting",
         "description":
@@ -402,9 +414,19 @@
     "blessings-of-knowledge": {
         "description":
             "You learn two languages of your choice. You also become proficient in your choice of two of the following skills: Arcana, History, Nature, or Religion. Your proficiency bonus is doubled for any ability check you make that uses either of those skills.",
-        "bonus-languages": 2
+        "bonus-languages": 2,
+        "proficiency-choices": {
+            "count": 2,
+            "from": [
+                "arcana",
+                "history",
+                "nature",
+                "religion"
+            ]
+        }
     },
     "domain-heavy-armor": {
+        "summaryname": "Domain Bonus Proficiency (Heavy Armor)",
         "proftitle": "Domain Bonus Proficiency",
         "fullname": "Bonus Proficiency",
         "description":
@@ -414,6 +436,7 @@
         ]
     },
     "domain-heavy-armor-martial-weapons": {
+        "summaryname": "Domain Bonus Proficiencies (Heavy Armor, Martial Weapons)",
         "proftitle": "Domain Bonus Proficiencies",
         "fullname": "Bonus Proficiencies",
         "description":
@@ -428,6 +451,7 @@
             "Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spells level."
     },
     "light-domain-cantrip": {
+        "summaryhidden": true,
         "fullname": "Extra Cantrip",
         "description":
             "You gain the light cantrip if you don't already know it.",
