@@ -523,7 +523,7 @@ function getBackgroundViews() {
 
 // proficiency categories, can be used to expand a category key to full list
 // e.g. 'musical-instrument' to full list of them
-let profCategoryJson = fs.readFileSync('bookdata/json/proficiency-categories.json', 'utf8');
+let profCategoryJson = fs.readFileSync('bookdata/json/proficiencies.json', 'utf8');
 let profCategories = JSON.parse(profCategoryJson);
 
 let languagesJson = fs.readFileSync('bookdata/json/languages.json', 'utf8');

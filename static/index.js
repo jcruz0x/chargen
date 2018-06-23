@@ -166,6 +166,15 @@ function keynameToFullname(str) {
     return arr.join(' ');
 }
 
+function allKeynamesToFullnames(arr) {
+    var newarr = [];
+    $.each(arr, function(i, item) {
+        newarr.push(keynameToFullname(item));
+    });
+
+    return newarr;
+}
+
 function capitalize(str) {
     return str[0].toUpperCase() + str.substr(1);
 }
@@ -246,8 +255,6 @@ function updateAbilities() {
     }
 
     updateAbilityHtml();
-    updateSpellcasting();
-    updateModel();
 }
 
 // 4d6, drop the lowest
@@ -337,7 +344,7 @@ function setupDraggableScores() {
 
             scorediv.ondragend = function(event) {
                 $scorediv.css('opacity', '100%');
-                updateAbilities();
+                updatePage();
             }
 
         })();
@@ -373,7 +380,7 @@ function setupTapSwappableScores() {
                     scorediv.classList.add("scoreglow");
                 } else {
                     swapAbilityRolls(currentAbility, swapAbility);
-                    updateAbilities();
+                    updatePage();
                     $("#" + swapAbility)[0].classList.remove("scoreglow");
                     swapAbility = null;
                 }
@@ -406,12 +413,6 @@ function selectRace(changeto) {
     $('#bonus-choice-dropdowns').toggle(
         raceval === 'variant-human' || raceval === 'half-elf'
     )
-
-    updateAbilities();
-    updateProficiencies();
-    updateLanguages();
-    updateSpellcasting();
-    updateModel();
 }
 
 function getCharSpeed() {
@@ -542,8 +543,7 @@ function setupSuggestionButton(prefix, section, subsection) {
         }
 
         $textarea.text(text);
-        updateModel();
-        updateSummary();
+        updatePage();
     })
 }
 
@@ -580,7 +580,7 @@ function updateProficiencies() {
 
 function getLanguages() {
     var extra = 0;
-    var languages = getRaces().main.languages;
+    var languages = getRaces().main.languages.slice(0);
     var features = getFeatures();
 
     for (var i = 0; i < features.length; i++) {
@@ -589,11 +589,15 @@ function getLanguages() {
             extra += feature['bonus-languages'];
         }
 
-        if (feature['languages'] !== undefined)
+        if (feature['languages'] !== undefined) {
             languages = languages.concat(feature['languages']);
+        }
     }
 
     extra += bookdata.backgrounds[model.backgroundval].languages || 0;
+
+    if (model.classval === 'ranger')
+        languages.push(model.rangerLanguage);
 
     return { list: languages, extra: extra };
 }
@@ -601,6 +605,8 @@ function getLanguages() {
 function updateLanguages() {
     var languages = getLanguages();
     var $langlist = $("#languages-list");
+
+    var selectedLanguages = getSelectedLanguages();
 
     $langlist.html('');
 
@@ -621,10 +627,24 @@ function updateLanguages() {
         $langlist.append(html);
     }
 
-    $('.extra-language-dropdown').change(function() {
-        updateModel();
-        updateSummary();
+    var $langdrops = $('.extra-language-dropdown');
+
+
+    for (var i = 0; i < selectedLanguages.length && i < $langdrops.length; i++) {
+        $langdrops.eq(i).val(selectedLanguages[i]);
+    }
+
+    $langdrops.change(function() {
+        updatePage();
     });
+}
+
+function getSelectedLanguages() {
+    var selected = [];
+    $('.extra-language-dropdown').each(function() {
+        selected.push(this.value);
+    })
+    return selected;
 }
 
 // --------------------------------------------------
@@ -682,7 +702,7 @@ function updateInventory() {
                         else
                             model.inventory.splice(i, 1);
 
-                        updateInventory();
+                        updatePage();
                         return;
                     }
                 }
@@ -712,7 +732,6 @@ function calculateGold(takeAverage) {
         
         model.initialGold = sum * multiplier;
     }
-    updateInventory();
 }
 
 function addInventoryItem(itemkey) {
@@ -733,7 +752,7 @@ function setupEquipmentControls() {
             $('#' + item.keyname + '-buy-button').click(function() {
                 addInventoryItem(item.keyname);
                 model.spentGold += item.cost;
-                updateInventory();
+                updatePage();
             });
         })();
     }
@@ -780,7 +799,6 @@ function updateSpellcasting() {
     var isSpellCastingClass = $.inArray(model.classval, spellcasters) !== -1;
     var preparesSpells = $.inArray(model.classval, spellPreppers) !== -1;
     var hasSpellsKnown = isSpellCastingClass && (model.classval != 'cleric' && model.classval != 'druid');
-    
     var canCastSpells = isSpellCastingClass;
 
     if (model.raceval === 'high-elf')
@@ -804,14 +822,15 @@ function updateSpellcasting() {
     $('#prepared-spells-div').toggle(preparesSpells);
 
     var $cantrips = $('#cantrips-list');
-    $cantrips.html('');
 
     if (isSpellCastingClass) {
         var cantripsKnown = bookdata.classes[model.classval].cantripsknown;
         var cantripsList = bookdata.classes[model.classval].cantrips;
+        var cantripsSelected = getSpellsSelected('cantrips');
+
         var html = '';
         for (var i = 0; i < cantripsKnown; i++) {
-            html += '<select class="cantrips-known-dropdown trigger-model-update-onchange">';
+            html += '<select class="cantrips-known-dropdown">';
             for (var j = 0; j < cantripsList.length; j++) {
                 var keyname = cantripsList[j];
                 var fullname = keynameToFullname(keyname);
@@ -821,17 +840,26 @@ function updateSpellcasting() {
         }
 
         $cantrips.html(html);
+
+        var $dropdowns = $('.cantrips-known-dropdown');
+        fillSpellSelections($dropdowns, cantripsSelected, cantripsList);
+        $dropdowns.change(function() {
+            updatePage();
+        });
+    } else {
+        $cantrips.html('');
     }
 
     var $spellsknown = $('#spells-known-list');
-    $spellsknown.html('');
 
     if (hasSpellsKnown) {
         var spellsKnown = bookdata.classes[model.classval].spellsknown;
         var spellsList = bookdata.classes[model.classval].spells;
+        var spellsSelected = getSpellsSelected('spells');
+
         var html = '';
         for (var i = 0; i < spellsKnown; i++) {
-            html += '<select class="spells-known-dropdown trigger-model-update-onchange">';
+            html += '<select class="spells-known-dropdown">';
             for (var j = 0; j < cantripsList.length; j++) {
                 var keyname = spellsList[j];
                 var fullname = keynameToFullname(keyname);
@@ -840,6 +868,14 @@ function updateSpellcasting() {
             html += '</select>'
         }
         $spellsknown.html(html);
+
+        var $dropdowns = $('.spells-known-dropdown');
+        fillSpellSelections($dropdowns, spellsSelected, spellsList);
+        $dropdowns.change(function() {
+            updatePage();
+        });
+    } else {
+        $spellsknown.html('');
     }
 
     if (preparesSpells) {
@@ -852,6 +888,24 @@ function updateSpellcasting() {
             var nspells = Math.max(1, model.abilityModifiers.int + 1);
             $('#prepared-spell-text').text('You can prepare ' + nspells + ' spell(s) from your spellbook.');
         }
+    }
+}
+
+function getSpellsSelected(prefix) {
+    var spells = [];
+
+    $('.' + prefix + '-known-dropdown').each(function() {
+        spells.push(this.value);
+    });
+
+    return spells;
+}
+
+// TODO: make this generic for filling dropdowns, make allowed optional
+function fillSpellSelections($dropdowns, spells, allowed) {
+    for(var i = 0; i < spells.length && i < $dropdowns.length; i++) {
+        if ($.inArray(spells[i], allowed) !== -1)
+            $dropdowns.eq(i).val(spells[i]);
     }
 }
 
@@ -868,49 +922,64 @@ function getProficiencies() {
     var features = getFeatures();
 
     profs.skills = bg.skills.slice(0)
-    profs.tools = bg.tools.slice(0);
+    profs.tools = bg.tools ? bg.tools.slice(0) : [];
 
     profs.weapons = charclass.weaponprof.slice(0);
-    profs.armors = charclass.armorprof.slice(0);
+    profs.armor = charclass.armorprof.slice(0);
 
-    profs.languages = getLanguages.list.concat(model.languageChoices);
+    profs.languages = getLanguages().list.concat(model.languageChoices);
 
     $.each(features, function(i, featurekey) {
         var featureprofs = bookdata.features[featurekey].proficiencies;
         if (!featureprofs)
-            continue;
+            return;
 
         $.each(featureprofs, function(j, proficiency) {
             var category = categoriseProficiency(proficiency); 
-            profs[category] = proficiency;
+            profs[category].push(proficiency);
         });
     });
+
+    $.each(model.profchoices, function(i, choice) {
+        var category = categoriseProficiency(choice.value);
+        profs[category].push(choice.value);
+    });
+
+    profs.skills = removeDuplicates(profs.skills);
+    profs.tools = removeDuplicates(profs.tools);
+    profs.weapons = removeDuplicates(profs.weapons);
+    profs.armor = removeDuplicates(profs.armor);
+    profs.languages = removeDuplicates(profs.languages);
+
+    return profs;
 }
 
 function categoriseProficiency(proficiency) {
-    $.each(bookdata.profCategories, function(category, list) {
-        if ($.inArray(proficiency, list)) {
-            if (category === 'artisans-tools' || category === 'gaming-set' || category === 'musical-instrument') 
-                return 'tools';
-            else
-                return category;
+    for (var category in bookdata.profCategories) {
+        if (!bookdata.profCategories.hasOwnProperty(category)) 
+            continue;
+
+        var list = bookdata.profCategories[category];
+
+        for (var i = 0; i < list.length; i++) {
+            if (list[i] === proficiency) {
+                if (category === 'artisans-tools' || category === 'gaming-set' || category === 'musical-instrument')
+                    return 'tools';
+                else
+                    return category;
+            }
         }
-    });
+    }
 
-    $.each(bookdata.weapons, function (i, weapon) {
-        if (proficiency === weapon.keyname)
+    for (var i = 0; i < bookdata.weapons.length; i++) {
+        if (proficiency === bookdata.weapons[i].keyname)
             return 'weapons'
-    });
-
-    $.each(bookdata.armors, function (i, armor) {
-        if (proficiency === armor.keyname)
-            return 'armors'
-    });
+    }
 
     return 'languages';
 }
 
-function AppendListItem(html, title, desc, subpoints) {
+function appendListItem(html, title, desc, subpoints) {
     html += '<li class="two-column">';
     var onlyTitle = ( typeof desc !== 'string' && (subpoints === undefined || subpoints.length === 0));
 
@@ -941,9 +1010,12 @@ function AppendListItem(html, title, desc, subpoints) {
 }
 
 function updateSummary() {
+
+    var profs = getProficiencies();
+
     var html = '<ul class="two-column">';
 
-    html = AppendListItem(html, "Description", null, [
+    html = appendListItem(html, "Description", null, [
         ['Name', model.charname || '--'],
         ['Appearance', model.appearance || '--'],
         ['Race', keynameToFullname(model.raceval)],
@@ -951,7 +1023,7 @@ function updateSummary() {
         ['Alignment', keynameToFullname(model.alignment)]
     ]);
 
-    html = AppendListItem(html, 'Attributes', null, [
+    html = appendListItem(html, 'Attributes', null, [
         ['Proficiency Bonus', '2'],
         ['Initiative', (10 + model.abilityModifiers.dex).toString()],
         ['Speed', getCharSpeed().toString()],
@@ -961,7 +1033,7 @@ function updateSummary() {
         
     ]);
 
-    html = AppendListItem(html, "Ability Scores", null, [
+    html = appendListItem(html, "Ability Scores", null, [
         ['Strength',     model.finalAbilities.str + ' (+' + model.abilityModifiers.str + ')'],
         ['Dexterity',    model.finalAbilities.dex + ' (+' + model.abilityModifiers.dex + ')'],
         ['Constitution', model.finalAbilities.con + ' (+' + model.abilityModifiers.con + ')'],
@@ -970,8 +1042,23 @@ function updateSummary() {
         ['Charisma',     model.finalAbilities.cha + ' (+' + model.abilityModifiers.cha + ')'],
     ]);
 
+    if (profs.skills.length > 0)
+        html = appendListItem(html, "Skill Proficiencies", null, allKeynamesToFullnames(profs.skills));
+    if (profs.tools.length > 0)
+        html = appendListItem(html, "Tool Proficiencies", null, allKeynamesToFullnames(profs.tools));
+    if (profs.weapons.length > 0)
+        html = appendListItem(html, "Weapon Proficiencies", null, allKeynamesToFullnames(profs.weapons));
+    if (profs.armor.length > 0)
+        html = appendListItem(html, "Armor Proficiencies", null, allKeynamesToFullnames(profs.armor));
+    if (profs.languages.length > 0)
+        html = appendListItem(html, "Languages", null, allKeynamesToFullnames(profs.languages));
+
+        
+
     html += '</ul>';
     $('#summary-div').html(html);
+
+
 }
 
 // read all data from the page into the model, except the
@@ -1041,30 +1128,28 @@ function updateModel() {
         });
     });
 
-    model.languageChoices = [];
-    $('.extra-language-dropdown').each(function() {
-        model.languageChoices.push(this.value);
-    })
+    model.languageChoices = getSelectedLanguages();
 
     model.acolyteCantrip = $('#acolyte-cantrip-dropdown').val();
     model.elfCantrip = $('#elf-cantrip-dropdown').val();
-
     model.cantrips = [];
-    model.spells = [];
 
-    $('.cantrips-known-dropdown').each(function() {
-        model.cantrips.push(this.value);
-    })
-    
-    $('.spells-known-dropdown').each(function() {
-        model.spells.push(this.value);
-    })
+    model.spells = getSpellsSelected('spells');
+    model.cantrips = getSpellsSelected('cantrips');
 
     model.trinket = $('#trinket-div').text();
-
-    updateSummary();
 }
 
+
+function updatePage() {
+    updateAbilities();
+    updateProficiencies();
+    updateInventory();
+    updateLanguages();
+    updateSpellcasting();
+    updateModel();
+    updateSummary();
+}
 
 // --------------------------------------------------
 // Page
@@ -1087,59 +1172,37 @@ function pageinit() {
     selectDomain(model.domainval);
     selectPatron(model.patronval);
     selectBackground(model.backgroundval)
-    updateProficiencies();
     selectEquipmentTable();
-    updateInventory();
-    updateLanguages();
-    updateSpellcasting();
-    updateModel();
+    updatePage();
 
     $('#race-dropdown').change(function() {
         selectRace();
-        updateProficiencies();
-        updateLanguages();
-        updateSpellcasting();
-        updateModel();
+        updatePage();
     })
 
     $('#class-dropdown').change(function() {
         selectClass();
-        updateProficiencies();
-        updateInventory();
-        updateLanguages();
-        updateSpellcasting();
-        updateModel();
+        updatePage();
     })
 
     $('#domain-dropdown').change(function() {
         selectDomain();
-        updateProficiencies();
-        updateLanguages();
-        updateSpellcasting();
-        updateModel();
+        updatePage();
     })
 
     $('#patron-dropdown').change(function() {
         selectPatron();
-        updateProficiencies();
-        updateLanguages();
-        updateSpellcasting();
-        updateModel();
+        updatePage();
     })
 
     $('#sorcerous-origin-dropdown').change(function() {
         selectSorcerousOrigin();
-        updateProficiencies();
-        updateLanguages();
-        updateSpellcasting();
-        updateModel();
+        updatePage();
     })
 
     $('#background-dropdown').change(function() {
         selectBackground();
-        updateProficiencies();
-        updateLanguages();
-        updateModel();
+        updatePage();
     })
 
     $('#equipment-dropdown').change(function() {
@@ -1148,58 +1211,53 @@ function pageinit() {
 
     $('#abilities-roll-button').click(function() {
         rollAllAbilities();
-        updateAbilities();
+        updatePage();
     });
 
     $('#abilities-array-button').click(function() {
-       abilityArrayFill();
-       updateAbilities();
+        abilityArrayFill();
+        updatePage();
     });
 
     $('#bonus-choice1').change(function() {
-        updateAbilities();
+        updatePage();
     });
 
     $('#bonus-choice2').change(function() {
-        updateAbilities();
+        updatePage();
     });
 
     $('#remove-all-button').click(function() {
         clearInventory();
-        updateInventory();
-        updateSummary();
+        updatePage();
     });
 
     $('#gold-roll-button').click(function() {
         calculateGold(false);
-        updateSummary();
+        updatePage();
     });
 
     $('#gold-avg-button').click(function() {
         calculateGold(true);
-        updateSummary();
+        updatePage();
     });
 
     $('#trinket-button').click(function() {
         $('#trinket-div').text(sample(bookdata.trinkets));
-        updateModel();
-        updateSummary();
+        updatePage();
     });
 
     $('#favored-enemy-dropdown, #humanoid-dropdown1, #humanoid-dropdown2').change(function() {
         updateRangerDiv();
-        updateModel();
-        updateSummary();
+        updatePage();
     });
 
     $('.trigger-model-update-onchange').change(function() {
-        updateModel();
-        updateSummary();
+        updatePage();
     });
 
     $('.trigger-model-update-onblur').blur(function() {
-        updateModel();
-        updateSummary();
+        updatePage();
     });
 }
 
