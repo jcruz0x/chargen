@@ -521,16 +521,17 @@ function getBackgroundViews() {
 // Skills and Proficienies
 // -------------------------------------------------- 
 
-// proficiency expansions, e.g. 'musical-instrument' to full list of them
-let expansionJson = fs.readFileSync('bookdata/json/expansions.json', 'utf8');
-let expansions = JSON.parse(expansionJson);
+// proficiency categories, can be used to expand a category key to full list
+// e.g. 'musical-instrument' to full list of them
+let profCategoryJson = fs.readFileSync('bookdata/json/proficiency-categories.json', 'utf8');
+let profCategories = JSON.parse(profCategoryJson);
 
 let languagesJson = fs.readFileSync('bookdata/json/languages.json', 'utf8');
 let languages = JSON.parse(languagesJson);
 
 function getExpertiseView() {
     let view = [];
-    let skills = expansions.skills;
+    let skills = profCategories.skills;
 
     for (let i = 0; i < skills.length; i++) {
         view.push({
@@ -550,8 +551,8 @@ function getExpertiseView() {
 function profExpand(list) {
     let newlist = [];
     for (let prof of list) {
-        if (expansions.hasOwnProperty(prof)) {
-            newlist = newlist.concat(expansions[prof]);
+        if (profCategories.hasOwnProperty(prof)) {
+            newlist = newlist.concat(profCategories[prof]);
         } else {
             newlist.push(prof);
         }
@@ -979,7 +980,8 @@ function getView() {
 
 let joinedData = { 
     races, classes, racechoices, features, backgrounds, 
-    weapons, armors, items, packs, trinkets, languages 
+    weapons, armors, items, packs, trinkets, languages,
+    profCategories
 };
 let joinedJson = JSON.stringify(joinedData);
 

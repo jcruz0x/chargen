@@ -55,5 +55,25 @@
         "pan-flute",
         "shawm",
         "viol"
+    ],
+    "tools": [
+        "disguise-kit",
+        "forgery-kit",
+        "herbalism-kit",
+        "navigators-tools",
+        "poisoners-tools",
+        "thieves-tools",
+        "land-vehicles",
+        "water-vehicles"
+    ],
+    "armors": [
+        "light-armor",
+        "medium-amor",
+        "heavy-armor",
+        "shields"
+    ],
+    "weapons": [
+        "simple-weapons",
+        "martial-weapons"
     ]
 }

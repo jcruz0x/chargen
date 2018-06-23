@@ -55,7 +55,6 @@ function getFeatures() {
         features = features.concat(bookdata.classes.warlock.patrons[model.patronval].features);
     }
 
-
     return features;
 }
 
@@ -413,6 +412,14 @@ function selectRace(changeto) {
     updateLanguages();
     updateSpellcasting();
     updateModel();
+}
+
+function getCharSpeed() {
+    var races = getRaces();
+    if (races.sub === undefined)
+        return races.main.speed;
+    else
+        return races.sub.speed;
 }
 
 // --------------------------------------------------
@@ -849,8 +856,59 @@ function updateSpellcasting() {
 }
 
 // --------------------------------------------------
-// Summary / Model Updating 
+// Summary / Model Updating and Processing 
 // --------------------------------------------------
+
+function getProficiencies() {
+    var profs = {};
+
+    var bg = bookdata.backgrounds[model.backgroundval];
+    var charclass = bookdata.classes[model.classval];
+    var race = bookdata.classes[model.raceval];
+    var features = getFeatures();
+
+    profs.skills = bg.skills.slice(0)
+    profs.tools = bg.tools.slice(0);
+
+    profs.weapons = charclass.weaponprof.slice(0);
+    profs.armors = charclass.armorprof.slice(0);
+
+    profs.languages = getLanguages.list.concat(model.languageChoices);
+
+    $.each(features, function(i, featurekey) {
+        var featureprofs = bookdata.features[featurekey].proficiencies;
+        if (!featureprofs)
+            continue;
+
+        $.each(featureprofs, function(j, proficiency) {
+            var category = categoriseProficiency(proficiency); 
+            profs[category] = proficiency;
+        });
+    });
+}
+
+function categoriseProficiency(proficiency) {
+    $.each(bookdata.profCategories, function(category, list) {
+        if ($.inArray(proficiency, list)) {
+            if (category === 'artisans-tools' || category === 'gaming-set' || category === 'musical-instrument') 
+                return 'tools';
+            else
+                return category;
+        }
+    });
+
+    $.each(bookdata.weapons, function (i, weapon) {
+        if (proficiency === weapon.keyname)
+            return 'weapons'
+    });
+
+    $.each(bookdata.armors, function (i, armor) {
+        if (proficiency === armor.keyname)
+            return 'armors'
+    });
+
+    return 'languages';
+}
 
 function AppendListItem(html, title, desc, subpoints) {
     html += '<li class="two-column">';
@@ -886,26 +944,35 @@ function updateSummary() {
     var html = '<ul class="two-column">';
 
     html = AppendListItem(html, "Description", null, [
-        ['Name', model.charname],
-        ['Appearance', model.appearance],
+        ['Name', model.charname || '--'],
+        ['Appearance', model.appearance || '--'],
         ['Race', keynameToFullname(model.raceval)],
         ['Class and Level', 'Level 1 ' + keynameToFullname(model.classval)],
         ['Alignment', keynameToFullname(model.alignment)]
     ]);
 
+    html = AppendListItem(html, 'Attributes', null, [
+        ['Proficiency Bonus', '2'],
+        ['Initiative', (10 + model.abilityModifiers.dex).toString()],
+        ['Speed', getCharSpeed().toString()],
+        ['Size', capitalize(getRaces().main.size)],
+        ['Hit Points', (bookdata.classes[model.classval].hitdie + model.abilityModifiers.con).toString()],
+        ['Hit Dice', '1d' + bookdata.classes[model.classval].hitdie]
+        
+    ]);
+
     html = AppendListItem(html, "Ability Scores", null, [
-        ['Strength', model.finalAbilities.str.toString()],
-        ['Dexterity', model.finalAbilities.dex.toString()],
-        ['Constitution', model.finalAbilities.con.toString()],
-        ['Intelligence', model.finalAbilities.int.toString()],
-        ['Wisdom', model.finalAbilities.wis.toString()],
-        ['Charisma', model.finalAbilities.cha.toString()],
+        ['Strength',     model.finalAbilities.str + ' (+' + model.abilityModifiers.str + ')'],
+        ['Dexterity',    model.finalAbilities.dex + ' (+' + model.abilityModifiers.dex + ')'],
+        ['Constitution', model.finalAbilities.con + ' (+' + model.abilityModifiers.con + ')'],
+        ['Intelligence', model.finalAbilities.int + ' (+' + model.abilityModifiers.int + ')'],
+        ['Wisdom',       model.finalAbilities.wis + ' (+' + model.abilityModifiers.wis + ')'],
+        ['Charisma',     model.finalAbilities.cha + ' (+' + model.abilityModifiers.cha + ')'],
     ]);
 
     html += '</ul>';
     $('#summary-div').html(html);
 }
-
 
 // read all data from the page into the model, except the
 // stuff that directly updates itself
@@ -974,7 +1041,7 @@ function updateModel() {
         });
     });
 
-    model.languageChoices = []
+    model.languageChoices = [];
     $('.extra-language-dropdown').each(function() {
         model.languageChoices.push(this.value);
     })
