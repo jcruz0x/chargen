@@ -171,6 +171,7 @@
         ]
     },
     "skill-versatility": {
+        "summaryhidden": true,
         "description":
             "You gain proficiency in two skills of your choice.",
         "proficiency-choices": {
@@ -222,7 +223,7 @@
             "While you are wearing no armor and not using a shield, your Armor Class equals 10 + your Dexterity modifier + your Wisdom modifier."
     },
     "bardic-spellcasting": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "fullname":
             "Spellcasting",
         "description":
@@ -233,19 +234,19 @@
             "You can inspire others within 60 feet through stirring words or music. They gain a d6. Once, within 10 minutes, they can roll the die and add the number to an ability check, attack roll, or saving throw. A creature can only have on bardic inpiration die at a time."
     },
     "cleric-spellcasting": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "fullname":
             "Spellcasting",
         "description":
             "As a conduit for divine power, you can cast cleric spells. See the Players Handbook for full rules on Cleric Spellcasting."
     },
     "divine-domain": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "description":
             "Your choice of a domain associated with your deity grants you domain spells and other features."
     },
     "druidic": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "description":
             "You know druidic, the secret language of druids.",
         "languages": [
@@ -253,7 +254,7 @@
         ]
     },
     "druidic-spellcasting": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "description":
             "Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will. See the Players Handbook for full rules on Druid Spellcasting."
     },
@@ -387,7 +388,7 @@
             "Once per turn, you deal an extra 1d6 damage to a creature you hit with advantage on the attack roll. You must use a finesse or ranged weapon. You don't need advantage on the attack if an ally is within 5 feet of the target and you don't have disadvantage on the attack roll. The extra damage increases as you level, per the Sneak Attack column of the Rouge table."
     },
     "sorcerer-spellcasting": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "fullname":
             "Spellcasting",
         "description":
@@ -398,16 +399,17 @@
             "You must choose a sorcerous origin, which describes the source of your innate magical power: Draconic Bloodline, or Wild Magic."
     },
     "otherworldy-patron": {
+        "summaryhidden": true,
         "description":
             "You have struck a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One. Your choice grants you special features."
     },
     "pact-magic": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "description":
             "Your arcane research and the magic bestowed on you by your patron have given you facility with spells. See the Players Handbook for full rules on Pact Magic."
     },
     "wizard-spellcasting": {
-        "summary-hidden": true,
+        "summaryhidden": true,
         "fullname":
             "Spellcasting",
         "description":
@@ -513,6 +515,7 @@
             "You can manipulate the forces of chance and chaos to gain advantage on one attack roll, ability check, or saving throw. Once you do so, you must finish a long rest before you can use this feature again. Any time before you regain the use of this feature, the DM can have you roll on the Wild Magic Surge table immediately after you cast a sorcerer spell of 1st level or higher. You then regain the use of this feature."
     },
     "dragon-ancestor": {
+        "summaryhidden": true,
         "description":
             "Choose one type of dragon as your ancestor. The damage type associated with each dragon is used by features you gain later. You know Draconic. You can add double your proficiency bonus to Charisma checks when interacting with dragons.",
         "languages": [

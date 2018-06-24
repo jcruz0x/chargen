@@ -53,7 +53,7 @@ function getFeatures() {
     }
     else if (model.classval === 'warlock') {
         features = features.concat(bookdata.classes.warlock.patrons[model.patronval].features);
-    }
+    } 
 
     return features;
 }
@@ -1049,6 +1049,7 @@ function appendListItem(html, title, desc, subpoints) {
 function updateSummary() {
     var profs = getProficiencies();
     var inv = getCategorizedInventory();
+    var features = getFeatures();
 
     var html = '<ul class="two-column">';
 
@@ -1069,12 +1070,23 @@ function updateSummary() {
         ['Hit Dice', '1d' + bookdata.classes[model.classval].hitdie]
     ]);
 
+    html = appendListItem(html, 'Saving Throws', null, [
+        bookdata.abilities[bookdata.classes[model.classval].savingthrows[0]].fullname,
+        bookdata.abilities[bookdata.classes[model.classval].savingthrows[1]].fullname,
+    ]);
+
     if (model.classval === 'cleric')
         html = appendListItem(html, 'Cleric Domain', keynameToFullname(model.domainval));
-    else if (model.classval === 'sorcerer')
-        html = appendListItem(html, 'Sorcerous Origin', keynameToFullname(model.originval));
     else if (model.classval === 'warlock')
-        html = appendListItem(html, 'Warlock Patron', keynameToFullname(model.patronval));
+            html = appendListItem(html, 'Warlock Patron', keynameToFullname(model.patronval));
+    else if (model.classval === 'sorcerer') {
+        if (model.originval === 'wild-magic')
+            var text = 'Wild Magic';
+        else
+            var text = 'Dragon Ancestor (Dragontype: ' + keynameToFullname(model.originDragontype) + ')';
+
+        html = appendListItem(html, 'Sorcerous Origin', text);
+    }
 
     var scores = model.finalAbilities;
     var mods = model.abilityModifiers;
@@ -1103,14 +1115,9 @@ function updateSummary() {
     html = appendListItem(html, "Armor", null, inv.armor.length > 0 ? inv.armor : ['None'])
     html = appendListItem(html, "Items", null, inv.items.length > 0 ? inv.items : ['None'])
 
-    html = appendListItem(html, "Total Weight", weightStr(calculateTotalWeight()));
+    html = appendListItem(html, "Trinket", model.trinket);
 
-    // html = appendListItem(html, "Background", keynameToFullname(model.backgroundval) || '--');
-    // html = appendListItem(html, "Personality Trait", escapeText(model.trait1) || '--');
-    // html = appendListItem(html, "Personality Trait", escapeText(model.trait2) || '--');
-    // html = appendListItem(html, "Ideal", escapeText(model.ideal) || '--');
-    // html = appendListItem(html, "Bond", escapeText(model.bond) || '--');
-    // html = appendListItem(html, "Flaw", escapeText(model.flaw) || '--');
+    html = appendListItem(html, "Total Weight", weightStr(calculateTotalWeight()));
 
     var bgtraits = getBgTitleAndFeature();
     html = appendListItem(html, "Background", bgtraits.title, [
@@ -1140,16 +1147,86 @@ function updateSummary() {
         var atkmod = 2 + spellbonus;
         var abilityName = bookdata.abilities[spellstat].fullname;
 
-        html = appendListItem(html, "Spell Save DC", "8 + Your Proficiency Modifier (2) + Your " + abilityName + " modifier = " + savedc);
-        html = appendListItem(html, "Spell Attack Modifier", "Your Proficiency Modifier (2) + Your " + abilityName + " modifier = " + atkmod);
+        html = appendListItem(html, "Spell Save DC", "8 + Your proficiency modifier (2) + your " + abilityName + " modifier = " + savedc);
+        html = appendListItem(html, "Spell Attack Modifier", "Your proficiency modifier (2) + your " + abilityName + " modifier = " + atkmod);
 
         if (hasRitualCasting(model.classval))
             html = appendListItem(html, "Ritual Casting", "Yes");
     }
 
+    html = appendListItem(html, "Features", null, getFeatureSummary(features));
+
     html += '</ul>';
     $('#summary-div').html(html);
 }
+
+function getFeatureSummary(features) {
+    var list = [];
+    for (var i = 0; i < features.length; i++) {
+        var text = processFeature(features[i]);
+        if (text)
+            list.push(processFeature(features[i]));
+    }
+    return list;
+}
+
+function processFeature(featurekey) {
+    var feature = bookdata.features[featurekey];
+
+    if (feature.summaryhidden === true)
+        return null;
+    else if (featureHandlers[featurekey] != undefined)
+        return featureHandlers[featurekey](feature);
+    else
+        return feature.summaryname || feature.fullname || keynameToFullname(featurekey);
+}
+
+var featureHandlers = {
+    'elf-cantrip': function() {
+        return 'Elf Cantrip (' + keynameToFullname(model.elfCantrip) + ', Intelligence)';
+    },
+    'fighting-style': function() {
+        return 'Fighting Style (' + keynameToFullname(model.fightingStyle) + ')';
+    },
+    'favored-enemy': function() {
+        var language = keynameToFullname(model.rangerLanguage);
+        if (model.rangerEnemy === 'humanoids') {
+            var humanoid1 = keynameToFullname(model.rangerHumanoid1);
+            var humanoid2 = keynameToFullname(model.rangerHumanoid2);
+            return 'Favored Enemy (' + humanoid1 + ', ' + humanoid2 + ', ' + language + ')';
+        } else {
+            var enemy = keynameToFullname(model.rangerEnemy);
+            return 'Favored Enemy (' + enemy + ', ' + language + ')';
+        }
+    },
+    'natural-explorer': function() {
+        return 'Natural Explorer (' + keynameToFullname(model.rangerTerrain) + ')';
+    },
+    'draconic-ancestry': function() {
+        return 'Draconic Ancestry (Dragontype: ' + keynameToFullname(model.dragonbornAncestry) + ')';
+    },
+    'dwarven-tool-proficiency': function() {
+        var dwarventool = ''
+        for (var i = 0; i < model.profchoices.length; i++) {
+            if (model.profchoices[i].sourcekey === 'dwarven-tool-proficiency')
+                dwarventool = keynameToFullname(model.profchoices[i].value);
+        }
+        return 'Dwarven Tool Proficiency (' + dwarventool + ')' ;
+    },
+    'blessings-of-knowledge': function() {
+        var blessings = [];
+        for (var i = 0; i < model.profchoices.length; i++) {
+            if (model.profchoices[i].sourcekey === 'blessings-of-knowledge')
+                blessings.push(keynameToFullname(model.profchoices[i].value));
+        }
+        return 'Blessings Of Knowledge (' + (blessings[0] || '') + ', ' + (blessings[1] || '') + ')';
+    },
+    'expertise': function() {
+        var expertise1 = keynameToFullname(model.expertise1 || '');
+        var expertise2 = keynameToFullname(model.expertise2 || '');
+        return 'Expertise (' + expertise1 + ', ' + expertise2 + ')';
+    }
+};
 
 function hasRitualCasting(classval) {
     if (classval === 'cleric') return true;
@@ -1220,7 +1297,7 @@ function getSpellsAndCantrips() {
     if (model.classval === 'cleric') {
         if (model.domainval === 'light-domain')
             cantrips.push('light');
-        else if (model.domainval === 'nature-domain')
+        else if (model.domainval === 'nature-domain' && model.acolyteCantrip)
             cantrips.push(model.acolyteCantrip);
     }
     return {
@@ -1438,7 +1515,7 @@ function pageinit() {
         updatePage();
     });
 
-    $('#favored-enemy-dropdown, #humanoid-dropdown1, #humanoid-dropdown2').change(function() {
+    $('#favored-enemy-dropdown, #humanoid-dropdown1, #humanoid-dropdown2, #favored-terrain-dropdown').change(function() {
         updateRangerDiv();
         updatePage();
     });
