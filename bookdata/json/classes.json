@@ -62,6 +62,7 @@
             "bardic-spellcasting",
             "bardic-inspiration"
         ],
+        "spellstat": "cha",
         "cantripsknown": 2,
         "spellsknown": 4,
         "spellslots": 2,
@@ -132,6 +133,7 @@
             "cleric-spellcasting",
             "divine-domain"
         ],
+        "spellstat": "wis",
         "cantripsknown": 3,
         "spellslots": 2,
         "cantrips": [
@@ -283,6 +285,7 @@
             "druidic",
             "druidic-spellcasting"
         ],
+        "spellstat": "wis",
         "cantripsknown": 2,
         "cantrips": [
             "druidcraft",
@@ -532,6 +535,7 @@
         "gold": [3,4,10],
         "goldstr": "3d4 x 10 gp",
         "goldavg": 75,
+        "spellstat": "cha",
         "cantripsknown": 4,
         "spellsknown": 2,
         "spellslots": 2,
@@ -617,6 +621,7 @@
             "otherworldy-patron",
             "pact-magic"
         ],
+        "spellstat": "cha",
         "cantripsknown": 2,
         "spellsknown": 2,
         "spellslots": 1,
@@ -708,6 +713,7 @@
             "wizard-spellcasting",
             "arcane-recovery"
         ],
+        "spellstat": "int",
         "cantripsknown": 3,
         "spellslots": 2,
         "spellsknown": 6,

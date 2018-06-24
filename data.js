@@ -981,7 +981,7 @@ function getView() {
 let joinedData = { 
     races, classes, racechoices, features, backgrounds, 
     weapons, armors, items, packs, trinkets, languages,
-    profCategories
+    profCategories, abilities
 };
 let joinedJson = JSON.stringify(joinedData);
 

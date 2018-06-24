@@ -194,11 +194,15 @@ function calcAbilityModifier(ability) {
     return Math.floor((score - 10) / 2);
 }
 
-function printableMod(mod) {
+function printableMod(mod, zerostr) {
+    if (zerostr === undefined)
+        zerostr = '--';
+
     if (mod == 0)
-        return '--';
+        return zerostr;
     if (mod > 0) 
         return '+' + mod.toString();
+
     return mod.toString();
 }
 
@@ -420,7 +424,7 @@ function getCharSpeed() {
     if (races.sub === undefined)
         return races.main.speed;
     else
-        return races.sub.speed;
+        return races.sub.speed || races.main.speed;
 }
 
 // --------------------------------------------------
@@ -675,7 +679,7 @@ function updateInventory() {
     for (var i = 0; i < model.inventory.length; i++) {
         (function() {
             var key = model.inventory[i].itemkey;
-            var item = getEquipmentItem(key);
+            var item = lookup.equipment[key];
             var name = item.fullname;
             var qty = model.inventory[i].qty;
             var cost = goldStr(item.cost);
@@ -759,17 +763,35 @@ function setupEquipmentControls() {
 }
 
 var equipmentList;
+var lookup = {};
+
 function gatherEquipmentList() {
     equipmentList = bookdata.weapons.concat(
         bookdata.armors,
         bookdata.packs,
         bookdata.items
     );
+
+    lookup.equipment = buildLookup(equipmentList);
+    lookup.items = buildLookup(bookdata.items);
+    lookup.weapons = buildLookup(bookdata.weapons);
+    lookup.armor = buildLookup(bookdata.armors);
+    lookup.packs = buildLookup(bookdata.packs);
+}
+
+function buildLookup(list, keyprop) {
+    keyprop = keyprop || 'keyname';
+    var lookup = {};
+    for (var i = 0; i < list.length; i++) {
+        var key = list[i][keyprop];
+        lookup[key] = list[i];
+    }
+    return lookup;
 }
 
 function clearInventory() {
     for (var i = 0; i < model.inventory.length; i++) {
-        var item = getEquipmentItem(model.inventory[i].itemkey);
+        var item = lookup.equipment[model.inventory[i].itemkey];
         var cost = item.cost;
         var qty = model.inventory[i].qty;
         model.spentGold -= cost * qty;
@@ -778,12 +800,12 @@ function clearInventory() {
     model.inventory = [];
 }
 
-function getEquipmentItem(keyname) {
-    for (var i = 0; i < equipmentList.length; i++) {
-        if (equipmentList[i].keyname === keyname)
-            return equipmentList[i];
-    }
-    return null;
+
+function equipmentKeynamesToNames(arr) {
+    var newarr = [];
+    for (var i = 0; i < arr.length; i++)
+        newarr.push(arr[i].fullname)
+    return newarr;
 }
 
 // --------------------------------------------------
@@ -793,12 +815,18 @@ function getEquipmentItem(keyname) {
 var spellcasters = ['bard', 'cleric', 'druid', 'sorcerer', 'warlock', 'wizard'];
 var spellPreppers = ['wizard', 'cleric', 'druid'];
 
+var isSpellCastingClass;
+var hasSpellsKnown;
+var preparesSpells;
+var numSpellsPreppable;
+var spellPrepText;
+
 function updateSpellcasting() {
     var features = getFeatures();
 
-    var isSpellCastingClass = $.inArray(model.classval, spellcasters) !== -1;
-    var preparesSpells = $.inArray(model.classval, spellPreppers) !== -1;
-    var hasSpellsKnown = isSpellCastingClass && (model.classval != 'cleric' && model.classval != 'druid');
+    isSpellCastingClass = $.inArray(model.classval, spellcasters) !== -1;
+    preparesSpells = $.inArray(model.classval, spellPreppers) !== -1;
+    hasSpellsKnown = isSpellCastingClass && (model.classval != 'cleric' && model.classval != 'druid');
     var canCastSpells = isSpellCastingClass;
 
     if (model.raceval === 'high-elf')
@@ -854,13 +882,17 @@ function updateSpellcasting() {
 
     if (hasSpellsKnown) {
         var spellsKnown = bookdata.classes[model.classval].spellsknown;
-        var spellsList = bookdata.classes[model.classval].spells;
+        var spellsList = bookdata.classes[model.classval].spells.slice(0);
+
+        if (model.classval === 'warlock')
+            spellsList = spellsList.concat(bookdata.classes.warlock.patrons[model.patronval].spells);
+
         var spellsSelected = getSpellsSelected('spells');
 
         var html = '';
         for (var i = 0; i < spellsKnown; i++) {
             html += '<select class="spells-known-dropdown">';
-            for (var j = 0; j < cantripsList.length; j++) {
+            for (var j = 0; j < spellsList.length; j++) {
                 var keyname = spellsList[j];
                 var fullname = keynameToFullname(keyname);
                 html += '<option value="' + keyname + '">' + fullname + '</option>';
@@ -880,14 +912,18 @@ function updateSpellcasting() {
 
     if (preparesSpells) {
         if (model.classval == 'cleric' || model.classval == 'druid') {
-            var nspells = Math.max(1, model.abilityModifiers.wis + 1);
+            numSpellsPreppable = Math.max(1, model.abilityModifiers.wis + 1);
+            var spellword = numSpellsPreppable > 1 ? ' spells' : ' spell'
             var classname = capitalize(model.classval);
-            $('#prepared-spell-text').text('You can prepare ' + nspells + ' spell(s) from the ' + classname + ' spell list.');
+            spellPrepText = 'You can prepare ' + numSpellsPreppable + spellword + ' at a time from the ' + classname + ' spell list.';
         }
         else {
-            var nspells = Math.max(1, model.abilityModifiers.int + 1);
-            $('#prepared-spell-text').text('You can prepare ' + nspells + ' spell(s) from your spellbook.');
+            numSpellsPreppable = Math.max(1, model.abilityModifiers.int + 1);
+            var spellword = numSpellsPreppable > 1 ? ' spells' : ' spell'
+            spellPrepText = 'You can prepare ' + numSpellsPreppable + spellword + ' at a time from your spellbook.';
         }
+        
+        $('#prepared-spell-text').text(spellPrepText);
     }
 }
 
@@ -935,13 +971,13 @@ function getProficiencies() {
             return;
 
         $.each(featureprofs, function(j, proficiency) {
-            var category = categoriseProficiency(proficiency); 
+            var category = categorizeProficiency(proficiency); 
             profs[category].push(proficiency);
         });
     });
 
     $.each(model.profchoices, function(i, choice) {
-        var category = categoriseProficiency(choice.value);
+        var category = categorizeProficiency(choice.value);
         profs[category].push(choice.value);
     });
 
@@ -954,7 +990,7 @@ function getProficiencies() {
     return profs;
 }
 
-function categoriseProficiency(proficiency) {
+function categorizeProficiency(proficiency) {
     for (var category in bookdata.profCategories) {
         if (!bookdata.profCategories.hasOwnProperty(category)) 
             continue;
@@ -997,6 +1033,7 @@ function appendListItem(html, title, desc, subpoints) {
             else {
                 html += '<li>';
                 html += '<b>' + escapeText(subpoints[i][0]) + ': </b>';
+                // html += escapeText(subpoints[i][0]) + ': ' ;
                 html += escapeText(subpoints[i][1]);
                 html += '</li>'
             }
@@ -1010,8 +1047,8 @@ function appendListItem(html, title, desc, subpoints) {
 }
 
 function updateSummary() {
-
     var profs = getProficiencies();
+    var inv = getCategorizedInventory();
 
     var html = '<ul class="two-column">';
 
@@ -1030,16 +1067,25 @@ function updateSummary() {
         ['Size', capitalize(getRaces().main.size)],
         ['Hit Points', (bookdata.classes[model.classval].hitdie + model.abilityModifiers.con).toString()],
         ['Hit Dice', '1d' + bookdata.classes[model.classval].hitdie]
-        
     ]);
 
+    if (model.classval === 'cleric')
+        html = appendListItem(html, 'Cleric Domain', keynameToFullname(model.domainval));
+    else if (model.classval === 'sorcerer')
+        html = appendListItem(html, 'Sorcerous Origin', keynameToFullname(model.originval));
+    else if (model.classval === 'warlock')
+        html = appendListItem(html, 'Warlock Patron', keynameToFullname(model.patronval));
+
+    var scores = model.finalAbilities;
+    var mods = model.abilityModifiers;
+
     html = appendListItem(html, "Ability Scores", null, [
-        ['Strength',     model.finalAbilities.str + ' (+' + model.abilityModifiers.str + ')'],
-        ['Dexterity',    model.finalAbilities.dex + ' (+' + model.abilityModifiers.dex + ')'],
-        ['Constitution', model.finalAbilities.con + ' (+' + model.abilityModifiers.con + ')'],
-        ['Intelligence', model.finalAbilities.int + ' (+' + model.abilityModifiers.int + ')'],
-        ['Wisdom',       model.finalAbilities.wis + ' (+' + model.abilityModifiers.wis + ')'],
-        ['Charisma',     model.finalAbilities.cha + ' (+' + model.abilityModifiers.cha + ')'],
+        ['Str.', scores.str + ' (' + printableMod(mods.str, '+0') + ')'],
+        ['Dex.', scores.dex + ' (' + printableMod(mods.dex, '+0') + ')'],
+        ['Con.', scores.con + ' (' + printableMod(mods.con, '+0') + ')'],
+        ['Int.', scores.int + ' (' + printableMod(mods.int, '+0') + ')'],
+        ['Wis.', scores.wis + ' (' + printableMod(mods.wis, '+0') + ')'],
+        ['Cha.', scores.cha + ' (' + printableMod(mods.cha, '+0') + ')'],
     ]);
 
     if (profs.skills.length > 0)
@@ -1053,16 +1099,165 @@ function updateSummary() {
     if (profs.languages.length > 0)
         html = appendListItem(html, "Languages", null, allKeynamesToFullnames(profs.languages));
 
-        
+    html = appendListItem(html, "Weapons", null, inv.weapons.length > 0 ? inv.weapons : ['None'])
+    html = appendListItem(html, "Armor", null, inv.armor.length > 0 ? inv.armor : ['None'])
+    html = appendListItem(html, "Items", null, inv.items.length > 0 ? inv.items : ['None'])
+
+    html = appendListItem(html, "Total Weight", weightStr(calculateTotalWeight()));
+
+    // html = appendListItem(html, "Background", keynameToFullname(model.backgroundval) || '--');
+    // html = appendListItem(html, "Personality Trait", escapeText(model.trait1) || '--');
+    // html = appendListItem(html, "Personality Trait", escapeText(model.trait2) || '--');
+    // html = appendListItem(html, "Ideal", escapeText(model.ideal) || '--');
+    // html = appendListItem(html, "Bond", escapeText(model.bond) || '--');
+    // html = appendListItem(html, "Flaw", escapeText(model.flaw) || '--');
+
+    var bgtraits = getBgTitleAndFeature();
+    html = appendListItem(html, "Background", bgtraits.title, [
+        ["Feature", bgtraits.feature],
+        ["Personality Trait", escapeText(model.trait1) || '--'],
+        ["Personality Trait", escapeText(model.trait2) || '--'],
+        ["Ideal", escapeText(model.ideal) || '--'],
+        ["Bond", escapeText(model.bond) || '--'],
+        ["Flaw", escapeText(model.flaw) || '--']
+    ]);
+
+    if (isSpellCastingClass) {
+        var magic = getSpellsAndCantrips();
+        var cantrips = allKeynamesToFullnames(magic.cantrips);
+        var spells = allKeynamesToFullnames(magic.spells);
+        if (magic.cantrips.length > 0) 
+            html = appendListItem(html, "Cantrips Known", null, cantrips);
+        if (magic.spells.length > 0) 
+            html = appendListItem(html, model.classval === 'wizard' ? "Spells in Spellbook" : "Spells Known", null, spells);
+
+        if (preparesSpells)
+            html = appendListItem(html, "Spell Preparation", spellPrepText);
+
+        var spellstat = bookdata.classes[model.classval].spellstat;
+        var spellbonus = model.abilityModifiers[spellstat];
+        var savedc = 8 + 2 + spellbonus;
+        var atkmod = 2 + spellbonus;
+        var abilityName = bookdata.abilities[spellstat].fullname;
+
+        html = appendListItem(html, "Spell Save DC", "8 + Your Proficiency Modifier (2) + Your " + abilityName + " modifier = " + savedc);
+        html = appendListItem(html, "Spell Attack Modifier", "Your Proficiency Modifier (2) + Your " + abilityName + " modifier = " + atkmod);
+
+        if (hasRitualCasting(model.classval))
+            html = appendListItem(html, "Ritual Casting", "Yes");
+    }
 
     html += '</ul>';
     $('#summary-div').html(html);
+}
 
+function hasRitualCasting(classval) {
+    if (classval === 'cleric') return true;
+    if (classval === 'bard') return true;
+    if (classval === 'druid') return true;
+    if (classval === 'wizard') return true;
+    return false;
+}
+
+function getCategorizedInventory() {
+    var inv = {
+        items: [], itemkeys: [],
+        weapons: [], weaponkeys: [],
+        armor: [], armorkeys: [],
+    }
+
+    for (var i = 0; i < model.inventory.length; i++) {
+        var itemkey = model.inventory[i].itemkey;
+        var qty = model.inventory[i].qty;
+    
+        var desc = lookup.equipment[itemkey].fullname;
+        var pounds = lookup.equipment[itemkey].weight;
+
+        if (qty > 1) {
+            desc += ' (x ' + qty + ') ';
+            var eachWeight = weightStr(pounds);
+            var totalWeight = weightStr(pounds * qty)
+            desc += '(' + eachWeight + ' each, ' + totalWeight + ' total)';
+        }
+        else {
+            desc += ' ('  + weightStr(pounds) + ')';
+        }
+
+        if (itemkey in lookup.items || itemkey in lookup.packs) {
+            inv.items.push(desc)
+            inv.itemkeys.push(itemkey);
+        }
+        if (itemkey in lookup.armor) {
+            inv.armor.push(desc);
+            inv.armorkeys.push(itemkey);
+        }
+        if (itemkey in lookup.weapons) {
+            inv.weapons.push(desc);
+            inv.weaponkeys.push(itemkey);
+        }
+    }
+
+    return inv;
+}
+
+function calculateTotalWeight() {
+    var weight = 0;
+    for (var i = 0; i < model.inventory.length; i++) {
+        var item = model.inventory[i];
+        weight += lookup.equipment[item.itemkey].weight * item.qty;
+    }
+    return weight;
+}
+
+function getArmorClassSummary(armorkeys, featurekeys) {
 
 }
 
+function getSpellsAndCantrips() {
+    var cantrips = getSpellsSelected('cantrips');
+    var spells = hasSpellsKnown? getSpellsSelected('spells') : [];
+
+    if (model.classval === 'cleric') {
+        if (model.domainval === 'light-domain')
+            cantrips.push('light');
+        else if (model.domainval === 'nature-domain')
+            cantrips.push(model.acolyteCantrip);
+    }
+    return {
+        cantrips: removeDuplicates(cantrips), 
+        spells: removeDuplicates(spells)
+    }
+}
+
+function getBgTitleAndFeature() {
+    var key = model.backgroundval;
+    var bg = bookdata.backgrounds[key]
+    var title = keynameToFullname(key);
+    var feature = keynameToFullname(bg.feature);
+    
+    if (bg.variant) {
+        var selector = '#variant-background-checkbox-' + key;
+        if ($(selector).prop('checked')) {
+            title = keynameToFullname(bg.variant);
+        }
+    }
+
+    if (bg.variantfeature) {
+        var selector = '#variant-feature-checkbox-' + key;
+        if ($(selector).prop('checked')) {
+            feature = keynameToFullname(bg.variantfeature);
+        }
+    }
+
+    return { title: title, feature: feature };
+}
+
+// --------------------------------------------------
+// Page
+// --------------------------------------------------
+
 // read all data from the page into the model, except the
-// stuff that directly updates itself
+// stuff that updates the model itself
 function updateModel() {
     model.charname = $('#character-name-field').val();
     model.appearance = $('#appearance-field').val();
@@ -1112,7 +1307,7 @@ function updateModel() {
     // get values of proficiency dropdowns associated with features
     var features = getFeatures();
     for (var i = 0; i < features.length; i++) {
-        $('#' + features[i] + '-prof-dropdown').each(function() {
+        $('.' + features[i] + '-prof-dropdown').each(function() {
             model.profchoices.push({
                 sourcekey: features[i],
                 value: this.value
@@ -1140,7 +1335,6 @@ function updateModel() {
     model.trinket = $('#trinket-div').text();
 }
 
-
 function updatePage() {
     updateAbilities();
     updateProficiencies();
@@ -1151,9 +1345,6 @@ function updatePage() {
     updateSummary();
 }
 
-// --------------------------------------------------
-// Page
-// --------------------------------------------------
 
 function pageinit() {
     newModel();

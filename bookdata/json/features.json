@@ -172,7 +172,13 @@
     },
     "skill-versatility": {
         "description":
-            "You gain proficiency in two skills of your choice."
+            "You gain proficiency in two skills of your choice.",
+        "proficiency-choices": {
+            "count": 2,
+            "from": [
+                "skills"
+            ]
+        }
     },
     "menacing": {
         "description":
@@ -423,7 +429,8 @@
                 "nature",
                 "religion"
             ]
-        }
+        },
+        "profnote": "Your proficiency bonus is doubled for any ability check you make with these skills."
     },
     "domain-heavy-armor": {
         "summaryname": "Domain Bonus Proficiency (Heavy Armor)",
