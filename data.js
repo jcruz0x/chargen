@@ -290,10 +290,6 @@ function getToolDesc(tools) {
         return getSkillsDesc(tools);
 }
 
-function getGoldDesc(charclass) {
-    return `${charclass.gold}gp.`;
-}
-
 function getClassDivHtml(charclass) {
     let view = {};
     view.items = [];
@@ -334,7 +330,7 @@ function getClassDivHtml(charclass) {
 
     view.items.push({
         name: "Starting Wealth", 
-        desc: getGoldDesc(charclass)
+        desc: charclass.goldstr
     });
 
     for (let i = 0; i < charclass.features.length; i++) {

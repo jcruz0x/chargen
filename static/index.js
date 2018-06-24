@@ -1074,7 +1074,7 @@ function updateSummary() {
 
     html = appendListItem(html, 'Attributes', null, [
         ['Proficiency Bonus', '2'],
-        ['Initiative', (10 + model.abilityModifiers.dex).toString()],
+        ['Initiative', printableMod(model.abilityModifiers.dex, '+0')],
         ['Speed', getCharSpeed().toString()],
         ['Size', capitalize(getRaces().main.size)],
         ['Hit Points', (bookdata.classes[model.classval].hitdie + model.abilityModifiers.con).toString()],
@@ -1470,7 +1470,6 @@ function updatePage() {
     updateModel();
     updateSummary();
 }
-
 
 function pageinit() {
     newModel();
