@@ -784,7 +784,7 @@ function getWeaponView() {
         viewitem.fullname = weapon.fullname;
         viewitem.cost = goldStr(weapon.cost);
         viewitem.damage = damageStr(weapon.damage, weapon.type);
-        viewitem.weight = weightStr(weapon.weight) ;
+        viewitem.weight = weightStr(weapon.weight);
         viewitem.properties = weapon.propdesc;
 
         let list = getOrAddCategory(weapon.category, view);
@@ -890,6 +890,8 @@ function goldStr(gold) {
 }
 
 function weightStr(pounds) {
+    if (pounds === 0)
+        return '--';
     if (pounds === 0.5)
         return '1/2 lb.';
     if (pounds === 0.25)

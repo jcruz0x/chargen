@@ -118,6 +118,8 @@ function sample(arr) {
 }
 
 function weightStr(pounds) {
+    if (pounds === 0)
+        return '--';
     if (pounds === 0.5)
         return '1/2 lb.';
     if (pounds === 0.25)
@@ -489,7 +491,9 @@ function updateRangerDiv() {
 
     $('#ranger-language-none-text').toggle(langs.length === 0);
     $('#ranger-language-dropdown').toggle(langs.length > 0);
+
     var $langdrop = $('#ranger-language-dropdown');
+    var oldlang = $langdrop.val();
 
     $langdrop.html('');
     for (var i = 0; i < langs.length; i++) {
@@ -497,6 +501,9 @@ function updateRangerDiv() {
         var fullname = keynameToFullname(keyname);
         $langdrop.append('<option value="' + keyname + '">' + fullname + '</option>')
     }
+
+    if ($.inArray(oldlang, langs) !== -1)
+        $langdrop.val(oldlang);
 }
 
 // --------------------------------------------------
@@ -671,8 +678,11 @@ function updateInventory() {
     var currentGold = model.initialGold - model.spentGold;
 
     $('#initial-gold-tracker').text(goldStr(model.initialGold));
-    $('#spent-gold-tracker').text(goldStr(model.spentGold));
-    $('#current-gold-tracker').text(goldStr(currentGold));
+    $('#spent-gold-tracker, #total-cost-tracker').text(goldStr(model.spentGold));
+    $('#current-gold-tracker, #gold-remaining-tracker').text(goldStr(currentGold));
+
+    var totalWeight = calculateTotalWeight();
+    $('#total-weight-tracker').text(weightStr(totalWeight));
 
     var $inventory = $('#inventory-table-body');
     $inventory.html('');
@@ -714,8 +724,9 @@ function updateInventory() {
         })();
     }
 
+
     $('#no-inventory-div').toggle(model.inventory.length == 0);
-    $('#inventory-table, #remove-all-button-div').toggle(model.inventory.length > 0);
+    $('#inventory-table, #remove-all-button-div, #inventory-totals-div').toggle(model.inventory.length > 0);
 }
 
 function calculateGold(takeAverage) {
@@ -1100,6 +1111,9 @@ function updateSummary() {
         ['Cha.', scores.cha + ' (' + printableMod(mods.cha, '+0') + ')'],
     ]);
 
+    var armorclasses = getArmorClassSummary(inv.armorkeys);
+    html = appendListItem(html, "Armor Class", null, armorclasses);
+
     if (profs.skills.length > 0)
         html = appendListItem(html, "Skill Proficiencies", null, allKeynamesToFullnames(profs.skills));
     if (profs.tools.length > 0)
@@ -1286,8 +1300,43 @@ function calculateTotalWeight() {
     return weight;
 }
 
-function getArmorClassSummary(armorkeys, featurekeys) {
+function getArmorClassSummary(armorkeys) {
+    // console.log(armorkeys)
+    var hasShield = $.inArray('shield', armorkeys) !== -1;
+    var ac = [];
+    var dex = model.abilityModifiers.dex;
+    var wis = model.abilityModifiers.wis;
+    var con = model.abilityModifiers.con;
 
+    if (model.classval === 'monk') {
+        ac.push(['Unarmored', (dex + wis + 10).toString()])
+        if (hasShield)
+            ac.push(['Unarmored With Shield', (dex + 2 + 10).toString()])
+    }
+    else if (model.classval === 'barbarian') {
+        ac.push(['Unarmored', (dex + con + 10).toString()])
+        if (hasShield)
+            ac.push(['Unarmored With Shield', (dex + con + 2 + 10).toString()])
+    }
+    else {
+        ac.push(['Unarmored', (dex + 10).toString()])
+        if (hasShield)
+            ac.push(['Unarmored With Shield', (dex + 2 + 10).toString()])
+    }
+
+    $.each(armorkeys, function(i, armorkey) {
+        if (armorkey === 'shield')
+            return;
+
+        var armor = lookup.armor[armorkey];
+        var bonus = armor.ac + (armor.maxdex === null ? dex : Math.min(dex, armor.maxdex));
+
+        ac.push([armor.fullname, bonus]);
+        if (hasShield)
+            ac.push([armor.fullname + " With Shield", bonus + 2]);
+    })
+
+    return ac;
 }
 
 function getSpellsAndCantrips() {
