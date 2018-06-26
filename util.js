@@ -5,6 +5,8 @@ let showdown = require('showdown');
 
 let markdownConverter = new showdown.Converter();
 
+// convertes keyname, e.g. 'magic-missle', 
+// to fullname, e.g. 'Magic Missle'
 function keynameToFullname(str) {
     let arr = str.split('-');
 
@@ -15,19 +17,11 @@ function keynameToFullname(str) {
 }
 
 function allKeynamesToFullnames(arr) {
-    let newarr = [];
-    for (let item of arr) {
-        newarr.push(keynameToFullname(item));
-    }
-    return newarr;
+    return arr.map(keynameToFullname);
 }
 
 function capitalize(str) {
     return str[0].toUpperCase() + str.substr(1);
-}
-
-function rolld(n) {
-    return Math.floor(Math.random() * n) + 1;
 }
 
 function getBookMdAsHtml(filename) {

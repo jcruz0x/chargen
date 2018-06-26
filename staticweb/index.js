@@ -418,7 +418,7 @@ function setupAbilityControls() {
 // --------------------------------------------------
 
 function selectRace(changeto) {
-    let raceval = manageDivSelection('race', changeto);
+    var raceval = manageDivSelection('race', changeto);
 
     $('#dragonborn-table').toggle(raceval === 'dragonborn');
     $('#variant-human-bonus-text').toggle(raceval === 'variant-human');
@@ -441,7 +441,7 @@ function getCharSpeed() {
 // --------------------------------------------------
 
 function selectClass(changeto) {
-    let classval = manageDivSelection('class', changeto);
+    var classval = manageDivSelection('class', changeto);
 
     selectSorcerousOrigin();
     $('#divine-domains').toggle(model.classval === 'cleric');
@@ -470,11 +470,11 @@ function selectSorcerousOrigin() {
 }
 
 function selectDomain(changeto) {
-    let domainval = manageDivSelection('domain', changeto);
+    var domainval = manageDivSelection('domain', changeto);
 }
 
 function selectPatron(changeto) {
-    let patronval = manageDivSelection('patron', changeto);
+    var patronval = manageDivSelection('patron', changeto);
 }
 
 function updateRangerDiv() {
@@ -518,7 +518,7 @@ function updateRangerDiv() {
 // --------------------------------------------------
 
 function selectBackground(changeto) {
-    let backgroundval = manageDivSelection('background', changeto);
+    var backgroundval = manageDivSelection('background', changeto);
 
     clearTextFields([
         'background-subtype',
@@ -532,7 +532,7 @@ function selectBackground(changeto) {
     // hide all the background subtype divs, then determine if we
     // should reshow
     $('.background-subtype-div').hide();
-    let $subtypediv = $('#background-subtype-' + model.backgroundval);
+    var $subtypediv = $('#background-subtype-' + model.backgroundval);
     if ($subtypediv.length > 0) {
         $subtypediv.show();
         $('#background-subtype-entry-div').show();

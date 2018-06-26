@@ -28,10 +28,7 @@ let abilities = {
 
 function getAbilityView() {
     let view = [];
-    for (let ability in abilities) {
-        if (!abilities.hasOwnProperty(ability))
-            continue;
-
+    for (let ability of Object.keys(abilities)) {
         let attribs = {};
         attribs.abilityname = abilities[ability].fullname;
         attribs.shortname = util.capitalize(ability);
@@ -75,10 +72,7 @@ let races = JSON.parse(raceJson);
 let racechoiceJson = fs.readFileSync('bookdata/json/concrete-races.json', 'utf8');
 let racechoices = JSON.parse(racechoiceJson);
 
-for (let keyname in races) {
-    if (!races.hasOwnProperty(keyname))
-        continue;
-
+for (let keyname of Object.keys(races)) {
     let race = races[keyname];
     race.fullname = util.keynameToFullname(keyname);
 
@@ -88,10 +82,7 @@ for (let keyname in races) {
 
 function getRaceChoiceView() {
     let raceChoiceView = [];
-    for (let keyname in racechoices) {
-        if (!racechoices.hasOwnProperty(keyname))
-            continue;
-
+    for (let keyname of Object.keys(racechoices)) {
         let choice = {}; 
         choice.raceval = keyname;
         choice.racename = util.keynameToFullname(keyname);
@@ -117,10 +108,10 @@ function getRaceDivHtml(racechoice) {
     let sizeDesc = util.capitalize(getRaceProperty(racenames, 'size').toString()); 
     view.items.push({name: 'Size', desc: sizeDesc});
 
-    for (let i = 0; i < racenames.length; i++) {
-        view.title = races[racenames[i]].fullname;
-        view.desc += races[racenames[i]].htmlDesc;
-        view.items = view.items.concat(getRaceFeatureItems(racenames[i]));
+    for (let racename of racenames) {
+        view.title = races[racename].fullname;
+        view.desc += races[racename].htmlDesc;
+        view.items = view.items.concat(getRaceFeatureItems(racename));
     }
 
     return mustache.render(desclistTwoColTemplate, view);
@@ -128,8 +119,8 @@ function getRaceDivHtml(racechoice) {
 
 function getRaceProperty(racenames, propertyname) {
     let result;
-    for (let i = 0; i < racenames.length; i++) {
-        let property = races[racenames[i]][propertyname];
+    for (let racename of racenames) {
+        let property = races[racename][propertyname];
         if (property !== undefined)
             result = property;
     }
@@ -149,10 +140,7 @@ function getRaceAbilityBonusItem(racenames) {
     let bonuses = getRaceBonuses(racenames);
     let desc = [];
     
-    for (let key in bonuses) {
-        if (!bonuses.hasOwnProperty(key))
-        continue;
-        
+    for (let key of Object.keys(bonuses)) {
         if (abilities.hasOwnProperty(key)) {
             desc.push(`+${bonuses[key]} to ${abilities[key].fullname}.`);
             continue;
@@ -172,12 +160,12 @@ function getRaceAbilityBonusItem(racenames) {
 }
 
 function getRaceFeatureItems(racename) {
-    let list = races[racename].features;
+    let racefeatures = races[racename].features;
     let items = [];
 
-    for (let i = 0; i < list.length; i++) {
-        let feature = features[list[i]];
-        let name = feature.fullname || util.keynameToFullname(list[i]);
+    for (let featurekey of racefeatures) {
+        let feature = features[featurekey];
+        let name = feature.fullname || util.keynameToFullname(featurekey);
         items.push({name: name, desc: feature.description});
     }
 
@@ -186,12 +174,9 @@ function getRaceFeatureItems(racename) {
 
 function getRaceDivView() {
     let view = [];
-    for (let racechoice in racechoices) {
-        if (!racechoices.hasOwnProperty(racechoice))
-            continue;
-        
+    for (let racechoice of Object.keys(racechoices))
         view.push({name: racechoice, html: getRaceDivHtml(racechoice)});
-    }
+
     return view;
 }
 
@@ -225,13 +210,10 @@ function getSorcererDraconicView() {
 let classJson = fs.readFileSync('bookdata/json/classes.json', 'utf8');
 let classes = JSON.parse(classJson);
 
-for (let keyname in classes) {
-    if (!classes.hasOwnProperty(keyname))
-        continue;
-
-    let _class = classes[keyname];
-    _class.fullname = util.keynameToFullname(keyname);
-    _class.htmlDesc = util.getBookMdAsHtml(keyname + '.md');
+for (let keyname of Object.keys(classes)) {
+    let charclass = classes[keyname];
+    charclass.fullname = util.keynameToFullname(keyname);
+    charclass.htmlDesc = util.getBookMdAsHtml(keyname + '.md');
 }
 
 function appendHitDieFeatures(charclass, items) {
@@ -254,20 +236,19 @@ function appendHitDieFeatures(charclass, items) {
 }
 
 function joinFullnames(keynames) {
-if (keynames.length == 0)
+    if (keynames.length == 0)
         return "None";
 
-    let fullnames = [];
-    for (let i = 0; i < keynames.length; i++)
-        fullnames.push(util.keynameToFullname(keynames[i]));
+    let fullnames = util.allKeynamesToFullnames(keynames);
     return fullnames.join(", ");
 }
 
 
-function getSavingThrowsDesc(throws) {
+function getSavingThrowsDesc(savingthrows) {
     let fullnames = [];
-    for (let i = 0; i < throws.length; i++) 
-        fullnames.push(abilities[throws[i]].fullname)
+    for (let savingthrow of savingthrows) 
+        fullnames.push(abilities[savingthrow].fullname)
+
     return fullnames.join(", ") + ".";
 }
 
@@ -331,26 +312,28 @@ function getClassDivHtml(charclass) {
         desc: charclass.goldstr
     });
 
-    for (let i = 0; i < charclass.features.length; i++) {
-        let feature = features[charclass.features[i]];
-        let fullname = feature.fullname || util.keynameToFullname(charclass.features[i]);
+    for (let featurekey of charclass.features) {
+        let feature = features[featurekey];
+        let fullname = feature.fullname || util.keynameToFullname(featurekey);
         view.items.push({ name: fullname, desc: feature.description });
     }
 
     return mustache.render(desclistTwoColTemplate, view);
 }
 
-
 function getClassDivView() {
     let view = [];
-    for (let classkey in classes) {
-        if (!classes.hasOwnProperty(classkey))
-            continue;
 
+    for (let classkey of Object.keys(classes)) {
         let fullname = util.keynameToFullname(classkey);
 
-        view.push({name: classkey, html: getClassDivHtml(classes[classkey]), fullname });
+        view.push({ 
+            name: classkey, 
+            html: getClassDivHtml(classes[classkey]), 
+            fullname 
+        });
     }
+
     return view;
 }
 
@@ -360,9 +343,7 @@ function getDomainDivHtml(domain, fullname) {
     view.desc = domain.description;
     view.items = [];
 
-
-    for (let i = 0; i < domain.features.length; i++) {
-        let featurekey = domain.features[i]
+    for (let featurekey of domain.features) {
         let feature = features[featurekey];
         let fullname = feature.fullname || util.keynameToFullname(featurekey);
 
@@ -382,11 +363,9 @@ function getDomainDivHtml(domain, fullname) {
 
 function getDomainDivView(domains) {
     let view = [];
-    for (let domainkey in domains) {
-        if (!domains.hasOwnProperty(domainkey))
-            continue;
-
+    for (let domainkey of Object.keys(domains)) {
         let domain = domains[domainkey];
+
         let fullname = domain.fullname || util.keynameToFullname(domainkey);
         let html = getDomainDivHtml(domain, fullname);
 
@@ -399,10 +378,7 @@ function getDomainDivView(domains) {
 function getFightingStyleView() {
     let view = [];
     let styles = features['fighting-style'].styles;
-    for (let style in styles) {
-        if (!styles.hasOwnProperty(style))
-            continue;
-
+    for (let style of Object.keys(styles)) {
         let item = {};
 
         item.name = style;
@@ -434,20 +410,17 @@ function getRangerViews() {
 let backgroundsJson = fs.readFileSync('bookdata/json/backgrounds.json', 'utf8');
 let backgrounds = JSON.parse(backgroundsJson);
 
-for (let bgkey in backgrounds) {
-    if (!backgrounds.hasOwnProperty(bgkey))
-        continue;
-
+for (let bgkey of Object.keys(backgrounds)) {
     let bg = backgrounds[bgkey];
 
     if (bg.fullname === undefined)
-        bg.fullname = util.keynameToFullname(bgkey);
+        bg.fullname = bg.fullname || util.keynameToFullname(bgkey);
 }
 
 function getBgToolsDesc(bg) {
     let result = '';
 
-    if (bg.tools != undefined)
+    if (bg.tools !== undefined)
         result += joinFullnames(bg.tools) + '. ';
     
     if (bg.toolchoice != undefined) {
@@ -464,10 +437,7 @@ function getBackgroundViews() {
     let bgVariantFeatureViews = [];
     let bgVariantViews = [];
 
-    for (let keyname in backgrounds) {
-        if (!backgrounds.hasOwnProperty(keyname))
-            continue;
-        
+    for (let keyname of Object.keys(backgrounds)) {
         let bgview = {};
         let bg = backgrounds[keyname];
 
@@ -527,10 +497,10 @@ function getExpertiseView() {
     let view = [];
     let skills = profCategories.skills;
 
-    for (let i = 0; i < skills.length; i++) {
+    for (let skill of skills) {
         view.push({
-            name: skills[i],
-            fullname: util.keynameToFullname(skills[i])
+            name: skill,
+            fullname: util.keynameToFullname(skill)
         })
     }
     
@@ -551,6 +521,7 @@ function profExpand(list) {
             newlist.push(prof);
         }
     }
+
     return newlist;
 }
 
@@ -558,50 +529,44 @@ let profsources;
 
 function gatherProficiencies() {
     profsources = [];
-    for (let classkey in classes) {
-        if (!classes.hasOwnProperty(classkey))
-            continue;
-
-        let _class = classes[classkey];
+    for (let classkey of Object.keys(classes)) {
+        let charclass = classes[classkey];
 
         let skillsource = {}
         skillsource.sourcekey = classkey;
-        skillsource.title = _class.fullname + ' Skills'
+        skillsource.title = charclass.fullname + ' Skills'
         skillsource.list = []
-        skillsource.count = _class.skills.count;
-        skillsource.choices = profExpand(_class.skills.from);
+        skillsource.count = charclass.skills.count;
+        skillsource.choices = profExpand(charclass.skills.from);
         profsources.push(skillsource);
 
-        if (_class.tools !== undefined) {
+        if (charclass.tools !== undefined) {
             let toolsource = {}
             toolsource.sourcekey = classkey;
-            toolsource.title = _class.fullname + ' Tool Proficiencies'
-            if (Array.isArray(_class.tools)) {
-                toolsource.list = _class.tools;
+            toolsource.title = charclass.fullname + ' Tool Proficiencies'
+            if (Array.isArray(charclass.tools)) {
+                toolsource.list = charclass.tools;
                 toolsource.count = 0;
                 toolsource.choices = [];
             } else {
                 toolsource.list = [];
-                toolsource.count = _class.tools.count;
-                toolsource.choices = profExpand(_class.tools.from);
+                toolsource.count = charclass.tools.count;
+                toolsource.choices = profExpand(charclass.tools.from);
             }
 
             profsources.push(toolsource);
         }
 
-        let wasource = {};
+        let wasource = {}; // weapon and armor source
         wasource.sourcekey = classkey;
-        wasource.title = _class.fullname + ' Weapon and Armor Proficiencies';
+        wasource.title = charclass.fullname + ' Weapon and Armor Proficiencies';
         wasource.count = 0;
         wasource.choices = [];
-        wasource.list = _class.armorprof.concat(_class.weaponprof);
+        wasource.list = charclass.armorprof.concat(charclass.weaponprof);
         profsources.push(wasource)
     }
     
-    for (let featurekey in features) {
-        if (!features.hasOwnProperty(featurekey))
-            continue;
-
+    for (let featurekey of Object.keys(features)) {
         let feature = features[featurekey];
         let pchoices = feature['proficiency-choices'];
 
@@ -626,10 +591,7 @@ function gatherProficiencies() {
         profsources.push(profsource);
     }
 
-    for (let bgkey in backgrounds) {
-        if (!backgrounds.hasOwnProperty(bgkey))
-            continue;
-
+    for (let bgkey of Object.keys(backgrounds)) {
         let bg = backgrounds[bgkey];
 
         let skillsource = {};
@@ -695,7 +657,7 @@ gatherProficiencies();
 // Equipment
 // -------------------------------------------------- 
 
-// get data synchronously from db
+// get equipment data synchronously from db
 let weapons = bookdb.prepare('SELECT * FROM weapons').all();
 let armors = bookdb.prepare('SELECT * FROM armor').all();
 let items = bookdb.prepare('SELECT * FROM items').all();
@@ -891,11 +853,7 @@ function weightStr(pounds) {
 }
 
 function keysToKeyFullnamePairs(arr) {
-    let newarr = [];
-    for (let i = 0; i < arr.length; i++) {
-        newarr.push(keyToKeyFullnamePair(arr[i]));
-    }
-    return newarr;
+    return arr.map(keyToKeyFullnamePair);
 }
 
 function keyToKeyFullnamePair(keyname) {
