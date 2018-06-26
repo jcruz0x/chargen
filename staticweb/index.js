@@ -1,4 +1,3 @@
-
 "use strict"
 // --------------------------------------------------
 // Model
@@ -68,9 +67,17 @@ function getRaces() {
     return { main: mainrace, sub: subrace };
 }
 
+
 // --------------------------------------------------
 // Misc / Util
 // --------------------------------------------------
+
+function fillDropdowns($dropdowns, items, allowed) {
+    for(var i = 0; i < items.length && i < $dropdowns.length; i++) {
+        if (allowed === undefined || $.inArray(items[i], allowed) !== -1)
+            $dropdowns.eq(i).val(items[i]);
+    }
+}
 
 function rolld(n) {
     return Math.floor(Math.random() * n) + 1;
@@ -724,7 +731,6 @@ function updateInventory() {
         })();
     }
 
-
     $('#no-inventory-div').toggle(model.inventory.length == 0);
     $('#inventory-table, #remove-all-button-div, #inventory-totals-div').toggle(model.inventory.length > 0);
 }
@@ -881,7 +887,7 @@ function updateSpellcasting() {
         $cantrips.html(html);
 
         var $dropdowns = $('.cantrips-known-dropdown');
-        fillSpellSelections($dropdowns, cantripsSelected, cantripsList);
+        fillDropdowns($dropdowns, cantripsSelected, cantripsList);
         $dropdowns.change(function() {
             updatePage();
         });
@@ -913,7 +919,8 @@ function updateSpellcasting() {
         $spellsknown.html(html);
 
         var $dropdowns = $('.spells-known-dropdown');
-        fillSpellSelections($dropdowns, spellsSelected, spellsList);
+        fillDropdowns($dropdowns, spellsSelected, spellsList);
+
         $dropdowns.change(function() {
             updatePage();
         });
@@ -946,14 +953,6 @@ function getSpellsSelected(prefix) {
     });
 
     return spells;
-}
-
-// TODO: make this generic for filling dropdowns, make allowed optional
-function fillSpellSelections($dropdowns, spells, allowed) {
-    for(var i = 0; i < spells.length && i < $dropdowns.length; i++) {
-        if ($.inArray(spells[i], allowed) !== -1)
-            $dropdowns.eq(i).val(spells[i]);
-    }
 }
 
 // --------------------------------------------------
@@ -1044,7 +1043,6 @@ function appendListItem(html, title, desc, subpoints) {
             else {
                 html += '<li>';
                 html += '<b>' + escapeText(subpoints[i][0]) + ': </b>';
-                // html += escapeText(subpoints[i][0]) + ': ' ;
                 html += escapeText(subpoints[i][1]);
                 html += '</li>'
             }
@@ -1163,9 +1161,7 @@ function updateSummary() {
 
         html = appendListItem(html, "Spell Save DC", "8 + Your proficiency modifier (2) + your " + abilityName + " modifier = " + savedc);
         html = appendListItem(html, "Spell Attack Modifier", "Your proficiency modifier (2) + your " + abilityName + " modifier = " + atkmod);
-
-        if (hasRitualCasting(model.classval))
-            html = appendListItem(html, "Ritual Casting", "Yes");
+        html = appendListItem(html, "Ritual Casting", hasRitualCasting(model.classval) ? "Yes" : "No");
     }
 
     html = appendListItem(html, "Features", null, getFeatureSummary(features));
@@ -1177,9 +1173,9 @@ function updateSummary() {
 function getFeatureSummary(features) {
     var list = [];
     for (var i = 0; i < features.length; i++) {
-        var text = processFeature(features[i]);
-        if (text)
-            list.push(processFeature(features[i]));
+        var processed = processFeature(features[i]);
+        if (processed)
+            list.push(processed);
     }
     return list;
 }
@@ -1244,8 +1240,8 @@ var featureHandlers = {
 
 function hasRitualCasting(classval) {
     if (classval === 'cleric') return true;
-    if (classval === 'bard') return true;
-    if (classval === 'druid') return true;
+    if (classval === 'bard'  ) return true;
+    if (classval === 'druid' ) return true;
     if (classval === 'wizard') return true;
     return false;
 }
@@ -1301,7 +1297,6 @@ function calculateTotalWeight() {
 }
 
 function getArmorClassSummary(armorkeys) {
-    // console.log(armorkeys)
     var hasShield = $.inArray('shield', armorkeys) !== -1;
     var ac = [];
     var dex = model.abilityModifiers.dex;
@@ -1382,8 +1377,8 @@ function getBgTitleAndFeature() {
 // Page
 // --------------------------------------------------
 
-// read all data from the page into the model, except the
-// stuff that updates the model itself
+// read all data from the page into the model, except
+// stuff that updates the model directly
 function updateModel() {
     model.charname = $('#character-name-field').val();
     model.appearance = $('#appearance-field').val();

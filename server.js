@@ -12,9 +12,9 @@ let fs = require('fs');
 let mustache = require('mustache');
 
 // other server files
-let data = require('./data.js');
+let bookdata = require('./bookdata');
 
-// express modules
+// express 
 let express = require('express');
 let app = express();
 
@@ -22,16 +22,15 @@ let app = express();
 // Routing
 // --------------------------------------------------
 
-let WEB = path.join(__dirname, 'web');
-let IMG = path.join(__dirname, 'img');
-let STATIC = path.join(__dirname, 'static')
+let WEB = path.join(__dirname, 'staticweb');
+let IMG = path.join(__dirname, 'staticimg');
 
-app.use('/static', express.static(STATIC));
-app.use('/img', express.static(IMG));
+app.use('/staticweb', express.static(WEB));
+app.use('/staticimg', express.static(IMG));
 
 app.get('/', (req, res) => {
-    let view = data.getView(); 
-    fs.readFile('./web/index.mustache', 'utf8', (err, data) => {
+    let view = bookdata.getView(); 
+    fs.readFile('./templates/index.mustache', 'utf8', (err, data) => {
         if (err) {
             res.status('500').send('Error. Unavailable.');
         }
@@ -43,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/jsondata', (req, res) => {
-    res.send(data.joinedJson);
+    res.send(bookdata.joinedJson);
 });
 
 app.get('*', (req,res) => res.status(404).send('Error 404: Not found'));

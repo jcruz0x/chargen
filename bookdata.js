@@ -10,8 +10,8 @@ let util = require('./util.js');
 let markdownConverter = new showdown.Converter();
 let bookdb = new database('db/bookdb.sqlite', {readonly: true, fileMustExist: true});
 
-let desclistTemplate = fs.readFileSync('web/desclist.mustache', 'utf8');
-let desclistTwoColTemplate = fs.readFileSync('web/desclist-twocolumn.mustache', 'utf8');
+let desclistTemplate = fs.readFileSync('templates/desclist.mustache', 'utf8');
+let desclistTwoColTemplate = fs.readFileSync('templates/desclist-twocolumn.mustache', 'utf8');
 
 // -------------------------------------------------- 
 // Abilities
@@ -83,8 +83,6 @@ for (let keyname in races) {
     race.fullname = util.keynameToFullname(keyname);
 
     let descfile = race.descfile || (keyname + ".md");
-    // let desc = fs.readFileSync('bookdata/md/' + descfile, 'utf8');
-    // race.htmlDesc = markdownConverter.makeHtml(desc);
     race.htmlDesc = util.getBookMdAsHtml(descfile);
 }
 
@@ -517,7 +515,7 @@ function getBackgroundViews() {
 // Skills and Proficienies
 // -------------------------------------------------- 
 
-// proficiency categories, can be used to expand a category key to full list
+// proficiency categories can be used to expand a category key to full list
 // e.g. 'musical-instrument' to full list of them
 let profCategoryJson = fs.readFileSync('bookdata/json/proficiencies.json', 'utf8');
 let profCategories = JSON.parse(profCategoryJson);
@@ -706,7 +704,6 @@ let packs = bookdb.prepare('SELECT * FROM packs').all();
 let trinketsJson = fs.readFileSync('bookdata/json/trinkets.json', 'utf8');
 let trinkets = JSON.parse(trinketsJson);
 
-
 for (let weapon of weapons) {
     if (weapon.properties !== '' && weapon.properties.trim() !== '') 
         weapon.proparr = weapon.properties.split(' ');
@@ -766,9 +763,6 @@ function damageStr(dice, damagetype) {
         return '--';
 
     return `${dice} ${damageTypes[damagetype]}`;
-}
-
-let weaponCategoryFullnames = {
 }
 
 function getWeaponView() {
@@ -926,7 +920,6 @@ function getFeatureCantripsView() {
     }
     return view;
 }
-
 
 // -------------------------------------------------- 
 // Main View Creation
