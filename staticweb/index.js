@@ -614,7 +614,7 @@ function getLanguages() {
 
     extra += bookdata.backgrounds[model.backgroundval].languages || 0;
 
-    if (model.classval === 'ranger')
+    if (model.classval === 'ranger' && model.rangerLanguage)
         languages.push(model.rangerLanguage);
 
     return { list: languages, extra: extra };
@@ -1199,14 +1199,14 @@ var featureHandlers = {
         return 'Fighting Style (' + keynameToFullname(model.fightingStyle) + ')';
     },
     'favored-enemy': function() {
-        var language = keynameToFullname(model.rangerLanguage);
+        var language = keynameToFullname(model.rangerLanguage || 'none');
         if (model.rangerEnemy === 'humanoids') {
             var humanoid1 = keynameToFullname(model.rangerHumanoid1);
             var humanoid2 = keynameToFullname(model.rangerHumanoid2);
-            return 'Favored Enemy (' + humanoid1 + ', ' + humanoid2 + ', ' + language + ')';
+            return 'Favored Enemy (' + humanoid1 + ', ' + humanoid2 + ', Language: ' + language + ')';
         } else {
             var enemy = keynameToFullname(model.rangerEnemy);
-            return 'Favored Enemy (' + enemy + ', ' + language + ')';
+            return 'Favored Enemy (' + enemy + ', Language: ' + language + ')';
         }
     },
     'natural-explorer': function() {

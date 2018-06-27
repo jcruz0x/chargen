@@ -243,7 +243,6 @@ function joinFullnames(keynames) {
     return fullnames.join(", ");
 }
 
-
 function getSavingThrowsDesc(savingthrows) {
     let fullnames = [];
     for (let savingthrow of savingthrows) 
