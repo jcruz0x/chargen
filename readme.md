@@ -12,7 +12,7 @@ summary at the end makes it easy to copy the resulting character to a character 
 The character generator can be accessed at http://chargen.jcruz0x.com
 
 Currently the variant human option that gets a feat
-at first level is not supported, and only the 'roll-for-gold' option is available for
+at first level is not supported, and only the 'roll for gold' option is available for
 equipment purchasing. Eventually I'd like to make the feats and the convenient 
 class/background equipment choices available, and maybe even the additional 
 backgrounds, feats, races and class options from the add on books.
